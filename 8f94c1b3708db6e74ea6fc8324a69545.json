@@ -1,0 +1,4 @@
+{
+  "problem_type": "多agent系统控制权分析",
+  "content": "1. 问题重述: 分析多agent系统中控制权转义机制\n2. 最优解决方案:\n   - 步骤1: 使用fd命令查找agent相关核心文件\n   - 步骤2: 使用rg搜索多agent相关关键词(multi-agent/multi_agent)\n   - 步骤3: 定位MultiAgent类实现文件\n   - 步骤4: 分析run()方法和消息处理机制\n   - 步骤5: 验证控制权转义流程(SEND_MESSAGE协议)\n3. 注意事项:\n   - 区分普通agent和多agent系统的差异\n   - 关注结构化消息传递机制\n   - 验证控制权循环逻辑\n4. 可选步骤:\n   - 可先分析普通agent实现作为对比\n   - 可检查配置文件了解agent初始化参数"
+}

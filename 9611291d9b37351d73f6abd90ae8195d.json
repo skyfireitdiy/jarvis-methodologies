@@ -1,0 +1,4 @@
+{
+  "problem_type": "python_package_installation_error",
+  "content": "# Python包安装错误\n## 问题重述\n在使用 `pip install -e .` 安装本地Python包时，可能会遇到因 `pyproject.toml` 文件格式错误或配置问题导致的安装失败。\n\n## 最优解决方案\n1. 检查 `pyproject.toml` 文件的格式和语法是否正确。\n2. 确保所有依赖项配置正确无误。\n3. 如果问题仍然存在，尝试清理缓存并重新安装。\n\n## 注意事项\n- 在修改 `pyproject.toml` 文件前，建议备份原始文件。\n- 使用 `pip` 的 `--verbose` 选项可以帮助诊断安装过程中的问题。"
+}

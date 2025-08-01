@@ -1,0 +1,4 @@
+{
+  "problem_type": "生成Release Note",
+  "content": "### 生成Release Note方法论\n\n1. **检查未提交代码**\n   - 使用execute_script执行`git status --porcelain`\n   - 如果有未提交代码，使用execute_script执行`jgc`命令提交\n\n2. **获取最新版本号**\n   - 使用execute_script执行`git describe --tags \\`git rev-list --tags --max-count=1\\``\n\n3. **获取当前日期**\n   - 使用execute_script执行`date +\"%Y-%m-%d\"`\n\n4. **获取代码变更信息**\n   - 使用execute_script执行`git diff <latest_tag>..HEAD | cat -`\n\n5. **分析变更并生成Release Note**\n   - 根据变更内容分类：\n     - 新功能(Features)\n     - 修复(Fixes)\n     - 优化与重构(Refactors & Improvements)\n     - 文档更新(Documentation)\n     - 其他(Miscellaneous)\n   - 按照标准格式组织内容\n\n**注意事项**:\n1. 确保所有代码已提交，避免遗漏变更\n2. 检查tag是否正确获取\n3. 变更分类要准确反映修改性质\n4. Release Note内容要简明扼要\n\n**优化方向**:\n1. 可考虑开发专用工具自动分类变更\n2. 可增加变更影响评估\n3. 可添加代码变更统计功能"
+}

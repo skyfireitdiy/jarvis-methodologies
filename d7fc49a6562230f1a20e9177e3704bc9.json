@@ -1,0 +1,4 @@
+{
+  "problem_type": "generate_release_note",
+  "content": "### Release Note - v0.1.193 2025-05-31\n\n#### **新功能 (Features)**  \n- 新增代码代理功能(jarvis-code-agent/jca)，支持代码分析与修改、审查优化、自动化git操作等功能\n- 增强Yuanbao平台支持，添加chatModelExtInfo并重构网络搜索功能支持\n\n#### **优化与重构 (Refactors & Improvements)**  \n- 改进代码代理的提示生成逻辑，增加默认附加提示\n- 优化代码代理的提交信息展示格式\n- 增强方法论模块的输出显示效果\n\n#### **其他 (Miscellaneous)**  \n- 新增活动策划专家角色模板示例\n\n本次更新主要增强了代码代理功能，提供了更完整的代码修改工作流，并优化了Yuanbao平台集成。"
+}

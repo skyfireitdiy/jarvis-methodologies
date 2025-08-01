@@ -1,0 +1,4 @@
+{
+  "problem_type": "git_commit_history_rewrite",
+  "content": "1. 使用`git status --porcelain`检查当前修改状态\n2. 使用`git diff <file>`查看具体文件修改内容\n3. 使用`git add <file>`暂存需要提交的文件\n4. 编写符合规范的commit信息，包含:\n   - 类型前缀(如docs, feat, fix等)\n   - 简短标题(50字符内)\n   - 详细说明(72字符换行)\n5. 使用`git commit -m \"message\"`提交变更\n6. 使用`git push origin <branch>`推送变更\n注意事项:\n- 确保commit信息准确反映修改内容\n- 推送前确认目标分支正确\n- 复杂修改建议分多次小提交"
+}

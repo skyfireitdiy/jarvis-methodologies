@@ -1,0 +1,4 @@
+{
+  "problem_type": "容器内执行网络请求",
+  "content": "# 在容器中执行curl命令获取网页内容\n## 问题重述\n需要在容器环境中执行curl命令获取指定网页内容\n\n## 最优解决方案\n1. 初始化容器环境: code-sandbox-mcp.tool_call.sandbox_initialize\n2. 安装curl工具: apt-get update && apt-get install -y curl\n3. 执行curl命令: curl [目标URL]\n\n## 注意事项\n1. 确保使用基础镜像(如ubuntu)初始化容器\n2. 安装curl前需要先更新apt源\n3. 容器网络需要能够访问目标URL\n\n## 可选步骤\n1. 对于需要保持的容器环境，可以添加持久化参数\n2. 对于需要代理访问的情况，可以配置容器网络参数"
+}

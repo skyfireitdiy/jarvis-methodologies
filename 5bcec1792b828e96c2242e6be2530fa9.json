@@ -1,0 +1,4 @@
+{
+  "problem_type": "python_dependency_installation",
+  "content": "# Python依赖自动安装方法论\n\n## 问题重述\n如何在Python项目中自动检测和安装缺失的依赖项\n\n## 最优解决方案\n1. 依赖检测:\n   - 使用正则表达式分析Python代码中的import语句\n   - 支持两种形式:\n     * `import package[.subpackage]`\n     * `from package[.subpackage] import module`\n   - 提取根包名作为依赖项(工具: 正则表达式)\n\n2. 依赖验证:\n   - 尝试导入每个检测到的包(工具: __import__)\n   - 捕获ImportError识别缺失依赖\n\n3. 依赖安装:\n   - 使用subprocess调用pip安装缺失依赖(工具: subprocess.run)\n   - 提供安装进度反馈(工具: PrettyOutput)\n\n## 注意事项\n- 只提取根包名(package)而非完整导入路径\n- 处理ImportError时要区分包不存在和其他导入错误\n- 安装依赖需要适当的权限\n- 考虑网络连接问题导致的安装失败\n\n## 可选步骤\n- 可以添加版本约束检查\n- 对于开发依赖可以区分安装\n- 可以支持多种包管理器(pip/conda等)"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "生成release_note",
+  "content": "任务已完成：\n1. 检测未提交代码并提交\n2. 获取最新tag版本号(v0.1.192)\n3. 获取当前日期(2025-05-31) \n4. 执行git diff获取变更内容\n5. 成功生成markdown格式release_note"
+}

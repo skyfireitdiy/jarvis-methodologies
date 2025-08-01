@@ -1,0 +1,4 @@
+{
+  "problem_type": "命令行工具shell选项开发",
+  "content": "1. 问题重述: 为命令行工具添加仅支持特定shell类型的选项\n\n2. 最优解决方案:\n   - 使用argparse添加shell选项参数(execute_script/edit_file)\n   - 设置choices限制为支持的shell类型(edit_file)\n   - 设置默认值为支持的shell类型(edit_file)\n   - 添加明确的帮助信息说明支持的shell类型(edit_file)\n   - 在命令处理逻辑中添加参数验证(edit_file)\n   - 保持原有功能不变，仅添加选项验证(edit_file)\n\n3. 注意事项:\n   - 严格遵循用户指定的shell类型限制\n   - 保持向后兼容性\n   - 提供清晰的错误提示\n\n4. 可选步骤:\n   - 如果需要支持多种shell类型，可以扩展choices列表\n   - 如果需要自动检测当前shell，可以移除默认值设置"
+}

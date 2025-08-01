@@ -1,0 +1,4 @@
+{
+  "problem_type": "版本发布流程",
+  "content": "1. 检查并提交未提交的代码变更（使用git status和git commit）\n2. 获取最新git tag版本号（使用git describe）\n3. 收集从最新tag到HEAD的提交历史（使用git log）\n4. 生成release note并更新ReleaseNote文件（使用edit_file工具）\n5. 执行发布脚本完成版本发布（使用execute_script）\n6. 验证发布结果（检查git tag和PyPI版本）\n7. 关键修正点：\n   - 确保ReleaseNote版本号与git tag一致\n   - 所有修改必须提交后再打tag\n注意事项：\n- 发布前必须确认所有修改已提交\n- ReleaseNote版本号必须与git tag完全一致\n- 打tag前必须确保包含所有相关修改"
+}

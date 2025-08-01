@@ -1,0 +1,4 @@
+{
+  "problem_type": "执行自定义shell命令",
+  "content": "问题重述: 如何执行和验证自定义shell命令的功能\n\n最优解决方案:\n1. 使用execute_script工具执行命令\n   - 工具: execute_script\n   - 参数: interpreter设置为bash, script_content设置为要执行的命令\n2. 分析命令输出结果\n3. 根据输出判断命令功能\n\n注意事项:\n1. 确保命令名称正确\n2. 注意命令输出的格式和编码\n3. 对于长时间运行的命令，可能需要设置超时时间\n\n可选步骤:\n1. 对于复杂的命令，可以先使用--help参数查看帮助\n2. 可以使用man命令查看手册页(如果可用)"
+}

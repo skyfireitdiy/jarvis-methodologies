@@ -1,0 +1,4 @@
+{
+  "problem_type": "command_list_extraction",
+  "content": "# Command List Extraction\n## Problem Restatement\nExtract a list of available commands and their purposes from a project's documentation or README file.\n\n## Optimal Solution\n1. Locate the project's README or documentation file.\n2. Identify the section containing the command list.\n3. Extract the commands and their descriptions using a code reading tool.\n4. Format the extracted information into a clear and concise list.\n\n## Notes\n- Ensure the README file is up-to-date and contains the command list.\n- Verify the extracted commands by testing them in the project environment."
+}

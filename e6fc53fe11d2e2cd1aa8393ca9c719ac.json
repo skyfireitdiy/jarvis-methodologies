@@ -1,0 +1,4 @@
+{
+  "problem_type": "nginx_source_compile_install",
+  "content": "# nginx源码编译安装方法论\n\n## 问题重述\n如何从源码编译安装nginx并启动服务\n\n## 最优解决方案\n1. 下载源码 (工具: execute_script)\n   - 使用wget下载最新稳定版nginx源码包\n   - 解压源码包\n2. 编译安装 (工具: execute_script)\n   - 进入源码目录执行./configure\n   - 执行make编译\n   - 执行make install安装\n3. 启动服务 (工具: execute_script)\n   - 使用绝对路径启动nginx服务\n\n## 注意事项\n- 确保系统已安装编译依赖(gcc, make等)\n- 可能需要root权限执行安装和启动\n- 默认安装路径为/usr/local/nginx\n- 防火墙可能需要开放80端口\n\n## 可选步骤\n- 可以添加--prefix参数指定安装路径\n- 可以添加编译参数定制功能模块\n- 可以配置systemd服务管理"
+}

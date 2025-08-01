@@ -1,0 +1,4 @@
+{
+  "problem_type": "命令行工具简写添加",
+  "content": "1. 问题重述: 为现有命令行工具添加简写命令\n2. 最优解决方案:\n   - 使用fd/rg定位命令处理相关文件\n   - 检查setup.py和pyproject.toml中的entry_points/scripts配置\n   - 在entry_points/scripts中添加简写映射\n   - 保持与现有简写命令风格一致\n3. 注意事项:\n   - 必须同时修改setup.py和pyproject.toml文件\n   - 简写命令不应与现有命令冲突\n   - 保持项目一致性，遵循现有命名风格\n4. 可选步骤:\n   - 可以优先检查项目中已有的简写命令模式\n   - 可以验证新命令是否可用"
+}

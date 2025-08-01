@@ -1,0 +1,4 @@
+{
+  "problem_type": "docker_build_from_python_project",
+  "content": "问题重述: 如何从Python项目中提取版本号并构建Docker镜像\n\n最优解决方案:\n1. 定位项目根目录: 使用脚本自身路径推导项目根目录\n   - 工具: bash脚本路径解析\n2. 提取版本号: 从setup.py中获取version字段\n   - 工具: grep正则匹配\n3. 构建Docker镜像: 使用提取的版本号作为tag\n   - 工具: docker build命令\n\n注意事项:\n- 必须使用绝对路径确保脚本可在任意目录执行\n- 版本号提取正则表达式需匹配项目实际格式\n- 确保Dockerfile位于项目根目录\n\n可选步骤:\n- 可添加版本号格式验证步骤\n- 可添加构建前依赖检查步骤"
+}

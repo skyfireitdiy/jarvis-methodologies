@@ -1,0 +1,4 @@
+{
+  "problem_type": "python_package_installation",
+  "content": "# Python包安装方法论\n\n## 问题重述\n如何在开发模式下安装Python包\n\n## 最优解决方案\n1. 确保已安装最新版setuptools和wheel\n2. 在项目根目录执行命令：python3 -m pip install -e . --verbose\n3. 验证安装结果（执行pip list检查）\n\n## 注意事项\n1. 注意处理__pycache__目录警告\n2. 确保二进制文件权限设置正确(755)\n3. 可编辑安装模式下会显示项目路径而非site-packages路径\n\n## 可选步骤\n1. 对于生产环境安装，去掉-e参数\n2. 可使用--user参数进行用户级别安装"
+}

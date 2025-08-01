@@ -1,0 +1,4 @@
+{
+  "problem_type": "多文件PATCH块编辑",
+  "content": "# 多文件PATCH块编辑方法论\n\n## 问题重述\n如何高效地使用PATCH块格式同时编辑多个文件\n\n## 最优解决方案\n1. 使用file_editor_handler工具处理PATCH块格式输入\n2. 解析PATCH块获取文件路径和修改内容\n3. 对每个文件依次应用修改:\n   - 优先尝试fast_edit快速编辑\n   - 如果失败则使用slow_edit\n4. 返回每个文件的编辑结果\n\n## 注意事项\n- PATCH块格式必须严格遵循规范\n- SEARCH部分必须包含足够上下文确保唯一匹配\n- 每个PATCH块必须包含完整的file、SEARCH和REPLACE部分\n- 修改前建议备份重要文件\n\n## 可选步骤\n- 可以添加预处理步骤验证PATCH块格式\n- 对于复杂修改可以先在测试文件上验证\n- 可以添加dry-run模式只检查不实际修改"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "system_update",
+  "content": "# 系统更新方法论\n## Problem Restatement\n更新Linux系统中的软件包和依赖性以确保安全性和功能完整性。\n\n## Optimal Solution\n使用包管理工具（如pacman）更新系统。在遇到包数据库无法同步或下载失败时，可以更换镜像源或手动更新镜像列表。\n\n## Notes\n建议选择稳定且靠近地理位置的镜像源，以提高更新速度和成功率。定期检查镜像源状态，确保使用可用的源进行更新。"
+}

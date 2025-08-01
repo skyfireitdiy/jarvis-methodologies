@@ -1,0 +1,4 @@
+{
+  "problem_type": "project_build",
+  "content": "# 项目构建\n## 问题重述\n如何正确构建一个使用xmake作为构建工具的项目。\n\n## 最优解决方案\n1. 确保xmake工具已安装并正确配置。\n2. 在项目根目录下执行`xmake build`命令进行构建。\n\n## 注意事项\n- 确保项目结构符合xmake的约定，特别是xmake.lua配置文件的正确性。\n- 如果构建失败，检查xmake.lua文件中的配置，并确保所有依赖项已正确安装。"
+}

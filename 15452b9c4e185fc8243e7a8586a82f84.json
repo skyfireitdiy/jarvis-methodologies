@@ -1,0 +1,4 @@
+{
+  "problem_type": "software_installation",
+  "content": "1. 使用setup.py文件管理Python包的安装依赖\n2. 对于shell补全功能，实现专门的安装函数(如install_fish_completion)\n3. 对于语言服务器(LSP)，实现check()方法验证是否已安装\n4. 在README.md中提供清晰的安装说明和配置指南\n5. 使用entry_points定义命令行工具入口点\n6. 确保安装脚本处理不同shell环境的兼容性\n7. 提供详细的错误处理和诊断信息\n8. 支持通过pip进行开发模式安装(-e参数)\n9. 使用`--verbose`参数获取详细安装日志\n10. 检查并处理`__pycache__`目录警告\n11. 确保版本号正确递增\n12. 验证二进制文件权限设置(755)\n13. 可编辑安装会创建`.pth`文件修改`sys.path`\n14. 安装前会自动卸载旧版本\n15. 临时文件存储在`/tmp/pip-*`目录下\n16. 建议显式处理`__pycache__`目录警告"
+}

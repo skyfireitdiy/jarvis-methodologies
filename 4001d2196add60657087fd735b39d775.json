@@ -1,0 +1,4 @@
+{
+  "problem_type": "git_clone_ssh",
+  "content": "# Git Clone via SSH\n## Problem Restatement\nClone a remote Git repository using SSH protocol to a specified local directory.\n\n## Optimal Solution\n1. Ensure SSH key is properly configured for authentication.\n2. Use the `git clone` command with the SSH URL of the repository.\n3. Specify the target directory if needed.\n\n## Notes\n- Verify SSH key permissions and configuration before cloning.\n- Use absolute paths for target directories to avoid confusion.\n- Check network connectivity if the clone process is slow or fails."
+}

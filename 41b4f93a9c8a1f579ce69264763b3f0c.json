@@ -1,0 +1,4 @@
+{
+  "problem_type": "code_submission",
+  "content": "# Code Submission Methodology\n## Problem Restatement\nSubmit code changes to a version control system.\n\n## Optimal Solution\n1. Use `git add .` to stage all changes.  \n2. Use `git diff --cached` to review staged changes.  \n3. Write a clear and descriptive commit message summarizing the changes.  \n4. Use `git commit -m \"commit message\"` to commit the changes.  \n5. Use `git push` to submit the changes to the remote repository.  \n\n## Notes\n- Always review changes before committing to ensure accuracy.  \n- Ensure commit messages are descriptive and follow project conventions.  \n- Verify the push operation to confirm successful submission."
+}

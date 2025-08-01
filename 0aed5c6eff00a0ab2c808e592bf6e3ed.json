@@ -1,0 +1,4 @@
+{
+  "problem_type": "git_commit_analysis",
+  "content": "### 问题重述\n如何对Git commit进行深度分析，包括单个提交和范围提交分析\n\n### 最优解决方案\n1. (工具: git) 使用`git show <commit>`获取单个提交信息\n2. (工具: git) 使用`git diff <commit1>..<commit2>`获取范围差异\n3. (工具: code_plan) 建立分析框架，分离单commit和范围分析逻辑\n4. (工具: edit_file) 实现目录切换保护机制（try-finally）\n5. (工具: create_code_agent) 创建差异内容分析核心模块\n6. (工具: execute_script) 添加命令行参数互斥校验\n\n### 注意事项\n1. 必须验证commit范围的格式有效性（包含\"..\"分隔符）\n2. 大范围commit分析建议分页处理（避免内存溢出）\n3. Windows系统需注意目录切换的线程安全问题\n4. 对git命令输出进行编码验证（UTF-8兼容）\n\n### 可选步骤\n* 当需要长期保存分析结果时：\n  - 添加结果缓存机制（使用file_operation工具）\n  - 实现增量分析功能（通过lsp_get_diagnostics跟踪变更）"
+}

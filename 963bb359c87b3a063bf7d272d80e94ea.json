@@ -1,0 +1,4 @@
+{
+  "problem_type": "Python包版本发布流程",
+  "content": "1. 问题重述: \n- 如何正确执行Python包的版本发布流程，包括版本号更新、构建包、创建git标签和上传到PyPI\n\n2. 最优解决方案:\n- 使用版本发布脚本执行以下步骤:\n  a) 更新版本号 (使用publish.py脚本)\n  b) 清理构建环境 (删除__pycache__和旧构建文件)\n  c) 构建包 (使用python -m build)\n  d) 检查包质量 (使用twine check)\n  e) 提交版本更新 (git commit)\n  f) 创建或更新git标签 (git tag -f)\n  g) 推送标签 (git push --tags --force)\n  h) 上传到PyPI (twine upload --skip-existing)\n\n3. 注意事项:\n- 如果PyPI已存在相同版本，使用--skip-existing避免冲突\n- 如果git标签已存在，需要使用-f强制更新\n- 构建前确保清理旧构建文件\n- 上传前务必检查包质量\n\n4. 可选步骤:\n- 可以使用--verbose参数获取更详细的构建/上传信息\n- 对于测试环境，可以先上传到TestPyPI"
+}

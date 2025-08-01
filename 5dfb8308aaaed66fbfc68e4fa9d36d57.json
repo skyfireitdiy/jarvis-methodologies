@@ -1,0 +1,4 @@
+{
+  "problem_type": "release_note_generation",
+  "content": "已成功生成release note内容：\n### Release Note - v0.1.193 2025-05-31\n\n#### **新功能 (Features)**  \n- 新增代码代理功能(jarvis-code-agent/jca)\n- 增强Yuanbao平台支持\n\n#### **优化与重构 (Refactors & Improvements)**  \n- 改进代码代理提示生成逻辑\n- 优化提交信息展示格式\n\n任务执行流程已验证完成"
+}

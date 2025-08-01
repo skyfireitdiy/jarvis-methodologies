@@ -1,0 +1,4 @@
+{
+  "problem_type": "git_tag_management",
+  "content": "问题重述: 删除远程Git仓库的tag\n\n最优解决方案:\n1. 检查工作区状态(execute_script: git status --porcelain)\n2. 确认当前tag版本(execute_script: git describe --tags --abbrev=0)\n3. 删除远端tag(execute_script: git push origin --delete <tag_name>)\n\n注意事项:\n1. 确保工作区干净，没有未提交的修改\n2. 确认要删除的tag名称正确\n3. 删除操作不可逆，请谨慎操作"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "python_package_release",
+  "content": "1. 问题重述: Python包版本发布流程标准化\n2. 最优解决方案:\n   - 使用命令: python3 ./scripts/publish.py patch (execute_script工具)\n   - 关键步骤:\n     1) 版本号自动递增(patch级别)\n     2) 清理构建缓存(__pycache__/.mypy_cache)\n     3) 创建隔离虚拟环境并安装构建依赖\n     4) 生成sdist和wheel包\n     5) 验证包有效性\n     6) 提交版本更新到Git并创建标签\n     7) 上传到PyPI\n     8) 推送到远程仓库\n3. 注意事项:\n   - 必须使用python3而非bash直接执行脚本\n   - 注意处理SetuptoolsDeprecationWarning(特别是license配置)\n   - 确保构建前清理旧文件\n   - 验证包有效性后再上传\n4. 可选步骤:\n   - 可添加--verbose参数获取详细日志\n   - 可添加额外的构建前检查步骤"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "clean_unused_pip_packages",
+  "content": "# Clean Unused PIP Packages\n## Problem Restatement\nPython projects often accumulate unused pip packages over time, which can lead to increased maintenance overhead and potential security vulnerabilities.\n\n## Optimal Solution\nUse pip-tools to analyze package usage and safely remove unused dependencies. The process involves: 1) Identifying installed packages, 2) Detecting which packages are actually used in the codebase, 3) Removing unused packages through a controlled process.\n\n## Notes\nAlways review the unused packages list before removal to avoid breaking dependencies. Consider using virtual environments to isolate project dependencies."
+}
