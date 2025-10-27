@@ -1,0 +1,4 @@
+{
+  "problem_type": "VSCode字体配置",
+  "content": "VSCode字体配置方法论：\n\n1. 确认需求\n- 是否需要特殊字体(如Nerd Font)\n- 是否需要连字功能\n\n2. 字体准备阶段\n- 使用install_nerd_font工具安装所需字体(如未安装)\n- 使用execute_script执行`fc-list | grep -i \"字体名\"`确认系统字体名称\n\n3. 配置阶段\n- 使用read_code检查现有配置(~/.config/Code/User/settings.json)\n- 使用rewrite_file创建/修改配置:\n  {\n    \"editor.fontFamily\": \"'确认的字体名', monospace\",\n    \"editor.fontLigatures\": true/false\n  }\n\n4. 验证阶段\n- 重启VSCode\n- 检查字体是否生效\n- 如不生效，检查:\n  - 字体名称是否正确(特别是Nerd Font变体)\n  - 配置文件路径是否正确\n  - 是否需要系统级字体缓存更新(fc-cache -fv)"
+}

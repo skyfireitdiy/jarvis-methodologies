@@ -1,0 +1,4 @@
+{
+  "problem_type": "prince CJK字符显示问题",
+  "content": "解决prince工具中CJK字符U+5546（\"商\"）显示警告的问题：\n\n  问题分析：\n  - 错误信息：\"warning: no font for CJK character U+5546, fallback to U+2BD1\"\n  - 问题：缺少对特定CJK字符的字体支持\n\n  解决方案实施：\n  1. 识别系统环境：Arch Linux (pacman包管理器)\n  2. 安装完整CJK字体包：\n     sudo pacman -S --noconfirm adobe-source-han-sans-cn-fonts noto-fonts-cjk\n  3. 验证字体安装：\n     - fc-list :lang=zh 检查中文字体\n     - fc-match :charset=5546 测试字符匹配\n  4. 重建字体缓存：fc-cache -fv\n\n  结果验证：\n  - 已成功安装Noto Sans CJK系列和Source Han Sans CN字体\n  - Noto Sans CJK字体包含完整的CJK字符集\n  - U+5546字符应该能够被正确渲染\n\n  关键信息：\n  - 已安装字体：adobe-source-han-sans-cn-fonts, noto-fonts-cjk\n  - 字体路径：/usr/share/fonts/noto-cjk/\n  - 问题已解决，系统具备完整的中文CJK字体支持"
+}

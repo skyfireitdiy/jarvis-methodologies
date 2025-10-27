@@ -1,0 +1,4 @@
+{
+  "problem_type": "设置sudo免密",
+  "content": "### 问题重述\n为Linux系统上的当前用户配置sudo权限，使其在执行需要root权限的命令时无需输入密码。\n\n### 可复用解决流程\n1.  **获取当前用户名**: 使用 `whoami` 命令获取当前操作的用户名。\n    - **工具**: `execute_script`\n    - **示例**: `whoami`\n2.  **创建sudoers配置文件**: 构造配置内容 `[username] ALL=(ALL) NOPASSWD: ALL`，并使用 `sudo tee` 命令将其写入到 `/etc/sudoers.d/` 目录下的一个新文件中（文件名建议与用户名相同）。\n    - **工具**: `execute_script`\n    - **示例**: `echo \"$(whoami) ALL=(ALL) NOPASSWD: ALL\" | sudo tee /etc/sudoers.d/$(whoami)`\n3.  **验证配置**: 使用 `sudo -n` (non-interactive) 选项执行一个需要root权限的命令，以验证配置是否生效。如果命令成功执行或因权限问题失败但没有提示输入密码，则说明配置成功。\n    - **工具**: `execute_script`\n    - **示例**: `sudo -n ls /root`\n\n### 注意事项\n- **安全性**: 直接修改 `/etc/sudoers` 文件风险较高，一旦出错可能导致系统无法使用sudo。将配置写入 `/etc/sudoers.d/` 目录下的独立文件是更安全、更推荐的做法。\n- **首次密码**: 在执行第二步写入配置文件时，由于使用了`sudo`，系统可能会要求输入一次当前用户的密码。这是正常现象。\n- **验证命令**: 验证时使用的命令（如 `ls /root`）本身可能会因为其他原因（如SELinux策略、目录不存在等）失败，但只要 `sudo` 命令本身没有提示输入密码，就证明免密配置是成功的。"
+}

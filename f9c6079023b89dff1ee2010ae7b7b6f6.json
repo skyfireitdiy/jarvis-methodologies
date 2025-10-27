@@ -1,0 +1,4 @@
+{
+  "problem_type": "PlantUML文字重叠问题",
+  "content": "# PlantUML文字重叠问题的解决方法论\n\n## 根本原因分析\n1. **字体大小问题**: 字体相对于容器过大，导致超出显示范围\n2. **字符间距问题**: 行距/字距设置不当导致视觉重叠\n3. **布局算法限制**: Graphviz自动布局在复杂场景下可能造成元素距离过近\n3. **容器尺寸不足**: 图形元素没有足够的空间容纳文字内容\n\n## 解决方案\n\n### 字体大小调整\n- **全局设置**: 使用skinparam命令\n  ```plantuml\n  skinparam classFontSize 10\n  skinparam defaultFontSize 12\n  ```\n\n### 文字格式优化\n- **强制换行**: 在长标签中插入`\\n`字符\n- **自动换行**: 设置`wrap`属性\n- **HTML样式控制**: 使用HTML标签进行精细格式控制\n\n### 布局改进\n- 使用`left to right direction`改变布局方向\n- 手动指定元素相对位置\n- 利用package和namespace创建逻辑分组\n\n### 具体修复方法\n1. **调整主要字体大小**: classFontSize, defaultFontSize等\n2. **为长文本添加换行或wrap属性**\n3. **使用HTML标签精确控制样式**\n4. **调整图形容器尺寸**\n5. **简化图表复杂度**或使用**分部显示**"
+}
