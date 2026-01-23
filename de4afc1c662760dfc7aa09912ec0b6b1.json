@@ -1,0 +1,4 @@
+{
+  "problem_type": "encoding-compatibility-task-verification",
+  "content": "编码兼容性任务验证方法论\n\n问题重述：\n验证 subprocess.Popen 调用是否需要添加 decode_output 函数以支持编码兼容性（UTF-8优先，失败回退GBK）。\n\n可复用解决流程：\n\n1. 定位所有 subprocess.Popen 调用\n   - 使用 rg/grep 搜索 'subprocess.Popen' 获取所有调用位置\n   - 记录每个调用的具体行号和上下文\n\n2. 区分读取和写入操作类型\n   - 检查 stdin 参数：如果为 subprocess.PIPE，表示写入数据\n   - 检查 stdout/stderr 参数：如果为 subprocess.DEVNULL，表示不读取输出\n   - 只有 stdout 或 stderr 不为 DEVNULL 时，才需要解码输出\n\n3. 验证 decode_output 的应用\n   - 对于需要读取输出的调用，检查是否：\n     * 导入了 decode_output 函数\n     * 在读取 stdout/stderr 时使用 decode_output 解码\n   - 对于仅写入的调用，确认无需解码（符合实际需求）\n\n4. 任务描述合理性校验\n   - 如果任务要求\"使用 decode_output\"，但实际代码都是写入操作\n   - 应质疑任务描述的合理性，可能需要澄清需求\n   - 若任务执行者指出无需 decode_output，应予以确认\n\n注意事项：\n- 不要盲目按任务描述修改代码，先分析实际需求\n- 区分\"写入操作\"和\"读取操作\"是关键判断点\n- 验证时应基于实际代码逻辑，而非仅依赖任务描述\n\n可选步骤：\n- 检查 decode_output 函数是否存在且位置正确\n- 验证导入语句是否正确（from jarvis.jarvis_utils.utils import decode_output）"
+}

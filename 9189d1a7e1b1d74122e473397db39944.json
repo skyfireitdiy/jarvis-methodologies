@@ -1,0 +1,5 @@
+{
+  "problem_type": "上下文长度计算从字符迁移到token",
+  "content": "## 问题重述\n将工具的上下文长度限制从字符长度计算改为基于 token 的精确计算，避免因字符与 token 比例差异导致的长度不准确问题。\n\n## 可复用解决流程\n\n### 步骤1：评估影响范围\n1. 搜索所有调用 `len(content)` 计算上下文长度的代码\n2. 检查是否有 `calculate_content_length_limit` 等辅助函数需要修改\n3. 识别涉及内容截取、长度限制的所有代码位置\n\n### 步骤2：修改长度计算函数（如存在）\n- 函数返回值从字符数改为 token 数\n- 移除 `token * 4` 的字符转换逻辑\n- 更新函数文档字符串说明返回 token 数\n\n### 步骤3：引入 token 计算工具\n```python\nfrom jarvis.jarvis_utils.embedding import get_context_token_count\n```\n\n### 步骤4：替换字符计算为 token 计算\n1. **长度检查**：`len(content)` → `get_context_token_count(content)`\n2. **限制计算**：\n   - 计算：`remaining_limit = limit - get_context_token_count(current_content)`\n   - 截取：使用保守估计 `content[:limit * 4]`（1 token ≈ 4 字符）\n3. **日志输出**：从 \"X 字符\" 改为 \"X token\"\n\n### 步骤5：验证修改\n- 静态扫描通过\n- 读取修改后的代码确认逻辑正确\n- 确保 token 计算在异常情况下有回退方案\n\n## 注意事项\n1. **保守截取**：基于 token 限制截取内容时，使用 `content[:token_limit * 4]` 而非精确 token 切割\n2. **异常处理**：`get_context_token_count` 在失败时回退到字符估算（已内置）\n3. **保持一致**：所有相关的上下文长度计算都应统一改为 token\n4. **文档更新**：更新函数文档和注释，明确说明单位是 token\n\n## 可选步骤\n- 如果需要精确的 token 切割（字符边界不完整时可接受），可使用 `split_text_into_chunks` 函数\n- 考虑添加测试用例验证 token 计算的准确性",
+  "scope": "global"
+}

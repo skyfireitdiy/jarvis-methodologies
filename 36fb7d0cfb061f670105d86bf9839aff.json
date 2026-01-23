@@ -1,0 +1,5 @@
+{
+  "problem_type": "git-multi-remote-automation",
+  "content": "**问题重述**\n在自动化Git操作中，需要向多个remote仓库（如origin、gitee等）推送代码或tags，且某个remote失败时不影响其他remote的操作继续执行。\n\n**可复用解决流程**\n\n1. **设计错误处理模式**\n   - 创建`run_command_ignore_errors`函数（Python）：\n     ```python\n     def run_command_ignore_errors(cmd: List[str], error_msg: str) -> bool:\n         try:\n             subprocess.run(cmd, check=True, capture_output=True)\n             return True\n         except subprocess.CalledProcessError as e:\n             print(f\"⚠️  Warning: {error_msg}\")\n             return False\n     ```\n\n2. **获取所有remote列表**\n   - 使用命令：`git remote`\n   - 解析输出获取remote名称列表\n\n3. **遍历执行操作**\n   - 遍历每个remote\n   - 对每个remote执行操作（push main、push tags等）\n   - 使用错误忽略函数，失败时返回False但继续循环\n\n4. **统计和反馈**\n   - 记录成功/失败数量\n   - 提供清晰的最终反馈：`✅ 成功push到 X/Y 个remotes`\n\n**注意事项**\n- 区分关键操作和非关键操作：关键操作使用普通run_command（失败退出），非关键操作使用错误忽略模式\n- 确保错误信息清晰：使用⚠️标识警告，便于与错误区分\n- 空remote处理：遍历时检查remote是否为空字符串\n- 分步操作：对于复杂任务（先push main再push tags），应分别处理并统计\n\n**适用场景**\n- 多仓库代码同步（GitHub + Gitee镜像）\n- 多环境发布（dev、staging、production环境）\n- 需要容错的备份操作\n- 批量通知或回调场景",
+  "scope": "global"
+}

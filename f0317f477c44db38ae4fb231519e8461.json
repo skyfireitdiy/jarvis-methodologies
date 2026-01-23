@@ -1,0 +1,5 @@
+{
+  "problem_type": "循环优化-避免重复计算",
+  "content": "问题重述：\n在循环中重复计算应该只计算一次的值，导致性能问题或逻辑错误（如剩余token计算返回最大值）。\n\n可复用解决流程：\n1. 识别循环中的重复计算模式：\n   - 循环体内调用的计算函数，其输入参数在循环过程中不变化\n   - 每次计算结果相同，但累积消耗量在变化的场景（如token、内存、带宽限制）\n\n2. 确定计算时机：\n   - 在循环开始前计算基准值（如总限制、初始配额）\n   - 在循环中维护累积量或剩余量（通过加减更新）\n\n3. 重构代码模式：\n   修复前：\n   ```python\n   for item in items:\n       limit = calculate_limit(item)  # 每次都重新计算\n       process(item, limit)\n   ```\n  \n   修复后：\n   ```python\n   limit = calculate_limit()  # 只计算一次\n   for item in items:\n       remaining = limit - used\n       if remaining <= 0:\n           break\n       process(item, remaining)\n   ```\n\n4. 添加边界检查：\n   - 当剩余量不足时，跳过或终止循环\n   - 添加日志输出便于调试\n\n注意事项：\n- 关注性能敏感场景（如文件处理、网络请求、大循环）\n- 使用累加器模式（accumulator）跟踪累积量\n- 对于复杂的计算，考虑使用缓存或记忆化（memoization）\n- 审查代码时特别注意：在循环内调用get_remaining/get_limit等函数\n\n可选步骤：\n- 使用性能分析工具（如cProfile）识别重复计算热点\n- 添加单元测试验证边界条件",
+  "scope": "global"
+}

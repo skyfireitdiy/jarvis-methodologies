@@ -1,0 +1,5 @@
+{
+  "problem_type": "gitignore例外配置",
+  "content": "## 问题重述\n需要忽略某个目录，但保留其中的特定子目录或文件。\n\n## 可复用解决流程\n\n### 步骤1：确定例外规则位置\n在 `.gitignore` 文件中找到要忽略的目录规则（如 `.jarvis`）\n\n### 步骤2：添加例外规则\n在忽略规则**之后**添加例外规则，使用 `!` 前缀：\n```gitignore\n.jarvis           # 忽略整个 .jarvis 目录\n!.jarvis/rule     # 例外：保留 .jarvis/rule\n!.jarvis/rules    # 例外：保留 .jarvis/rules\n```\n\n### 步骤3：验证配置\n使用 `git check-ignore -v <path>` 验证配置是否生效：\n- 有输出：路径被忽略\n- 无输出：路径未被忽略（例外规则生效）\n\n## 注意事项\n1. **顺序很重要**：例外规则必须在忽略规则之后，否则无效\n2. **父目录需存在**：如果父目录之前从未被提交过，例外规则可能不生效（需要先提交父目录）\n3. **子目录例外不影响子目录内容**：例外规则只让 git \"看到\"该目录，目录内的文件仍需满足其他忽略规则\n4. **使用 ! 前缀**：例外规则必须以 `!` 开头\n\n## 可选步骤\n如果需要保留多个子目录或文件，可以添加多个例外规则：\n```gitignore\n.jarvis\n!.jarvis/rule\n!.jarvis/rules\n!.jarvis/config.yml\n```",
+  "scope": "global"
+}

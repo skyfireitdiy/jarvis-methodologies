@@ -1,0 +1,4 @@
+{
+  "problem_type": "卸载PostgreSQL数据库",
+  "content": "问题重述:\n需要卸载通过README教程或其他方式安装的PostgreSQL数据库，包括清理相关的Prisma或其他ORM工具生成的文件。\n\n可复用解决流程:\n1. 检查服务状态：使用ps命令检查是否有正在运行的开发服务器或相关服务，确保数据库未被使用\n2. 停止相关服务：如果发现相关服务正在运行，需要先停止这些服务\n3. 删除数据库：使用PostgreSQL命令删除指定的数据库\n   - 例如：sudo -u postgres psql -c \"DROP DATABASE IF EXISTS database_name;\"\n4. 验证数据库删除：检查数据库列表中是否还存在该数据库\n   - 例如：sudo -u postgres psql -l | grep database_name\n5. 清理相关文件：删除ORM工具(如Prisma)生成的客户端文件和迁移文件\n   - 删除node_modules中的相关文件：rm -rf ./node_modules/.pnpm/@prisma*\n   - 删除迁移文件：rm -rf ./prisma/migrations (如果存在)\n6. 验证卸载结果：尝试连接数据库确认无法连接，确认卸载完成\n\n注意事项:\n- 执行删除操作前务必确认没有服务正在使用数据库\n- 需要适当的权限来执行PostgreSQL命令(通常使用sudo -u postgres)\n- 确认数据库名称正确，避免误删其他数据库\n- 备份重要数据以防意外丢失\n\n可选步骤:\n- 如果需要彻底清理，可以删除相关的环境配置文件或重置配置\n- 检查并清理数据库用户(如需要)：sudo -u postgres psql -c \"DROP USER IF EXISTS username;\""
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "工具类开发",
+  "content": "# 工具类开发方法论\n\n## 问题重述\n在项目中开发新的工具类，需要遵循项目规范创建工具文件，实现标准接口。\n\n## 可复用解决流程\n1. 确认项目工具目录结构（如src/jarvis/jarvis_tools/）\n2. 创建工具文件（如web_terminal.py）\n3. 实现工具类，包含必需属性：\n   - name: 工具名称\n   - description: 工具描述\n   - parameters: 参数定义（JSON Schema格式）\n4. 实现execute方法处理业务逻辑\n5. 返回结构化结果{success, stdout, stderr}\n6. 验证工具是否符合项目规范\n\n## 注意事项\n- 工具文件必须放在指定目录下\n- 工具类必须遵循接口规范\n- 参数定义需符合JSON Schema标准\n- 异常处理要完善\n- 输出结果要结构化\n\n## 可选步骤\n- 根据具体工具需求添加额外功能\n- 考虑与其他工具的兼容性\n- 添加单元测试验证功能"
+}

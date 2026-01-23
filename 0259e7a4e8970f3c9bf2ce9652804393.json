@@ -1,0 +1,4 @@
+{
+  "problem_type": "web terminal审查",
+  "content": "问题重述：审查web terminal代码修改是否正确实现了前端自动分屏和后端终端对接功能\n\n可复用解决流程：\n1. 检查新增模块的语法正确性：使用python -m py_compile验证Python文件语法\n2. 验证入口点配置：检查pyproject.toml中的入口点配置是否正确\n3. 审查模块结构：验证__init__.py中的导出项是否完整\n4. 检查配置模块：确认WebTerminalConfig类是否包含必要的配置项\n5. 审查主实现文件：验证WebTerminalServer类的功能实现\n   - 检查分屏布局实现（quad/horizontal/vertical）\n   - 验证WebSocket连接处理逻辑\n   - 确认pty终端创建和数据转发机制\n   - 验证资源清理和进程管理机制\n6. 检查启动脚本：确认quick_start.py中的命令行参数处理\n7. 验证示例代码：检查example.py中的使用示例是否正确\n8. 检查安全和资源管理：确认无资源泄漏风险，进程管理是否正确\n\n注意事项：\n- pty进程创建和清理：确保子进程和文件描述符正确关闭\n- WebSocket连接管理：处理连接断开和异常情况\n- 终端大小调整：确保响应式布局和终端尺寸同步\n- 跨域配置：检查CORS策略是否合理\n- 并发处理：验证多终端同时连接的处理能力\n\n可选步骤：\n- 运行单元测试验证功能\n- 检查错误处理机制是否完善\n- 性能测试验证多终端同时使用的表现"
+}

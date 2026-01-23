@@ -1,0 +1,4 @@
+{
+  "problem_type": "release-script-version-management",
+  "content": "## 问题重述\n在自动化发布脚本中，使用 `npm version --dry-run` 命令进行版本预览存在不可靠性，因为它依赖于 package.json、package-lock.json 的状态以及当前 git 标签状态，可能导致显示错误的版本号。需要使用基于字符串操作的版本递增函数来替代。\n\n## 可复用解决流程\n1. 实现版本递增函数：创建 version_increment 函数，使用 bash 字符串操作解析版本号 (x.y.z) 并根据类型 (major/minor/patch) 正确递增对应位\n2. 替换版本预览显示：在用户选择界面中，用 version_increment 函数替换 `npm version --dry-run` 命令来显示预期的新版本\n3. 替换版本计算逻辑：在实际计算新版本时，用 version_increment 函数替换 `npm version --dry-run` 命令\n4. 保留实际版本更新：仍使用 `npm version` 命令执行实际的版本更新，保持对 package.json 和 package-lock.json 的修改\n5. 验证函数逻辑：测试函数对 major、minor、patch 类型的处理是否正确\n\n## 注意事项\n- version_increment 函数应正确处理版本递增规则：major 类型递增主版本号并将次版本号和修订号重置为0；minor 类型递增次版本号并将修订号重置为0；patch 类型仅递增修订号\n- 确保函数能够正确解析版本号格式 (x.y.z)\n- 验证函数返回格式与原脚本显示格式一致\n- 保持脚本的错误处理和用户交互体验\n\n## 可选步骤\n- 添加版本格式验证：确保输入版本号符合 x.y.z 格式\n- 添加类型参数验证：确保版本递增类型为 major、minor 或 patch\n- 为自定义版本号提供支持：允许用户手动输入版本号\n- 增加对预发布版本号的支持（如 x.y.z-alpha.1）"
+}

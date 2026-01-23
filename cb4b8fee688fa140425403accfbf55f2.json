@@ -1,0 +1,4 @@
+{
+  "problem_type": "FastAPI测试验证",
+  "content": "## FastAPI Web 测试验证方法论\n\n### 问题重述\n验证 FastAPI Web 应用的集成测试是否完整且正确，确保测试覆盖所有核心接口、成功/失败场景，并遵循最佳实践。\n\n### 可复用解决流程\n\n**步骤1：读取测试文件**\n- 使用 read_code 读取测试文件\n- 验证文件存在且内容完整\n- 检查测试类命名规范（Test* 模式）\n\n**步骤2：验证测试结构**\n- 确认使用 TestClient 而非启动 uvicorn 服务器\n- 确认使用 tmp_path fixture 创建临时文件\n- 检查是否测试了所有必须的端点：\n  * 应用创建（create_app）\n  * GET /api/schema\n  * POST /api/save（成功场景）\n  * POST /api/save（失败场景：验证失败、类型错误、枚举错误、缺少必填字段）\n  * GET /api/health\n  * 错误处理\n\n**步骤3：运行测试**\n- 执行 `pytest tests/path/to/test_file.py -v`\n- 验证所有测试通过（PASSED）\n- 统计测试数量是否符合预期\n\n**步骤4：代码风格检查**\n- 执行 `ruff check tests/path/to/test_file.py`\n- 确保无语法错误和风格问题\n\n### 注意事项\n1. 禁止在测试中实际启动 uvicorn 服务器\n2. 必须使用临时文件 fixture（tmp_path）避免污染文件系统\n3. POST /api/save 接口需要覆盖多种失败场景\n4. 测试使用 pytest 和 httpx/FastAPI TestClient\n5. 代码风格需通过 ruff 检查（PEP 8）\n\n### 可选步骤\n- 运行 mypy 进行类型检查\n- 检查测试覆盖率\n- 验证嵌套对象、数组等复杂类型的测试覆盖"
+}
