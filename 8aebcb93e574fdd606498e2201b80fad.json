@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust边界值测试失败修复",
+  "content": "# Rust边界值测试失败修复方法论\n\n## 问题重述\n当Rust代码处理usize边界值（如usize::MAX）时出现测试失败，通常表现为整数溢出或边界条件处理不当。\n\n## 可复用解决流程\n\n### 步骤1: 问题定位\n- 使用`cargo test -- --nocapture`获取详细测试失败信息\n- 记录失败的测试用例名称和具体断言错误\n- 通过`read_code`工具读取失败的测试函数实现\n\n### 步骤2: 根因分析\n- 检查涉及的数值操作（加减乘除）\n- 确认是否使用了可能导致panic的操作（如+、-、*、/）\n- 对比C实现的行为（如使用wrapping_*方法）\n\n### 步骤3: 修复实施\n- 对于原子操作：使用`fetch_add`/`fetch_sub`配合`wrapping_add`/`wrapping_sub`\n- 对于普通数值：使用`wrapping_add`/`wrapping_sub`替代+/-操作符\n- 保持API行为一致性（返回值的语义不变）\n\n### 步骤4: 验证策略\n- 首先运行失败的特定测试：`cargo test test_name -- --nocapture`\n- 然后运行完整测试套件：`cargo test -- --nocapture`\n- 检查是否有回归问题（原本通过的测试现在失败）\n\n### 注意事项\n- 修复时保持函数签名和行为不变，只修改内部实现\n- 原子操作要使用正确的内存顺序（Ordering::Relaxed通常足够）\n- 注意测试用例的期望值是基于原实现还是修正后的行为\n\n### 可选步骤\n- 添加额外的边界值测试用例\n- 使用`cargo clippy -- -D warnings`清理相关警告"
+}

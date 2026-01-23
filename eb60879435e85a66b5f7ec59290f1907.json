@@ -1,0 +1,4 @@
+{
+  "problem_type": "C函数转Rust实现",
+  "content": "方法论：C函数转Rust实现\n\n问题重述：\n将C语言函数正确转译为等价的Rust实现，确保功能一致、内存安全、测试通过。\n\n可复用解决流程：\n\n1. **需求分析阶段**\n   - 使用 read_symbols 获取C函数源码和签名\n   - 使用 read_code 理解函数逻辑和依赖关系\n   - 识别内存管理模式（malloc/free vs Box/Vec）\n\n2. **类型映射阶段**\n   - C指针 → Rust引用/Box/Vec（根据所有权语义）\n   - C数组 → Rust切片/Vec\n   - C字符串 → Rust String/str\n   - 枚举常量 → Rust enum（使用camelCase命名）\n\n3. **实现转换阶段**\n   - 保持函数签名语义等价\n   - 用Rust模式匹配替代C switch语句\n   - 用迭代器替代C指针算术\n   - 用Result/Option处理错误和空值\n\n4. **内存安全验证**\n   - 确保所有Box::into_raw都有对应的Box::from_raw\n   - 避免悬垂指针和重复释放\n   - 使用RAII管理资源\n\n5. **测试验证阶段**\n   - 运行 cargo test 验证功能正确性\n   - 运行 cargo clippy 确保代码质量\n   - 使用RUST_BACKTRACE=1获取详细错误信息\n\n注意事项：\n- 优先使用Rust安全特性，避免unsafe代码\n- 保持原有算法逻辑不变\n- 添加适当的中文注释说明关键转换\n- 处理边界条件和错误情况\n\n可选步骤：\n- 添加临时调试输出定位复杂问题\n- 创建Rust特有的单元测试\n- 使用基准测试验证性能"
+}

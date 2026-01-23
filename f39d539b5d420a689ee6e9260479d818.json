@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust测试类型不匹配修复",
+  "content": "# Rust测试类型不匹配问题修复方法论\n\n## 问题重述\n在Rust测试中常见assert_eq!断言类型不匹配错误，特别是涉及引用类型时，如Option<&T>与Option<&mut T>不匹配。\n\n## 可复用解决流程\n\n### 步骤1: 识别错误类型\n- 运行测试获取详细错误信息\n- 分析编译器提示的类型差异\n- 重点关注mutability和生命周期差异\n\n### 步骤2: 分析函数签名\n- 检查被测试函数的返回类型\n- 确认引用类型的具体形式（&T, &mut T, &'static T等）\n- 理解生命周期参数的影响\n\n### 步骤3: 选择转换方法\n根据类型差异选择适当的转换：\n\n1. **&mut T → &T**:\n   ```rust\n   // 方法1: 解引用后取引用\n   assert_eq!(func(), Some(&*value));\n  \n   // 方法2: 使用as_ref()\n   assert_eq!(func(), Some(value.as_ref()));\n  \n   // 方法3: 使用as_deref()\n   assert_eq!(func(), Some(value).as_deref());\n   ```\n\n2. **生命周期转换**:\n   ```rust\n   // 使用as_ref()转换生命周期\n   assert_eq!(func(), Some(non_static_value.as_ref()));\n   ```\n\n### 步骤4: 验证修复\n- 重新编译测试\n- 运行单个测试确认通过\n- 运行相关测试模块确保无回归\n\n## 注意事项\n- 优先使用编译器建议的转换方法\n- 确保转换后语义不变\n- 考虑内存安全性，避免悬垂引用\n- 对于复杂类型，可能需要分步转换\n\n## 可选步骤\n- 添加类型注解增强代码可读性\n- 创建辅助函数封装复杂转换\n- 使用静态断言确保类型匹配"
+}

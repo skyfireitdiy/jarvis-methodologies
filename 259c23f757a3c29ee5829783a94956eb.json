@@ -1,0 +1,4 @@
+{
+  "problem_type": "删除git worktree分支",
+  "content": "问题重述：需要安全删除git worktree创建的所有分支及其相关目录\n\n可复用解决流程：\n1. 检查当前工作树状态，使用`git worktree list`查看所有工作树和分支情况\n2. 切换到主分支，确保不在要删除的工作树分支上\n3. 对于每个要删除的工作树，使用`git worktree remove <worktree_path>`命令删除\n4. 使用`git branch -D <branch_name>`删除对应的本地分支\n5. 执行`git worktree prune`清理工作树引用\n6. 验证操作结果，使用`git worktree list`和`git branch -a`确认分支已正确删除\n\n注意事项：\n- 在删除前必须切换到主分支，避免在要删除的worktree分支上操作\n- 删除操作不可逆，重要数据需要提前备份\n- 如果worktree目录已不存在，可能需要手动清理git配置中的引用\n\n可选步骤：\n- 如果分支已推送到远程，可以使用`git push origin --delete <branch_name>`删除远程分支\n- 检查是否有未提交的更改，如有需要先决定是否保存或丢弃"
+}

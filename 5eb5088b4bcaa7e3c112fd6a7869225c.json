@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust实现C文件系统功能",
+  "content": "## 问题重述\n将C语言实现的littlefs文件系统功能移植到Rust，需要保持功能一致性并符合Rust安全规范。\n\n## 可复用解决流程\n\n### 1. 需求分析阶段\n- 使用`lsp_client search_symbol`定位相关符号\n- 使用`read_code`读取C源码作为参考\n- 识别核心功能点和依赖关系\n\n### 2. 架构设计阶段\n- 分析现有Rust项目的模块划分\n- 确定数据结构映射关系（C struct → Rust struct）\n- 设计错误处理策略（C error codes → Rust Result）\n\n### 3. 实现阶段\n- **数据结构转换**：C结构体→Rust结构体，保持内存布局兼容\n- **函数签名映射**：C函数→Rust函数，处理指针→引用转换\n- **宏到函数**：将C宏转换为Rust函数或常量\n- **错误处理**：用Result类型替代C的错误码返回\n\n### 4. 验证阶段\n- `cargo build`检查语法正确性\n- `cargo test`运行测试套件\n- 对比C和Rust实现的行为一致性\n\n### 5. 优化阶段\n- 消除unsafe代码块\n- 优化内存使用\n- 添加文档注释\n\n## 注意事项\n1. 类型转换：特别注意usize/u32在不同平台上的差异\n2. 内存安全：避免使用unsafe代码，优先使用Rust安全抽象\n3. 性能考虑：避免不必要的内存分配\n4. 兼容性：保持与C接口的兼容性，便于测试验证\n\n## 可选步骤\n- 添加基准测试对比性能\n- 实现更多文件系统功能（create, read, write, delete）\n- 添加模糊测试验证边界条件"
+}

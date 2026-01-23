@@ -1,0 +1,4 @@
+{
+  "problem_type": "assign_lvar_offsets-TDD任务列表",
+  "content": "## 任务列表：assign_lvar_offsets TDD转译\n\n### Task 1: 添加基础测试结构和空函数实现\n- 在x86_64.rs中添加测试模块和空函数签名\n- 添加第一个测试用例：空函数列表\n\n### Task 2: 实现align_to依赖函数\n- 使用TDD方法实现align_to函数\n- 添加align_to的测试用例\n\n### Task 3: 实现has_flonum依赖函数\n- 使用TDD方法实现has_flonum函数\n- 添加has_flonum的测试用例\n\n### Task 4: 完善测试用例\n- 添加完整的测试用例覆盖所有场景\n- 确保测试可编译运行（预期失败）\n\n### Task 5: 实现assign_lvar_offsets主体\n- 根据测试用例实现完整功能\n- 确保所有测试通过\n\n### Task 6: 验证和清理\n- 验证与C代码行为一致性\n- 清理测试代码，确保质量"
+}

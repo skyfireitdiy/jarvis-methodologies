@@ -1,0 +1,4 @@
+{
+  "problem_type": "Agent会话和任务列表保存",
+  "content": "问题重述：\n需要在保存Agent会话时，同时保存相关的任务列表数据，确保任务数据与会话数据保持关联。\n\n可复用解决流程：\n1. 检查Agent对象是否包含任务列表管理器(task_list_manager)和任务列表数据\n2. 确定任务列表保存的文件路径和命名规则，确保与会话文件有明确关联\n3. 遍历任务列表管理器中的所有任务列表，将其转换为字典格式\n4. 将任务列表数据保存到JSON文件中\n5. 在save_session方法中调用任务列表保存功能，但确保任务列表保存失败不影响主会话保存\n\n实现细节：\n- 文件命名规则：saved_session_{agent_name}_{platform_name}_{model_name}_tasklist.json\n- 保存位置：与会话文件相同的目录(.jarvis)\n- 数据结构：{\\\"task_lists\\\": {task_list_id: task_list.to_dict()}}\n- 任务列表保存失败不影响主流程，仅记录警告信息\n\n注意事项：\n- 需要验证task_list_manager.task_lists是否存在和非空\n- 文件操作需要处理异常情况\n- 确保to_dict方法能正确序列化任务列表和任务对象\n- 保持与现有会话保存机制的一致性"
+}

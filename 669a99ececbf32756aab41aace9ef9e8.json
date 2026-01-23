@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust重复测试属性警告修复",
+  "content": "## 问题重述\nRust项目中出现`duplicated attribute`警告，特别是重复的`#[test]`测试属性，需要快速定位并修复。\n\n## 可复用解决流程\n\n### 步骤1：获取警告信息\n使用命令：\n```bash\ncargo test -- --nocapture\n```\n或\n```bash\ncargo check --message-format=short\n```\n\n### 步骤2：解析警告信息\n关注以下关键信息：\n- 警告类型：`duplicated attribute`\n- 文件位置：如`src/chibicc/lexer.rs:1415:5`\n- 重复内容：通常是`#[test]`或`#[cfg(test)]`\n\n### 步骤3：定位并验证重复\n使用工具读取警告行附近的代码：\n```json\n{\"path\": \"目标文件路径\", \"start_line\": 警告行号-5, \"end_line\": 警告行号+5}\n```\n\n### 步骤4：执行修复\n使用编辑工具移除重复属性，保留一个即可：\n```json\n{\"file_path\": \"目标文件\", \"diffs\": [{\"search\": \"重复的内容\", \"replace\": \"保留的内容\"}]}\n```\n\n### 步骤5：验证修复\n重新执行测试命令确认警告已消除：\n```bash\ncargo test -- --nocapture\n```\n\n## 注意事项\n1. 必须确认是**完全重复**的属性，而非不同功能的属性\n2. 修复后必须验证，确保没有引入新的警告\n3. 对于大型测试模块，注意可能有多个重复属性需要检查\n\n## 可选步骤\n- 使用`cargo clippy -- -D warnings`进行更全面的警告检查\n- 考虑使用`rustfmt`格式化代码，避免格式相关的警告"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "git_history_rewrite",
+  "content": "# Git历史提交作者重写\n\n## 问题重述\n需要批量修改Git仓库历史提交中的作者信息\n\n## 最优解决方案\n1. 使用`git log`确认目标提交存在（execute_script工具）\n2. 使用`git filter-branch`环境过滤器进行批量修改（execute_script工具）\n3. 验证修改结果（execute_script工具）\n4. 根据用户决定是否推送（ask_user工具）\n\n## 注意事项\n- 操作前必须备份整个仓库\n- 需要完全匹配原作者信息格式\n- 强制推送会影响所有协作者\n- 用户可能选择不推送修改\n\n## 可选步骤\n- 对于少量提交可使用`git rebase -i`交互式修改\n- 大型仓库建议使用git-filter-repo工具"
+}

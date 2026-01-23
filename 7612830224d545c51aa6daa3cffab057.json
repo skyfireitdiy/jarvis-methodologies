@@ -1,0 +1,4 @@
+{
+  "problem_type": "git_commit_author_rewrite",
+  "content": "问题重述: 如何批量修改Git仓库历史提交的作者信息\n\n最优解决方案:\n1. 确认目标提交: 使用`git log --author=\"原作者\"`命令确认需要修改的提交\n2. 执行重写操作: 使用`git filter-branch`命令配合环境变量修改:\n   - GIT_AUTHOR_NAME=\"新作者名\"\n   - GIT_AUTHOR_EMAIL=\"新邮箱\"\n   - GIT_COMMITTER_NAME=\"新作者名\" \n   - GIT_COMMITTER_EMAIL=\"新邮箱\"\n3. 验证修改: 使用`git log --author=\"新作者名\"`确认修改结果\n4. 强制推送: 使用`git push --force`更新远程仓库\n\n注意事项:\n1. 操作会重写历史，团队协作时需谨慎\n2. 建议在修改前备份仓库\n3. 如果修改多个作者，需调整env-filter中的条件判断\n\n可选步骤:\n1. 可使用`--tag-name-filter cat`保留原有标签\n2. 对大型仓库可使用`--tree-filter`优化性能"
+}

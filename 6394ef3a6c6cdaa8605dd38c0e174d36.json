@@ -1,0 +1,4 @@
+{
+  "problem_type": "清理重复定义与临时文件",
+  "content": "问题重述：\n在Rust项目中，经常会出现以下问题：\n1. 函数/方法重复定义导致编译错误\n2. 临时备份文件（*.backup、*.orig、*.rej、*.awk等）污染工作目录\n3. 测试用例分散在.rej文件中未合并\n\n可复用解决流程（步骤化+工具）：\n\n1. 清理临时文件\n   - 使用execute_script工具删除所有临时文件\n   - 命令：`find <目录> -name \\\"*.backup\\\" -o -name \\\"*.orig\\\" -o -name \\\"*.rej\\\" -o -name \\\"*.awk\\\" | xargs rm -f`\n\n2. 检查重复定义\n   - 使用lsp_client的search_symbol功能查找重复符号\n   - 检查每个符号的出现次数和位置\n\n3. 保留唯一实现\n   - 使用read_code确认需要保留的实现位置\n   - 使用edit_file删除其他重复定义\n\n4. 合并测试用例\n   - 使用read_code读取.rej文件中的测试用例\n   - 使用edit_file将测试用例合并到主测试模块末尾\n\n5. 验证修复\n   - 运行cargo test确保所有测试通过\n   - 确认无编译错误和回归问题\n\n注意事项：\n- 删除前确保备份重要数据\n- 保留第一个找到的函数实现（通常是最新的）\n- 测试用例合并时注意作用域和模块路径\n- 执行cargo fmt保持代码风格一致\n\n可选步骤：\n- 如果项目使用git，可以先用git stash保存当前工作\n- 对于大型项目，可以分批处理文件\n- 使用git grep辅助查找重复符号"
+}

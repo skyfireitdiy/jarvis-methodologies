@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust边界值测试修复",
+  "content": "问题重述：\nRust代码中处理边界值（如usize::MAX）时出现测试失败，需要确保在边界条件下正确处理数值溢出，同时保持并发安全性。\n\n可复用解决流程：\n1. 问题定位\n   - 执行特定测试：cargo test 模块::测试名 -- --nocapture\n   - 识别失败断言：检查assert_eq!期望值vs实际值\n   - 确认边界条件：usize::MAX、0、isize::MIN等\n\n2. 根因分析\n   - 检查原子操作使用：AtomicUsize::fetch_add/fetch_sub返回值处理\n   - 验证溢出处理：是否使用wrapping_add/wrapping_sub而非简单加减\n   - 确认线程安全：原子操作是否保证并发场景正确性\n\n3. 修复实施\n   - 边界值处理：使用wrapping运算确保溢出时返回正确结果\n   - 原子操作：保持使用Atomic*类型确保线程安全\n   - 验证修复：重新运行失败测试和回归测试\n\n4. 验证步骤\n   - 特定测试：cargo test 失败的测试用例\n   - 边界测试：运行模块内所有边界相关测试\n   - 全面测试：确保不破坏现有功能\n\n注意事项：\n- 避免简单使用+/-运算符处理可能溢出的数值\n- 在并发场景下优先使用原子操作而非Mutex\n- 测试用例应包含边界值、边界值+1、边界值-1等情况\n\n可选步骤：\n- 添加wrapping_overflow检测：检查wrapping_add是否产生溢出\n- 性能测试：验证原子操作在高并发场景下的性能表现"
+}

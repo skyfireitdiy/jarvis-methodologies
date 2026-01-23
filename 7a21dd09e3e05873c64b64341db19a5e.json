@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust测试并发问题调试",
+  "content": "# Rust测试并发调试方法论\n\n## 问题重述\n当`cargo test`批量运行测试时出现内存错误（如SIGSEGV），但单独运行测试用例时正常。\n\n## 可复用解决流程\n\n### 步骤1：问题识别\n- 执行`cargo test -- --nocapture`观察错误模式\n- 记录失败的测试用例名称和错误类型\n- 确认是否为内存类错误（SIGSEGV/SIGABRT）\n\n### 步骤2：并发隔离验证\n```bash\n# 单线程运行测试\ncargo test -- --test-threads=1 --nocapture\n\n# 单独运行失败测试\ncargo test <test_name> -- --nocapture\n```\n\n### 步骤3：错误定位（如单线程仍失败）\n- 使用`RUST_BACKTRACE=1`获取堆栈信息\n- 添加`println!/dbg!`调试输出\n- 检查共享资源访问（文件、全局变量等）\n- 验证测试间是否有状态依赖\n\n### 步骤4：修复策略\n- **并发安全**：如单线程通过，考虑测试并发安全性\n- **资源隔离**：检查临时文件、全局状态的使用\n- **测试重构**：确保测试用例完全独立\n\n### 步骤5：验证\n- 多线程模式重新运行测试\n- 多次重复测试确保稳定性\n\n## 注意事项\n1. 优先排除并发问题，再考虑代码bug\n2. 临时文件路径使用唯一命名\n3. 避免测试间的全局状态共享\n4. 考虑使用测试框架的隔离机制\n\n## 可选步骤\n- 使用`cargo test --release`验证优化模式下行为\n- 添加`proptest`或`quickcheck`进行随机测试\n- 使用`sanitizer`工具检查内存问题"
+}

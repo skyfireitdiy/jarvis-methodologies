@@ -1,0 +1,4 @@
+{
+  "problem_type": "测试断言冲突处理",
+  "content": "## 测试断言冲突处理方法论\n\n**问题识别**：\n当测试同时出现以下矛盾断言时触发：\n- `assert!(output.contains(\"xxx\"))` 与 `assert!(output.is_empty())`\n- 数值范围断言重叠（如 `>10` 且 `<5`）\n\n**解决步骤**：\n1. **历史追踪**：查看git diff确认测试原始意图\n2. **语义分析**：理解业务逻辑中边界条件的预期行为\n3. **断言修正**：\n   - 删除矛盾的断言\n   - 保留符合业务逻辑的断言\n   - 添加清晰的行为注释\n\n**示例模式**：\n```rust\n// 原矛盾代码\nassert!(output.contains(\"mov\"));\nassert!(output.is_empty()); // 错误：永远失败\n\n// 修复后\nassert!(output.contains(\"mov\")); // 保留预期指令\n// 当size=0时只生成mov指令，无复制指令\n```\n\n**验证要点**：\n- 修复后测试通过率100%\n- 边界条件(size=0, null指针等)单独验证\n- 保持最小代码修改"
+}

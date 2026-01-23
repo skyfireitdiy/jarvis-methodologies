@@ -1,0 +1,4 @@
+{
+  "problem_type": "C函数Rust转译（TDD方法）",
+  "content": "### 问题描述\n将C语言函数转译为Rust实现，使用TDD（测试驱动开发）流程：先写测试，再实现功能。\n\n### 可复用解决流程\n\n#### 1. RESEARCH 阶段\n- 读取目标C源文件，理解函数逻辑\n- 查看目标Rust模块中的已有实现\n- 识别依赖函数是否已转译（如 `join_tokens`、`new_str_token` 等）\n\n#### 2. PLAN 阶段\n- 规划测试用例（空输入、正常输入、边界情况）\n- 规划函数签名转换（C的指针参数转为Rust的引用）\n\n#### 3. EXECUTE 阶段\n- **实现函数**：直接追加到文件末尾，使用 heredoc 避免edit_file的JSON解析问题\n- **添加测试**：在 `#[cfg(test)] mod tests` 模块中添加测试\n- **运行测试**：`cargo test <函数名>` 验证\n\n#### 4. REVIEW 阶段\n- 确保所有测试通过\n- 确保 `cargo check` 通过\n\n### 注意事项\n- **大文件编辑技巧**：避免使用edit_file处理长字符串，改用 `cat >> file << 'EOF'` 追加内容\n- **类型转换**：C的 `int` 对应Rust的 `i32`，指针参数用 `&[T]` 或 `&T`\n- **错误处理**：C返回指针的，Rust用 `Result<T, E>` 封装\n- **文件损坏恢复**：`git reset --hard <commit>` 可回退到安全状态\n\n### 可选步骤\n- 如果发现依赖函数未实现，需要先转译依赖函数"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "C路径处理函数到Rust的转译",
+  "content": "## C路径处理函数到Rust的转译方法论\n\n### 问题重述\n将C的路径处理函数（如dirname、basename等）转译到Rust时，需要处理C库函数与Rust标准库的行为差异。\n\n### 可复用解决流程\n\n#### 步骤1：行为差异识别\n- 使用`man`命令或文档确认C函数的确切行为\n- 特别关注边界情况（空字符串、纯文件名、相对路径等）\n- 创建测试用例覆盖所有边界情况\n\n#### 步骤2：Rust等效实现设计\n- 对于`dirname`函数：\n  - C行为：返回父目录路径，无父目录时返回\".\"\n  - Rust实现：使用`path.parent().unwrap_or_else(|| Path::new(\\\".\\\"))`\n\n- 对于`basename`函数：\n  - C行为：返回文件名部分，无文件名时返回\".\"\n  - Rust实现：使用`path.file_name().map_or(\\\".\\\", |n| n.to_str().unwrap_or(\\\".\\\"))`\n\n#### 步骤3：测试验证\n1. 创建包含边界情况的测试用例\n2. 确保测试覆盖：\n   - 绝对路径\n   - 相对路径\n   - 根目录路径\n   - 纯文件名\n   - 空路径\n3. 运行`cargo test -- --nocapture`验证所有测试通过\n\n#### 步骤4：最小修改实施\n- 仅修改必要的路径处理逻辑\n- 保持函数签名和整体结构不变\n- 使用标准库功能，避免引入新依赖\n\n### 注意事项\n- 路径分隔符：C使用`/`，Rust使用`/`（Unix）或`\\`（Windows）\n- 内存管理：C需要手动管理，Rust自动处理\n- 错误处理：C返回NULL指针，Rust使用Option类型\n\n### 可选步骤\n- 如果需要跨平台兼容，使用`std::path::MAIN_SEPARATOR`\n- 如需处理Windows路径，考虑使用`std::path::PathBuf`"
+}

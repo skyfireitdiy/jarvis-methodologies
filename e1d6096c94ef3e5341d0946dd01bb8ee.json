@@ -1,0 +1,4 @@
+{
+  "problem_type": "分析进程崩溃原因",
+  "content": "## 问题重述\n当进程异常退出时，需要快速定位崩溃的根本原因，特别是涉及内存错误或信号终止的情况。\n\n## 最优解决方案\n1. **收集崩溃现场**\n   - 使用 `zcat` 解压日志：`zcat 日志.gz | tail -n 200`\n   - 搜索关键错误：`grep -iE \"(error|abort|panic|segfault|signal|crash|exit|killed)\"`\n\n2. **识别崩溃信号**\n   - 检查是否有SIGSEGV、SIGABRT等信号\n   - 获取完整错误上下文：`grep -A 20 -B 5 \"SIGNAL:\"`\n\n3. **分析调用栈**\n   - 定位关键函数（如malloc_printerr、abort）\n   - 关注内存操作相关的调用链\n\n4. **保存关键信息**\n   - 记录崩溃信号类型\n   - 保存错误发生时的调用栈\n   - 标记涉及的系统调用或库函数\n\n5. **制定排查方向**\n   - 内存相关：检查重复free、越界访问、野指针\n   - 信号相关：分析信号来源和处理逻辑\n\n## 注意事项\n- 优先检查日志中的`malloc_printerr`报错，这是内存问题的典型标志\n- SIGABRT通常伴随assert失败或主动abort调用\n- 保存完整的错误上下文比只保存错误行更有价值\n\n## 可选步骤\n- 如需深度分析：使用core dump + gdb回溯\n- 如需预防：使用AddressSanitizer或Valgrind进行内存检查"
+}

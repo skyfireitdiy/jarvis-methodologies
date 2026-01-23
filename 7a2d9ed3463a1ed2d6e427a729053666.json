@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust测试失败调试",
+  "content": "# Rust测试失败调试方法论\n\n## 问题重述\n当 `cargo test` 报告测试失败时，需要准确识别失败原因并修复，特别是涉及并发测试或panic预期行为的场景。\n\n## 可复用解决流程\n\n### 1. 初始分析\n- 执行 `cargo test -- --nocapture` 获取完整错误信息\n- 区分\"真实失败\" vs \"期望panic\"\n- 记录失败测试用例名称和断言信息\n\n### 2. 隔离测试\n- 对失败测试单独执行：`cargo test <test_name> -- --nocapture`\n- 判断是测试逻辑问题还是并发环境问题\n- 添加调试输出验证实际行为\n\n### 3. 调试技巧\n- **调试输出**：在测试中添加 `println!` 或 `dbg!` 输出关键变量\n- **上下文检查**：验证测试setup/teardown是否正确\n- **并发排查**：多次运行测试确认稳定性\n\n### 4. 修复验证\n- 小步修改，每次验证\n- 执行完整测试套件确认无回归\n- 清理调试代码后最终验证\n\n## 注意事项\n- 注意 `#[should_panic]` 属性的测试，其panic是预期行为\n- 并发测试可能产生不确定结果\n- 测试间的共享状态可能导致干扰\n\n## 可选步骤\n- 使用 `RUST_BACKTRACE=1` 获取详细堆栈信息\n- 使用 `cargo test -- --test-threads=1` 强制单线程执行\n- 使用 `cargo nextest run` 作为替代测试运行器"
+}

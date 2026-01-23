@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust并发测试隔离",
+  "content": "## Rust并发测试隔离方法论\n\n### 问题重述\n当Rust测试用例使用共享静态变量（如Mutex、Atomic等）时，测试间状态污染导致测试失败。\n\n### 可复用解决流程\n\n**步骤1：识别共享状态**\n- 检查测试用例是否访问静态变量\n- 确认是否有Mutex、Atomic或其他共享状态\n\n**步骤2：分析失败模式**\n- 运行单个测试：`cargo test <test_name>`\n- 运行全部测试：`cargo test`\n- 对比结果确认是否为并发问题\n\n**步骤3：实施状态隔离**\n在每个测试函数末尾添加状态清理：\n```rust\n#[test]\nfn test_example() {\n    // 测试逻辑...\n   \n    // 清理共享状态\n    let mut shared = SHARED.lock().unwrap();\n    *shared = Default::default(); // 或特定清理逻辑\n}\n```\n\n**步骤4：验证修复**\n- 重复运行测试确保稳定性\n- 使用 `cargo test -- --test-threads=1` 验证单线程下通过\n\n### 注意事项\n- 清理代码应放在 `assert!` 之后，避免影响断言结果\n- 考虑使用 `std::sync::Once` 进行复杂状态初始化\n- 对于大型状态，考虑使用测试辅助函数统一清理\n\n### 可选步骤\n- 使用 `lazy_static!` 或 `once_cell` 管理复杂共享状态\n- 实现自定义测试运行器进行更精细的测试隔离"
+}

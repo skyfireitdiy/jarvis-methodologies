@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust递归类型无限大小问题修复",
+  "content": "问题重述：\nRust中当结构体A包含结构体B，结构体B又包含结构体A时，形成循环引用，导致编译器报错\\\"infinite size\\\"或\\\"recursive type has infinite size\\\"。\n\n可复用解决流程：\n1. 识别问题：运行`cargo build`收集所有递归类型相关错误\n2. 分析依赖链：使用工具搜索结构体定义，识别循环引用关系\n3. 应用Box模式：将递归字段改为Box包装\n   - 直接递归：`Option<T>` → `Option<Box<T>>`\n   - 间接递归：`T` → `Box<T>`\n4. 同步更新使用处：\n   - 构造函数中：`Some(value)` → `Some(Box::new(value))`\n   - 方法调用中：`value` → `Box::new(value)`\n   - 模式匹配中：适配新的Box类型\n5. 验证修复：\n   - 运行`cargo build`确保无递归类型错误\n   - 检查是否还有类型不匹配错误\n   - 运行测试确保功能正常\n\n注意事项：\n- Box会增加堆分配，但解决无限大小问题\n- Option<Box<T>>比Box<T>更灵活，支持null值\n- 需要同步更新所有相关代码的调用方式\n- 使用IDE的重构功能可自动更新部分调用\n\n可选步骤：\n- 对于频繁访问的字段，考虑使用Rc/Arc替代Box\n- 对于大型数据结构，评估使用arena分配器\n- 添加单元测试验证Box包装的完整性"
+}

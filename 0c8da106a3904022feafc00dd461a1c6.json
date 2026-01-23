@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust项目目录结构验证",
+  "content": "1. 使用execute_script执行文件系统检查（如ls/find）确认目录结构存在性\n2. 使用read_code抽样检查关键配置文件（如Cargo.toml）\n3. 验证模板文件的实施情况：\n   - 动态库项目验证lib.rs\n   - 可执行项目验证main.rs\n4. 附加检查（可选）：\n   - 验证build.rs/配置文件等特殊文件\n   - 检查.gitignore等版本控制文件\n\n注意事项：\n- 优先使用ripgrep(rg)查找精确路径\n- 检查Cargo.toml时需验证基本字段（如[package]）\n- 对于模板文件应验证关键功能片段而不仅是存在性"
+}

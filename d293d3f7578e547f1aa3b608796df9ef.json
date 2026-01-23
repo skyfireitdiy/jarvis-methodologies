@@ -1,0 +1,4 @@
+{
+  "problem_type": "LittleFS标签构造验证",
+  "content": "## LittleFS标签构造验证方法论\n\n### 问题重述\n在LittleFS文件系统中，Rust实现的函数调用需要正确构造标签(tag)参数，这些标签在C实现中通过LFS_MKTAG宏构造。验证Rust实现是否正确构造了这些标签是一个常见问题。\n\n### 可复用解决流程\n\n1. **识别标签构造位置**\n   - 使用`lsp_client`搜索所有涉及标签参数的函数调用\n   - 重点关注`lfs_dir_getread`、`lfs_bd_read`、`lfs_bd_prog`等系统调用\n\n2. **获取C源码参考**\n   - 使用`read_symbols`工具获取对应C函数的符号信息\n   - 使用`read_code`读取C源码中的具体实现\n   - 识别C源码中`LFS_MKTAG`宏的使用位置和参数\n\n3. **对比参数差异**\n   - 列出Rust实现中的标签参数\n   - 对比C实现中的标签构造方式\n   - 检查类型、位宽、位移等细节\n\n4. **实现标签构造辅助函数**\n   ```rust\n   const fn lfs_mktag(type_: u32, id: u32, size: u32) -> u32 {\n       ((type_ & 0x700) << 20) | ((id & 0x3ff) << 10) | (size & 0x3ff)\n   }\n   ```\n\n5. **修复并验证**\n   - 使用`edit_file`替换错误的标签参数\n   - 运行`cargo test -- --nocapture`确保所有测试通过\n   - 检查边界条件和异常处理是否正确\n\n### 注意事项\n- 注意C源码中的宏定义可能会在不同版本间变化\n- 确保标签构造的参数顺序与C实现一致\n- 验证时要考虑所有可能的标签类型组合\n\n### 可选步骤\n- 为标签构造添加单元测试\n- 创建标签验证工具函数用于开发期检查"
+}

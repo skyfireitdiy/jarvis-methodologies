@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust临时文件创建健壮性",
+  "content": "## Rust临时文件创建健壮性保证方法论\n\n### 问题重述\n使用libc::mkstemp创建临时文件后关闭文件描述符，在某些系统环境下可能导致文件被清理，造成文件不存在错误。\n\n### 可复用解决流程\n\n1. **问题识别阶段**（RESEARCH）\n   - 运行测试：`cargo test <test_name> -- --nocapture`\n   - 如果测试间歇性失败，重点检查文件创建和执行之间的间隔\n\n2. **根因分析阶段**\n   - 检查临时文件创建逻辑\n   - 确认文件路径是否正确\n   - 验证文件创建后立即存在的可靠性\n\n3. **修复实施阶段**（EXECUTE）\n   - 在临时文件创建后添加存在性检查\n   - 如文件不存在，使用`std::fs::File::create`重新创建\n   - 最小化改动，避免影响现有逻辑\n\n4. **验证阶段**\n   - 多次运行测试：`for i in {1..10}; do cargo test <test_name>; done`\n   - 运行完整测试套件：`cargo test -- --nocapture`\n   - 确保无回归问题\n\n### 代码模式\n```rust\n// 修复前\nlet fd = libc::mkstemp(...);\nlibc::close(fd);\n// 文件可能不存在\n\n// 修复后\nlet fd = libc::mkstemp(...);\nlibc::close(fd);\n// 确保文件存在\nif !final_path.exists() {\n    std::fs::File::create(&final_path)?;\n}\n```\n\n### 注意事项\n- 保持最小改动原则\n- 避免引入新的依赖\n- 确保文件权限正确\n- 测试应在不同环境下验证稳定性"
+}

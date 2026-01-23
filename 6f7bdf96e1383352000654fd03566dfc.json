@@ -1,0 +1,4 @@
+{
+  "problem_type": "code_modification",
+  "content": "1. Problem Restatement: Need to modify existing code, particularly focused on updating sensitive information in comments or strings to protect sensitive data.\n2. Optimal Solution: Use precise code editing techniques to ensure changes only affect the intended lines and are verified against the original content. Utilize tools for version control to track changes.\n3. Notes: Always confirm the file structure and maintain existing formatting to preserve code readability."
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust预处理器功能修复",
+  "content": "## Rust预处理器功能修复方法论\n\n### 问题重述\n针对Rust实现的C预处理器出现的三类核心问题：函数式宏展开失效、头文件搜索路径缺失、defined操作符求值错误。\n\n### 可复用解决流程\n\n1. **问题定位阶段**\n   - 使用`lsp_client`搜索关键符号：`expand_macros`, `process_include_file`, `ConditionParser`\n   - 检查`src/frontend/preprocessor.rs`中的相关实现\n\n2. **修复策略**\n   - **函数式宏展开**：\n     - 检查`expand_macros`函数签名，确保支持参数化宏\n     - 验证所有调用点是否正确传递tokens和位置参数\n   - **头文件搜索**：\n     - 在`process_include_file`中添加标准搜索路径\n     - 处理`#include \"file.h\"`和`#include <file.h>`的差异\n   - **defined操作符**：\n     - 确保`ConditionParser`能访问预处理器状态\n     - 将硬编码检查改为状态驱动的宏存在检查\n\n3. **验证方法**\n   - 执行`cargo test -- --nocapture`验证功能\n   - 检查11个核心测试用例全部通过\n   - 验证无编译警告或错误\n\n### 注意事项\n- 修改前备份原始文件到/tmp目录\n- 保持Rust所有权语义，必要时使用`.clone()`\n- 遵循项目现有代码风格（4空格缩进）\n\n### 可选步骤\n- 添加额外的预处理器测试用例\n- 检查边缘情况（嵌套宏、条件编译嵌套）"
+}

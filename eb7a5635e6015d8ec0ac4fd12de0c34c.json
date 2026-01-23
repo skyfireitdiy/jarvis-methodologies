@@ -1,0 +1,4 @@
+{
+  "problem_type": "Git patch管理",
+  "content": "# Git patch生成与打包流程\n## 问题重述\n需要生成Git补丁文件并打包处理\n\n## 最优解决方案\n1. 创建临时目录（使用execute_script工具）\n2. 使用git format-patch生成patch文件（使用execute_script工具）\n3. 使用tar打包压缩（使用execute_script工具）\n4. 删除临时目录（使用execute_script工具）\n\n## 注意事项\n- 确保目标目录存在\n- 确认正确的分支名称(origin/main)\n- 打包前验证patch文件数量和内容\n- 删除临时目录前确认打包已完成\n- 新增验证步骤确保数据完整性\n\n## 可选步骤\n- 可添加patch文件数量验证步骤\n- 可添加压缩包完整性验证步骤"
+}

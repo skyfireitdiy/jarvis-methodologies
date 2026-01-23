@@ -1,0 +1,4 @@
+{
+  "problem_type": "C-to-Rust重定位格式修复",
+  "content": "## C-to-Rust重定位格式修复方法论\n\n### 问题重述\nC代码使用`%+ld`格式字符串正确处理正负偏移值，但Rust移植时容易使用`{}+{}`格式导致负值时输出错误格式。\n\n### 可复用解决流程\n\n1. **定位问题**（使用read_code）\n   - 搜索`format!(\\\"{}+{}\\\", label, offset)`模式\n   - 确认涉及重定位的代码段\n\n2. **格式修复**（使用edit_file）\n   - 将固定格式改为条件格式：\n   ```rust\n   format!(\\\"{}{}\\\", label, \n       if offset >= 0 { format!(\\\"+{}\\\", offset) } \n       else { format!(\\\"{}\\\", offset) })\n   ```\n\n3. **测试验证**（使用execute_script）\n   - 运行`cargo test -- --nocapture`\n   - 添加正负偏移值测试用例\n   - 验证输出格式正确性\n\n### 注意事项\n- 必须测试正负值两种情况\n- 保持原有代码结构和注释风格\n- 确保所有依赖测试通过（无回归）\n\n### 可选步骤\n- 检查是否还有其他类似格式问题\n- 考虑抽象为辅助函数供多处使用"
+}

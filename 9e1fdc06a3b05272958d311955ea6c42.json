@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust unsafe代码重构为安全代码",
+  "content": "问题重述：将使用unsafe块和裸指针操作的Rust代码重构为纯安全代码，保持原有行为逻辑\n\n可复用解决流程：\n1. 分析阶段：\n   - 使用read_code检查当前unsafe代码范围\n   - 识别所有裸指针转换模式(&*ptr as *const T as *mut T)\n   - 记录原有算法逻辑和数据流\n\n2. 重构阶段：\n   - 移除unsafe块，使用安全引用(&mut T)替代裸指针\n   - 将指针遍历改为Option<&mut T>的while let遍历\n   - 用match表达式替代裸指针解引用\n   - 保持函数签名不变，仅修改实现\n\n3. 验证阶段：\n   - 使用execute_script运行cargo test验证行为一致性\n   - 检查是否仍有unsafe块：grep -n \"unsafe\" src/file.rs\n   - 确保所有测试用例通过\n\n4. 调试阶段：\n   - 如有测试失败，对比原始C实现逻辑\n   - 使用println!调试token遍历过程\n   - 检查边界条件处理(EOF、空链表等)\n\n注意事项：\n- 保持原有算法结构，避免逻辑变更\n- 注意Rust借用检查器的限制，可能需要重新组织代码结构\n- 对于递归调用场景(如skip_cond_incl2)，需要谨慎处理引用生命周期\n\n可选工具：\n- clippy --fix：自动修复部分unsafe模式\n- cargo +nightly miri：检测内存安全问题"
+}

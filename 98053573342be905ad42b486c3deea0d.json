@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust Mutex错误处理修复",
+  "content": "## Rust Mutex错误处理修复方法论\n\n### 问题重述\n需要将Rust代码中的Mutex::lock().unwrap()调用改进为lock().expect()，以提供更有意义的错误信息，特别是在运行时基础设施代码中。\n\n### 可复用解决流程\n\n1. **问题识别阶段**\n   - 使用 `grep -n \\\"\\\\.unwrap()\\\" 文件名` 快速定位所有unwrap()调用\n   - 使用 `rg \\\"\\\\.lock\\\\(\\\\)\\\\.unwrap\\\\(\\\\)\\\" 文件名` 精确定位Mutex相关的unwrap\n\n2. **分类处理阶段**\n   - **核心业务代码**：将 `lock().unwrap()` 改为 `lock().expect(\\\"具体描述：锁中毒原因\\\")`\n   - **Condvar相关**：将 `wait_timeout().unwrap()` 改为 `expect(\\\"condvar等待失败\\\")`\n   - **测试代码**：可以根据上下文选择保持unwrap()或改为带描述的expect()\n\n3. **验证阶段**\n   - 使用 `cargo check` 确保每处修改后代码能编译通过\n   - 使用 `grep -n \\\"\\\\.unwrap()\\\" 文件名` 再次检查确认修复完整性\n\n### 注意事项\n- 不要改变锁的获取逻辑\n- 不要引入新的错误处理机制（如Result返回）\n- 对于运行时基础设施，panic是合理的错误处理策略\n- 错误信息应具体明确，如\"blocking pool shared lock poisoned\"\n\n### 可选步骤\n- 对于测试代码中的unwrap()，可以选择性改进为expect()\n- 对于被忽略的join()结果（如let _ = handle.join()），可以添加注释说明保持现状"
+}

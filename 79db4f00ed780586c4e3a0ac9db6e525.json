@@ -1,0 +1,4 @@
+{
+  "problem_type": "下载并解压Linux内核源码",
+  "content": "1. 通过官方镜像站获取最新Linux内核源码下载URL\n2. 使用wget命令下载源码压缩包(linux-6.9.4.tar.xz)\n3. 使用tar命令解压源码包\n4. 验证解压结果并进入源码目录\n5. 成功进入/home/wangmaobin/code/linux-6.9.4目录"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust项目模块规划",
+  "content": "从函数调用关系规划Rust crate结构的方法论：\n\n1. 输入分析阶段\n- 收集所有root函数及其可达函数列表\n- 绘制函数调用图(可生成调用关系矩阵)\n- 标记潜在循环依赖\n\n2. 核心模块划分步骤\na) 根导向划分\n- 为每个root_function创建顶级模块\n- 确保每个模块有明确单一职责\n- 为独立工具类函数创建utils/模块\n\nb) 内聚性分析\n- 将高频互相调用的函数放在同一子模块\n- 使用Louvain算法进行社区发现(可选)\n- 为每个子模块设计清晰的接口边界\n\nc) 分层处理\n- 上层模块应依赖下层模块\n- 循环依赖须通过特征(trait)或重构消除\n- 识别并抽取共享类型到common/\n\n3. Rust特定优化\n- 将FFI/unsafe代码隔离到ffi/模块\n- 为性能关键路径标注#[inline]\n- 使用feature flag管理可选依赖\n\n4. 验证与迭代\n- cargo check验证模块可见性\n- cargo deny检查依赖关系\n- 通过cargo-udeps发现未使用依赖\n\n常见问题处理：\n- 循环依赖：引入新模块或特征解耦\n- 过大模块：按SRP原则继续拆分\n- 全局状态：考虑用OnceCell/LazyStatic\n\n最佳实践：\n1. 限制模块大小(300-500行)\n2. 预定义模块的pub接口\n3. 文档注释应包含模块职责说明\n4. 使用workspace管理多crate"
+}

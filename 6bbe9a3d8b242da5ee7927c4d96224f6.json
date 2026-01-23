@@ -1,0 +1,4 @@
+{
+  "problem_type": "git_review_process",
+  "content": "# Git代码评审流程\n## 问题重述\n需要将本地分支变更推送到Gerrit进行代码评审\n\n## 最优解决方案\n1. 获取当前分支名称\n2. 执行git review命令推送变更\n3. 验证Gerrit是否成功接收变更\n\n## 注意事项\n- 确保本地分支已包含所有需要评审的变更\n- 确认git review命令已正确配置Gerrit服务器信息\n- 检查Gerrit返回的评审链接是否有效\n- 如果推送失败，检查网络连接和权限设置\n\n## 可选步骤\n- 可以先执行git status确认变更状态\n- 可以使用git log验证提交历史"
+}

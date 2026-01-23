@@ -1,0 +1,4 @@
+{
+  "problem_type": "C到Rust代码移植中的unsafe代码移除",
+  "content": "问题重述：将C代码中的链表遍历逻辑移植到Rust时，需要移除unsafe代码和裸指针转换，同时保持原有逻辑行为。\n\n可复用解决流程：\n1. **分析C代码逻辑**：先理解C代码的遍历模式（如while循环、条件判断、指针操作）\n2. **识别unsafe代码**：查找所有as *const T、as *mut T、unsafe块等不安全的指针转换\n3. **设计Rust安全模式**：\n   - 使用while let Some(token) = current.next.as_mut()模式安全遍历\n   - 用Option<&mut Token>替代裸指针\n   - 避免在同一作用域内同时存在可变和不可变借用\n4. **验证逻辑一致性**：确保Rust实现的控制流与C代码完全一致\n5. **测试边界条件**：包括空链表、单节点、嵌套结构等情况\n\n注意事项：\n- 使用&mut Token时需注意Rust的借用规则\n- 对于需要多次可变借用的情况，考虑使用split_at_mut或重构数据结构\n- 保持函数签名不变，特别是&mut Token输入输出类型\n\n可选步骤：\n- 使用cargo clippy检查潜在的安全问题\n- 编写单元测试验证各种边界条件\n- 考虑使用RefCell或Arc<Mutex>处理复杂借用场景（但会增加运行时成本）"
+}

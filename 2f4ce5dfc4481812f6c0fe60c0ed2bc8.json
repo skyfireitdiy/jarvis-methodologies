@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust裸指针安全检查",
+  "content": "## Rust裸指针安全检查方法论\n\n### 问题识别\n检查以下裸指针使用场景：\n1. `*mut T`或`*const T`类型的解引用操作\n2. `std::slice::from_raw_parts`或`std::slice::from_raw_parts_mut`\n3. `ptr::add/offset`等地址计算\n4. 测试用例中使用`Vec::as_ptr/as_mut_ptr`\n\n### 检查流程\n1. **定位裸指针使用**：搜索`unsafe`块中的裸指针操作\n2. **验证null检查**：确保每次裸指针使用前调用`is_null()`检查\n3. **验证边界检查**：验证偏移量和长度在有效范围内\n4. **验证生命周期**：确保数据生命周期覆盖指针使用期\n\n### 修复模式\n```rust\n// 修复前\nunsafe {\n    let data = *ptr;\n}\n\n// 修复后\nif ptr.is_null() {\n    return Err(Error::NullPointer);\n}\nunsafe {\n    let data = *ptr;\n}\n```\n\n### 测试用例修复\n对于测试中用`Vec::as_mut_ptr()`获取的指针：\n```rust\n// 修复前\nlet v = vec![1, 2, 3];\nlet ptr = v.as_mut_ptr();\n// 使用ptr...\n\n// 修复后\nlet v = vec![1, 2, 3];\nlet ptr = v.as_mut_ptr();\n// 使用ptr...\nstd::mem::forget(v); // 防止Vec被drop\n```\n\n### 验证步骤\n1. 运行`cargo test`确保所有测试通过\n2. 检查是否有新的编译警告\n3. 验证修复不改变原有功能行为"
+}

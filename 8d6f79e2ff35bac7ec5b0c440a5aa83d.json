@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust panic测试验证",
+  "content": "问题：验证Rust测试是否正确使用panic断言属性\n\n解决流程：\n1. 查找测试文件：execute_script(\"find . -name '*.rs' -type f | xargs grep -l 'test_function_name'\")\n2. 验证should_panic属性：read_code(测试文件路径, 测试函数行号范围)\n   - 检查是否有#[should_panic]或#[should_panic(expected = \"...\")]\n   - 确认expected参数与预期panic消息匹配\n3. 运行测试验证逻辑：execute_script(\"cargo test test_function_name -- --nocapture\")\n   - 观察输出中\"should panic ... ok\"确认测试通过\n   - 验证panic消息与expected属性一致\n4. 保存验证结果：save_memory(验证通过的测试案例)\n\n注意事项：\n- 确保expected参数与实际的panic消息完全一致\n- 使用--nocapture参数查看详细输出便于调试\n- 对于复杂测试，可以单独运行特定测试用例"
+}

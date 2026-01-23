@@ -1,0 +1,4 @@
+{
+  "problem_type": "mark_live函数TDD实现",
+  "content": "## TDD实现mark_live函数步骤\n\n### 阶段1: 分析依赖\n- 确认Obj结构体定义\n- 确认StringArray类型和用法\n- 确认HashMap使用方式\n\n### 阶段2: Red - 编写测试\n- 在optimize.rs中添加#[cfg(test)] mod tests\n- 编写测试用例覆盖：\n  1. 非函数对象不进行任何操作\n  2. 已live的函数不再处理\n  3. 普通函数标记为live\n  4. 递归调用多个引用函数\n  5. 空引用数组处理\n  6. 引用不存在的函数\n\n### 阶段3: Green - 实现功能\n- 根据C逻辑实现mark_live函数\n- 使用递归方式处理函数引用\n- 确保与C语义完全一致\n\n### 阶段4: 验证\n- cargo test确保所有测试通过\n- 检查是否有内存安全问题\n- 清理临时文件"
+}

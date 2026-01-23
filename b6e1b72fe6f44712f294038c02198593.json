@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust数组边界安全修复",
+  "content": "## 问题重述\n在Rust中处理字符串或数组索引时，可能出现索引越界访问，特别是在处理从0开始还是1开始的索引时容易出错。\n\n## 可复用解决流程\n1. **风险识别阶段**  \n   - 使用`grep -n \\\"\\\\[.*-.*\\\\]\\\" src/**/*.rs`查找所有数组访问\n   - 特别关注循环中的递减索引（如`line_start -= 1`）\n\n2. **边界检查模板**  \n   ```\n   // 原始风险代码\n   while index > 0 && array[index - 1] != b'\\n' { ... }\n  \n   // 安全修复代码\n   while index > 0 && index <= array.len() && array[index - 1] != b'\\n' { ... }\n   ```\n\n3. **验证工具使用**  \n   - `cargo test`：运行所有测试用例\n   - `cargo clippy`：使用静态分析检查潜在风险\n   - `RUST_BACKTRACE=1 cargo test`：获取详细的panic回溯\n\n4. **测试用例补充**  \n   - 添加边界值测试（index=0, index=1, index=len）\n   - 添加空输入测试（如空字符串、空数组）\n\n## 注意事项\n- 始终使用`usize`类型进行索引计算\n- 在减法操作前必须检查`index > 0`\n- 对于字符串操作，考虑UTF-8字符边界问题\n\n## 可选步骤\n- 使用`get()`方法代替直接索引访问\n- 考虑使用迭代器替代手动索引管理"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "文件属性管理",
+  "content": "问题重述：\n保护重要文件不被意外修改、删除或重命名，特别是在系统管理中保护关键配置文件或二进制文件。\n\n可复用解决流程：\n1. 识别需要保护的文件：确定需要设置不可变属性的文件路径\n2. 使用chattr命令设置属性：\n   - 设置不可变属性：sudo chattr +i filename\n   - 移除不可变属性：sudo chattr -i filename\n   - 设置追加属性（仅允许追加）：sudo chattr +a filename\n3. 验证属性设置：使用 lsattr filename 命令查看文件属性\n4. 记录保护操作：在系统文档中记录哪些文件被保护及原因\n\n工具使用：\n- 使用file_attribute_manager工具（新创建的工具）来简化文件属性管理\n- 或使用execute_script工具直接执行chattr和lsattr命令\n\n注意事项：\n1. 设置不可变属性后，即使是root用户也无法修改文件，必须先移除属性\n2. 在生产环境中使用前，应在测试环境中验证\n3. 保护关键系统文件前应确保有备份和恢复计划\n4. 需要定期审查被保护的文件列表，确保保护策略仍然适用\n\n可选步骤：\n1. 批量保护多个文件：chattr +i file1 file2 file3\n2. 递归保护目录：chattr -R +i directory/\n3. 组合属性使用：chattr +ai filename（同时设置不可变和追加属性）"
+}

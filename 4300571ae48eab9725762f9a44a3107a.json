@@ -1,0 +1,4 @@
+{
+  "problem_type": "代码审查配置继承",
+  "content": "问题重述：\n当父级Agent设置了代码审查配置时，需要确保子级Agent能正确继承该配置。\n\n解决流程：\n1. 从父Agent获取配置：\n   - 使用getattr(parent_agent, \"disable_review\", default_value)安全获取属性\n   - 处理父Agent不存在的情况\n\n2. 传递给子Agent：\n   - 在创建子Agent时将配置作为参数传入\n   - 使用三元表达式处理默认值\n\n3. 兼容性处理：\n   - 确保当父Agent没有该属性时不报错\n   - 提供合理的默认值(false)\n\n4. 测试验证：\n   - 编写测试用例验证继承逻辑\n   - 包括有/无父Agent的情况\n   - 测试不同配置组合\n\n注意事项：\n1. 使用try-catch处理属性访问异常\n2. 确保不影响现有功能\n3. 考虑线程安全性\n4. 文档更新配置继承规则\n\n最佳实践：\n1. 使用@dataclass管理配置项\n2. 提供配置合并工具方法\n3. 优先使用显示配置而非隐式继承"
+}

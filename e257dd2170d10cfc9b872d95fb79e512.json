@@ -1,0 +1,4 @@
+{
+  "problem_type": "git_diff_generation",
+  "content": "# 获取Git提交差异\n## 问题重述\n如何获取Git仓库中两个提交之间的差异\n\n## 最优解决方案\n1. 使用`execute_script`工具执行git diff命令\n   - 命令格式: `git diff <commit1> <commit2>`\n   - 常用场景:\n     - HEAD与前一提交: `git diff HEAD^ HEAD`\n     - 工作区与暂存区: `git diff`\n     - 暂存区与最新提交: `git diff --cached`\n\n## 注意事项\n1. 确保在正确的Git仓库目录下执行\n2. 确认提交引用正确存在\n3. 对于大型差异，考虑使用分页工具或输出到文件\n4. 特殊符号(如^)需要正确转义\n\n## 可选步骤\n1. 格式化输出: 可添加`--color-words`等参数增强可读性\n2. 统计变更: 使用`--stat`参数获取变更统计\n3. 生成补丁文件: 使用`-p`参数生成标准补丁格式"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "C到Rust系统移植",
+  "content": "问题重述：将C语言实现的系统级程序（如FUSE文件系统）移植到Rust，需保持功能等价性、接口兼容性和行为一致性。\n\n可复用解决流程：\n\n1. 依赖分析阶段\n   - 使用read_code读取C源码，识别关键结构体(lfs_fuse_ops等)\n   - 使用read_symbols获取符号依赖关系\n   - 检查Cargo.toml确认依赖可用性(避免禁用的fuse库)\n\n2. 接口映射阶段\n   - 函数签名：将C的int返回值映射为Result<(), i32>\n   - 全局变量：转换为Rust结构体字段(如Config struct)\n   - 宏定义：转换为const/static或函数\n\n3. 参数解析标准化\n   - 使用clap::Parser替代C的getopt/fuse_opt_parse\n   - 保持参数顺序：设备路径 + 操作标志 + FUSE参数\n   - 验证模式：stat/format/migrate无需设备路径\n\n4. FUSE集成实现\n   - 创建ops模块包含lfs_fuse_ops等价结构\n   - 实现fuse_main入口函数\n   - 添加destroy清理函数\n\n5. 测试验证\n   - 运行cargo test -- --nocapture确保全量通过\n   - 验证参数解析测试覆盖所有模式\n   - 检查回归测试(原有测试不应失败)\n\n注意事项：\n- 保持最小修改，不重构未要求部分\n- 禁用禁用的库(littlefs2, fuse等)\n- 使用中文注释保持代码可读性\n- 处理clap与C参数格式的差异(如--stat vs --stat_)"
+}

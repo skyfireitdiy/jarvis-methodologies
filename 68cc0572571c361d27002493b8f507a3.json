@@ -1,0 +1,4 @@
+{
+  "problem_type": "C-to-Rust函数移植（TDD方法）",
+  "content": "## TDD 实现 is_numeric 函数的详细计划\n\n### 阶段1：RED - 编写测试用例\n1. 在现有测试模块中添加 is_numeric 的测试用例\n2. 测试覆盖：\n   - 整数类型：Char, Short, Int, Long（有符号和无符号）\n   - 浮点类型：Float, Double\n   - 非数值类型：Array, Func, Pointer, Struct, Vla, Enum\n   - 边界情况：默认类型、复合类型\n\n### 阶段2：GREEN - 实现功能\n1. 在 src/sema/check.rs 的非测试区域实现 pub fn is_numeric(ty: &Type) -> bool\n2. 实现逻辑：is_integer(ty) || is_flonum(ty)\n3. 确保测试通过\n\n### 阶段3：REFACTOR - 代码优化\n1. 检查代码简洁性和可读性\n2. 验证与 C 实现的行为一致性\n3. 确保测试覆盖完整性\n\n### 验证标准\n- 所有测试必须通过\n- 与 C 实现行为完全一致\n- 无警告和错误"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "Python包管理",
+  "content": "# Python包安装/卸载方法论\n\n## 问题重述\n如何在Python环境中安装或卸载指定的Python包\n\n## 最优解决方案\n1. 使用execute_script工具执行pip命令：\n   - 安装：`pip3 install <包名>`\n   - 卸载：`pip3 uninstall -y <包名>`\n2. 如需强制重新安装，先卸载再安装：\n   - `pip3 uninstall -y <包名> && pip3 install <包名>`\n\n## 注意事项\n1. 优先使用pip3而非pip，避免Python2.7兼容性问题\n2. 企业环境可能需要指定可信源(--index-url)\n3. 卸载时使用-y参数避免交互式确认\n4. 注意检查依赖包是否需要一并处理\n\n## 可选步骤\n1. 对于复杂依赖环境，可先创建虚拟环境\n2. 可添加--user参数进行用户级安装(当没有系统权限时)\n3. 可结合pip3 check检查依赖冲突"
+}

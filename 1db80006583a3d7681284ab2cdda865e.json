@@ -1,0 +1,4 @@
+{
+  "problem_type": "修改git历史提交时间",
+  "content": "成功使用git filter-branch命令将origin/main到HEAD的所有提交时间修改为当前时间\n验证方法：git log --format='%H %aI %cI' origin/main..HEAD\n注意事项：\n1. 会重写git历史，需要强制推送\n2. 会改变所有提交的SHA值\n3. 协作开发时需要通知所有成员"
+}

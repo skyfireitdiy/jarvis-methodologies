@@ -1,0 +1,4 @@
+{
+  "problem_type": "C汇编生成函数移植到Rust",
+  "content": "问题重述：将C语言中生成汇编代码的函数移植到Rust，保持语义等价\n\n可复用解决流程：\n1. 源分析阶段\n   - 使用read_code读取原始C代码\n   - 识别switch-case分支结构\n   - 记录字符串输出模式\n\n2. 测试设计阶段（Red）\n   - 为每个分支创建独立测试用例\n   - 验证空输出分支（复合类型）\n   - 验证字符串输出格式和指令正确性\n   - 使用Vec<u8>/String捕获输出进行断言\n\n3. 实现阶段（Green）\n   - 将C switch转换为Rust match\n   - 使用writeln!替代printf/println\n   - 保持汇编指令格式完全一致\n   - 处理类型系统的映射（is_unsigned对应movz/movs）\n\n4. 验证阶段\n   - 运行cargo test确保所有测试通过\n   - 验证输出字符串与C代码完全一致\n\n注意事项：\n- 确保测试用例覆盖所有TypeKind变体\n- 注意字符串转义（如%xmm0中的%需要%%）\n- 复合类型（数组、结构体等）测试验证无输出\n- 整数类型需测试有符号/无符号两种情况\n\n可选步骤：\n- 添加边界值测试（size=0, size>8）\n- 添加错误处理测试（无效size）"
+}

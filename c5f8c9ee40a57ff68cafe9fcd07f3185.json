@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust全局状态测试隔离修复",
+  "content": "问题重述：Rust项目中使用全局静态变量（如Mutex<HashMap>）时，测试之间会相互污染状态，导致Mutex PoisonError和测试失败。\n\n可复用解决流程：\n1. **识别污染源**：定位全局静态变量（如GLOBAL_VARS: Lazy<Mutex<HashMap>>）\n2. **创建状态重置函数**：实现reset_builtin_state()函数，包含：\n   - 清理所有静态变量（如unsafe { BUILTIN_ALLOCA = None; }）\n   - 清理全局容器（如使用unwrap_or_else(|e| e.into_inner())处理Mutex poison）\n3. **增强错误处理**：使用模式`let mut data = mutex.lock().unwrap_or_else(|e| e.into_inner())`处理poisoned Mutex\n4. **测试隔离**：在每个测试函数开头调用reset_builtin_state()\n5. **验证修复**：运行`cargo test -- --nocapture`确认所有测试通过且无PoisonError\n\n注意事项：\n- 保持API不变，仅增强错误处理\n- 使用最小改动原则\n- 确保每个测试都有完整的状态清理\n\n可选步骤：\n- 考虑使用thread_local!替代全局静态变量（如架构允许）\n- 添加并发测试验证修复效果"
+}

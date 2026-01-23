@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust Clippy警告修复方法",
+  "content": "## 问题重述\n需要消除Rust项目中的Clippy警告，确保`cargo clippy -- -D warnings`能够通过。\n\n## 可复用解决流程\n\n### 阶段1：自动修复尝试\n1. **工具**：execute_script\n2. **命令**：`cargo clippy --fix --allow-dirty --allow-staged -- -D warnings`\n3. **结果处理**：\n   - 成功：跳到阶段3验证\n   - 失败：继续阶段2\n\n### 阶段2：手动修复分析\n1. **工具**：execute_script + read_code\n2. **步骤**：\n   - 执行`cargo clippy -- -D warnings`获取完整警告信息\n   - 使用`read_code`定位具体代码位置\n   - 按clippy建议进行精确修改（edit_file）\n\n### 阶段3：最终验证\n1. **工具**：execute_script\n2. **命令**：`cargo clippy -- -D warnings`\n3. **成功标准**：返回码为0\n\n## 注意事项\n- 优先使用自动修复，减少人为错误\n- 手动修复时保持最小改动原则\n- 修复后必须验证，不能假设成功\n- 非交互模式下可直接执行，无需确认\n\n## 可选步骤\n- 对无法自动修复的警告，记录为项目技术债\n- 考虑在CI中添加clippy检查作为强制要求"
+}

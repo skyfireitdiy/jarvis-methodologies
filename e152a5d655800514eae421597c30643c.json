@@ -1,0 +1,4 @@
+{
+  "problem_type": "git_format_patch_and_pack",
+  "content": "# 将git变更输出为format-patch并打包\n## 问题重述\n需要将从某个分支到当前HEAD的git变更输出为format-patch文件，并将这些文件打包为压缩文件。\n\n## 最优解决方案\n1. 创建临时目录存放patch文件\n2. 使用`git format-patch`命令生成patch文件到临时目录\n3. 使用`tar`命令将patch文件打包为压缩文件\n4. 删除临时目录\n\n## 注意事项\n1. 确保目标目录存在，可以使用`mkdir -p`创建目录\n2. 确认正确的分支名称\n3. 检查生成的patch文件和压缩文件是否完整\n4. 建议在打包前验证补丁文件数量和内容\n5. 删除临时目录前需确认打包已完成且无错误\n6. 新增验证步骤：列出生成的patch文件确保完整\n7. 新增验证步骤：列出压缩包内容确认包含所有patch文件\n8. 新增步骤：验证临时目录是否成功删除"
+}

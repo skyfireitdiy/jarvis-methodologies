@@ -1,0 +1,4 @@
+{
+  "problem_type": "fix_skip_cond_incl_correct_behavior",
+  "content": "分析测试用例的正确行为：\n1. skip_cond_incl 函数应该从给定的 #if 指令开始，跳过整个条件块（包括所有嵌套的条件），直到找到匹配的 #endif\n2. 应该返回 #endif 之后的第一个 token\n3. 对于测试用例 test_skip_cond_incl_simple_if，输入是：#if 1 int x; #endif int y;\n   - 应该跳过 #if 1 int x; #endif，返回 int y;\n4. 当前实现返回 \"if\" 而不是 \"int\"，说明没有正确处理跳过整个块"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust编译警告消除",
+  "content": "问题重述：\nRust项目中存在编译错误或警告（包括Clippy警告），需要通过系统性方法消除所有警告，确保`cargo check`和`cargo clippy`都能通过。\n\n可复用解决流程：\n\n1. **识别警告类型**\n   - 运行`cargo check --message-format=short`识别编译警告\n   - 运行`cargo clippy -- -D warnings`识别Clippy警告\n\n2. **优先级修复**\n   - 先修复编译错误（E开头错误）\n   - 再修复编译警告（warning）\n   - 最后修复Clippy警告\n\n3. **常见修复模式**\n   - 类型推断失败：使用`match`表达式和明确类型注解\n   - 未使用的代码：添加`#[allow(dead_code)]`或移除\n   - 手动字符串操作：使用标准库方法如`strip_prefix`\n   - 项目结构问题：清理错误的模块配置\n\n4. **验证流程**\n   - 每次修复后运行`cargo check`\n   - 最终运行`cargo clippy -- -D warnings`\n   - 确保无警告输出\n\n注意事项：\n- 保留必要的测试方法，即使暂时未使用\n- 优先使用标准库方法而非手动实现\n- 保持代码风格一致性\n- 测试失败与编译警告要区分处理\n\n可选步骤：\n- 添加`#[allow(...)]`属性作为临时解决方案\n- 使用`--no-run`参数只检查编译不运行测试"
+}

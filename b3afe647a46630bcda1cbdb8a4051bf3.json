@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust Clippy警告修复",
+  "content": "问题重述：修复 Rust 项目中 clippy 警告，确保代码符合 Rust 最佳实践\n\n可复用解决流程：\n1. 首先尝试自动修复：执行 `cargo clippy --fix --allow-dirty --allow-staged -- -D warnings`\n2. 验证修复效果：执行 `cargo clippy -- -D warnings` 检查是否还有警告\n3. 如仍有警告，根据 clippy 的具体建议手动修改代码\n4. 对于无法自动修复的警告，分析警告类型并针对性修复\n5. 每次修复后都运行验证命令确保问题已解决\n\n注意事项：\n- 自动修复会修改代码，建议先提交当前工作\n- 某些警告可能需要设计层面的判断，不要盲目跟随建议\n- 修复后确保所有测试仍然通过：`cargo test`\n- 可以使用 `#[allow(clippy::warning_name)]` 显式允许特定警告（需添加注释说明原因）"
+}

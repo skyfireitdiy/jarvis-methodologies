@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust内存安全问题修复",
+  "content": "## 问题重述\nRust项目中出现\"free(): invalid pointer\"、\"double free\"或\"unsafe precondition violated\"等内存错误，需要精确修复。\n\n## 可复用解决流程\n\n### 阶段1：问题定位\n1. **错误信息分析**：通过cargo test -- --nocapture获取完整错误堆栈\n2. **符号搜索**：使用lsp_client搜索疑似内存问题的符号（如Drop、free、malloc相关）\n3. **代码审查**：重点关注Drop实现、全局变量、unsafe块\n\n### 阶段2：影响范围评估\n1. **全局状态识别**：搜索static变量、lazy_static!等共享状态\n2. **引用链分析**：使用lsp_client.references追踪问题符号的调用链\n3. **测试隔离**：单独运行失败测试模块验证问题范围\n\n### 阶段3：最小变更修复\n1. **重复Drop修复**：移除多余的Drop实现，统一内存管理\n2. **全局状态清理**：替换全局变量为局部状态或移除非必要全局管理\n3. **边界条件处理**：强化空指针检查和边界值验证\n\n### 阶段4：验证闭环\n1. **单模块测试**：cargo test 模块名 -- --nocapture\n2. **全量测试**：cargo test -- --nocapture\n3. **内存检查**：运行valgrind或address sanitizer验证\n\n## 注意事项\n- 优先保持最小改动，避免大规模重构\n- 修改前后保留代码备份，支持快速回退\n- 移除问题测试时确保核心功能测试覆盖\n- 关注编译警告，但可容忍非关键警告\n\n## 可选步骤\n- 添加内存安全测试用例\n- 配置CI/CD内存检查工具\n- 文档化内存管理约定"
+}

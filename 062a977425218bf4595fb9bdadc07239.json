@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust并发测试失败修复",
+  "content": "## 问题重述\nRust测试在并发运行时失败，但单独运行通过，通常是由于测试间共享全局状态导致的竞态条件。\n\n## 可复用解决流程\n\n### 步骤1：问题识别\n```bash\n# 运行完整测试套件\ncargo test -- --nocapture\n# 识别失败测试用例\n\n# 单独运行失败测试\ncargo test <test_name> -- --nocapture\n```\n\n### 步骤2：状态污染分析\n使用工具：\n- `rg -n \\\"全局变量名\\\" src/` 查找共享状态\n- `read_code` 读取测试用例和实现\n- 检查测试是否缺少状态隔离机制\n\n### 步骤3：修复策略\n1. **添加锁机制**：在测试函数开头添加`let _lock = TEST_LOCK.lock().unwrap();`\n2. **状态重置**：确保每个测试开始前调用`reset_xxx()`函数\n3. **最小改动原则**：只修改必要的测试，避免大范围重构\n\n### 步骤4：验证\n```bash\n# 单测验证\ncargo test <test_name> -- --nocapture\n\n# 全量验证\ncargo test -q\n```\n\n## 注意事项\n- 优先使用现有TEST_LOCK，不要创建新的锁\n- 确保所有使用共享状态的测试都有锁保护\n- 验证修复后不影响原有功能\n- 保持中文注释规范\n\n## 可选步骤\n- 对于复杂状态管理，考虑使用setup/teardown函数\n- 添加调试输出帮助定位问题"
+}

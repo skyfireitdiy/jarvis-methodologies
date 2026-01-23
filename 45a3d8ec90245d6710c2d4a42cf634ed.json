@@ -1,0 +1,4 @@
+{
+  "problem_type": "Nginx服务管理",
+  "content": "# Nginx服务管理方法论\n\n## 问题重述\n如何安全有效地管理Nginx服务（启动、停止、重启等）\n\n## 最优解决方案\n1. **服务状态检查** (工具: execute_script)\n   ```bash\n   ps aux | grep nginx | grep -v grep\n   ```\n2. **停止服务** (工具: execute_script)\n   - 优雅停止: `nginx -s quit`\n   - 强制停止: `pkill -9 nginx`\n   - 系统服务: `sudo systemctl stop nginx`\n3. **启动服务** (工具: execute_script)\n   ```bash\n   /path/to/nginx/sbin/nginx -c /path/to/nginx.conf\n   ```\n4. **重启服务** (工具: execute_script)\n   ```bash\n   nginx -s reload\n   ```\n\n## 注意事项\n1. 停止服务前确认是否有重要连接\n2. 强制停止可能导致数据丢失\n3. 多实例运行时需要指定正确的配置文件路径\n4. 系统服务可能需要sudo权限\n\n## 可选步骤\n1. 对于多实例管理，可以添加端口检查\n2. 可以配置日志轮转\n3. 可以设置开机自启动"
+}

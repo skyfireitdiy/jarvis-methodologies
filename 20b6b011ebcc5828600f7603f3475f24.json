@@ -1,0 +1,4 @@
+{
+  "problem_type": "crate_dependency_analysis",
+  "content": "# 分析Rust项目的开源crate依赖关系\n## 问题重述\n需要分析Rust项目直接引用的开源crate，排除测试和性能相关的依赖项\n\n## 最优解决方案\n1. 定位项目中的Cargo.toml文件\n2. 区分主项目和子项目(workspace成员)\n3. 分析[dependencies]部分\n4. 过滤掉[dev-dependencies]和[build-dependencies]\n5. 排除标记为optional的依赖(根据需求)\n6. 整理并分类依赖项信息\n\n## 注意事项\n- 注意workspace项目需要分析多个Cargo.toml文件\n- 区分路径依赖和外部crate依赖\n- 注意optional依赖可能需要特殊处理\n- 版本号信息需要准确提取\n\n## 可选步骤\n- 可以生成依赖关系图\n- 可以分析依赖项的许可证信息\n- 可以检查依赖项的更新情况"
+}

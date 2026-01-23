@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust死代码警告修复",
+  "content": "# Rust死代码警告修复方法论\n\n## 问题识别\n- 警告类型：`unused function`, `dead_code`\n- 常见触发场景：函数定义但未在非测试代码中使用\n\n## 解决流程\n1. **确认警告位置**\n   - 使用 `cargo test -- --nocapture` 查看完整警告信息\n   - 记录文件路径和行号\n\n2. **分析函数用途**\n   - 检查函数是否在测试模块中被调用\n   - 确认函数是否为公共API的一部分\n   - 评估函数的必要性\n\n3. **选择修复策略**\n   - **仅在测试中使用**：\n     ```rust\n     #[cfg(test)]\n     pub(crate) fn function_name(...) { ... }\n     ```\n   - **确实不需要**：\n     - 直接删除函数定义\n   - **需要保留但暂时未使用**：\n     ```rust\n     #[allow(dead_code)] // 保留原因：[具体说明]\n     ```\n\n4. **验证修复**\n   - 运行 `cargo test -- --nocapture` 确认无警告\n   - 确保所有测试用例仍通过\n\n## 注意事项\n- 优先使用`#[cfg(test)]`而非`#[allow(dead_code)]`\n- 修改后必须验证测试完整性\n- 对于公共API函数，考虑是否需要重新设计使用方式"
+}

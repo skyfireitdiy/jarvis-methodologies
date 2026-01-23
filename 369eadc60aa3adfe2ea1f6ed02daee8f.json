@@ -1,0 +1,4 @@
+{
+  "problem_type": "C函数scan_globals的TDD移植",
+  "content": "执行步骤：\n1. 补充Obj结构体的is_tentative字段\n2. 在tests模块中添加scan_globals的测试用例\n3. 实现scan_globals函数，操作GLOBALS全局变量\n4. 运行测试并修复问题\n5. 验证与C实现行为一致性"
+}

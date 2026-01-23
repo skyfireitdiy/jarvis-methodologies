@@ -1,0 +1,4 @@
+{
+  "problem_type": "C到Rust函数TDD转译-verror_at",
+  "content": "## TDD转译计划：verror_at\n\n### 阶段1：RED（先写测试）\n1. 在error.rs中添加#[cfg(test)]测试模块\n2. 设计测试用例覆盖：\n   - 正常单行错误提示\n   - 多行源码中的特定行定位\n   - 含有Unicode字符的显示宽度计算\n   - 边界情况（空字符串、首字符错误、末字符错误）\n\n### 阶段2：GREEN（实现功能）\n1. 实现display_width函数（基于已有char_width）\n   - 计算字符串的显示宽度，支持Unicode\n   - 从C版本的display_width移植逻辑\n2. 实现error_at函数\n   - 根据loc定位行首和行尾\n   - 计算错误位置的显示宽度\n   - 格式化输出错误信息，保持与C版本一致的格式\n\n### 阶段3：REFACTOR（优化重构）\n1. 确保测试覆盖率\n2. 代码风格统一\n3. 文档注释完善\n\n### 关键实现要点：\n- display_width需要基于已有char_width函数实现\n- error_at需要保持与C版本相同的错误输出格式\n- 使用标准Rust类型和错误处理"
+}

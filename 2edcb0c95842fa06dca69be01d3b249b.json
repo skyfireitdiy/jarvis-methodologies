@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust测试并发隔离问题",
+  "content": "# Rust并发测试隔离问题解决方法论\n\n## 问题识别\n当测试套件在单独运行时通过，但批量运行时失败，可能原因：\n- 测试间共享全局状态\n- 并发执行导致竞态条件\n- 资源清理不彻底\n\n## 解决流程\n1. **定位问题测试**\n   - 使用 `cargo test test_name -- --nocapture` 单独运行失败测试\n   - 确认问题是否稳定复现\n\n2. **检查全局状态**\n   - 查找static或lazy_static全局变量\n   - 检查是否使用Mutex/RwLock保护\n   - 确认清理机制是否完整\n\n3. **修复策略**\n   - 在每个测试开始前调用reset/cleanup函数\n   - 使用guard.clear()而非drop确保状态清空\n   - 添加断言验证初始状态\n\n4. **验证修复**\n   - 运行完整测试套件：`cargo test -- --nocapture`\n   - 多次运行确认稳定性\n\n## 代码模式\n```rust\n#[cfg(test)]\nmod tests {\n    #[test]\n    fn test_with_isolation() {\n        // 清理全局状态\n        reset_global_state();\n        {\n            let mut guard = GLOBAL_STATE.lock().unwrap();\n            guard.clear(); // 确保清空\n            assert_eq!(guard.len(), 0);\n}\n       \n        // 测试逻辑\n        // ...\n}\n}\n```\n\n## 注意事项\n- 避免在测试中使用共享可变状态\n- 优先使用线程局部变量(test-thread isolation)\n- 考虑使用`cargo test -- --test-threads=1`临时验证"
+}

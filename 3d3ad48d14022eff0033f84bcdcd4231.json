@@ -1,0 +1,4 @@
+{
+  "problem_type": "ELF动态链接器和rpath查询",
+  "content": "问题重述：获取ELF二进制文件的动态链接器（INTERP）和运行时搜索路径（rpath/runpath）\n\n可复用解决流程：\n1. 定位目标ELF文件\n   - 使用 find 命令查找：find <path> -name <filename> -type f\n\n2. 获取动态链接器 (INTERP)\n   - 执行：readelf -l <filepath> | grep -E 'INTERP|Requesting'\n   - 输出格式：[Requesting program interpreter: /path/to/ld-*.so.*]\n   - 常见值：\n     * x86_64: /lib/ld-linux-x86-64.so.2\n     * aarch64: /lib/ld-linux-aarch64.so.1\n\n3. 获取 rpath/RUNPATH\n   - 执行：readelf -d <filepath> | grep -E 'RPATH|RUNPATH'\n   - 如果无输出，说明未设置自定义库搜索路径\n   - 如需查看完整动态段：readelf -d <filepath> | head -n\n\n4. 验证和补充信息（可选）\n   - 查看所有动态库依赖：readelf -d <filepath> | grep NEEDED\n   - 查看文件架构：file <filepath>\n\n注意事项：\n- 静态链接的 ELF 文件没有 INTERP 段和动态段\n- RPATH 和 RUNPATH 功能相似，优先级不同（RUNPATH 优先级低于 LD_LIBRARY_PATH）\n- 无 rpath/runpath 时，链接器使用系统默认路径（/lib, /usr/lib 等）"
+}

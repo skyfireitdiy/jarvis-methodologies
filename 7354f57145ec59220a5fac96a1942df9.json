@@ -1,0 +1,4 @@
+{
+  "problem_type": "动态库符号分析",
+  "content": "# 动态库未定义符号分析方法论\n\n## 问题重述\n如何分析动态库(.so)中的未定义符号，特别是区分系统库符号和自定义符号\n\n## 最优解决方案\n1. 使用nm工具列出所有未定义符号：\n   - 工具：execute_script\n   - 命令：`nm -u <library>.so`\n\n2. 过滤系统库符号(GLIBC/GCC)：\n   - 工具：execute_script\n   - 命令：`nm -u <library>.so | grep -v '@@GLIBC_' | grep -v '@@GCC_' | grep -v '^ *U __'`\n\n3. 分析结果：\n   - 识别需要从其他自定义库链接的符号\n   - 确认是否存在应定义但缺失的符号\n\n## 注意事项\n- 注意区分弱符号(w)和未定义符号(U)\n- 对于C++库，可能需要额外处理name mangling后的符号\n- 某些项目特定的前缀(如OSS_)可以帮助识别自定义符号\n\n## 可选步骤\n- 对于复杂项目，可以使用`ldd -r`检查运行时依赖\n- 可以使用`c++filt`工具解析C++符号名"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust编译警告修复",
+  "content": "# Rust编译警告修复方法论\n\n## 问题重述\n修复Rust源代码中的编译警告，特别是unused_mut等常见警告类型，确保代码干净无警告。\n\n## 可复用解决流程\n\n### 步骤1：识别警告类型和位置\n- 工具：cargo check\n- 操作：`cargo check 2>&1 | grep -i \"warning\"`\n- 输出：获取警告类型、文件路径、行号信息\n\n### 步骤2：定位具体代码\n- 工具：read_code\n- 操作：读取指定文件的具体行号范围\n- 示例：`read_code([{\"path\": \"src/file.rs\", \"start_line\": 58, \"end_line\": 58}])`\n\n### 步骤3：分析警告原因\n- 常见警告类型处理：\n  - **unused_mut**: 变量声明为mut但未被修改\n  - **unused_variables**: 变量声明后未被使用\n  - **dead_code**: 函数或代码块未被使用\n\n### 步骤4：实施修复\n- **unused_mut**: 移除不必要的mut关键字\n- **unused_variables**: 使用下划线前缀重命名或删除变量\n- **dead_code**: 添加#[allow(dead_code)]属性或删除无用代码\n\n### 步骤5：验证修复\n- 工具：cargo check\n- 操作：重新运行`cargo check`确认警告已消除\n- 补充：运行`cargo test`确保修复不破坏功能\n\n## 注意事项\n1. 最小化修改原则：只修改产生警告的代码，避免过度重构\n2. 保留注释：如果警告代码有重要注释，修复后需保留相关说明\n3. 测试验证：修复后运行完整测试确保功能不受影响\n4. 批量处理：同类警告可以批量修复，减少提交次数\n\n## 可选步骤\n- 使用cargo clippy获取更详细的lint建议\n- 配置.clippy.toml文件自定义lint规则\n- 添加CI检查确保未来代码无警告"
+}

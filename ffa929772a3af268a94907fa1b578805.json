@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust原子计数器测试修复",
+  "content": "## 问题识别\n1. **症状**：测试失败显示期望值与实际值不符\n2. **根因**：fetch_add/fetch_sub返回值语义理解错误 + 并发状态污染\n\n## 修复流程\n1. **单独验证**：先单独运行失败测试确认问题稳定性\n2. **原子语义检查**：确认fetch_add返回旧值，需要+1得到新值\n3. **边界处理**：使用wrapping_add/wrapping_sub防止溢出\n4. **并发隔离**：使用RUST_TEST_THREADS=1验证基础正确性\n5. **测试验证**：确保所有测试在多线程下也稳定\n\n## 关键修复点\n- push(): `prev.wrapping_add(1)` - 返回新值\n- pop(): `prev.wrapping_sub(1)` - 返回新值\n- 测试隔离：每个测试前调用reset_depth()\n\n## 验证方法\n```bash\n# 基础验证\ncargo test test_push_initial_state -- --nocapture\n# 并发验证  \nRUST_TEST_THREADS=1 cargo test -- --nocapture\n# 全面验证\ncargo test -- --nocapture\n```"
+}

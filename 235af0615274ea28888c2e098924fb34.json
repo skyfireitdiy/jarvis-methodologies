@@ -1,0 +1,4 @@
+{
+  "problem_type": "fix_skip_cond_incl_tests",
+  "content": "分析测试失败原因：\n1. 测试期望 skip_cond_incl 从 #if 开始跳过整个条件块到 #endif 之后\n2. 当前实现返回空字符串，表明返回位置不正确\n3. 对比 C 源码：C 版本是从当前 token 开始查找 #elif/#else/#endif，而不是从 #if 开始\n4. 测试用例的期望行为与 C 实现不一致，需要调整实现以匹配测试期望\n\n修复策略：\n1. 调整 skip_cond_incl 的行为：从 #if 开始跳过整个条件块\n2. 保持 skip_cond_incl2 不变（处理嵌套）\n3. 确保返回 #endif 后的第一个 token"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "修复Rust clippy告警",
+  "content": "## 修复Rust clippy告警的方法论\n\n### 问题定义\n在Rust项目中，使用`cargo clippy`产生的代码风格和功能改进建议，需要在不改变功能的前提下修复这些告警。\n\n### 可复用解决流程\n\n1. **识别告警类型**\n   - 使用 `cargo clippy --message-format=short` 获取告警摘要\n   - 使用 `cargo clippy --bin <binary_name> -- -D warnings` 检查特定目标\n\n2. **分类处理常见告警**\n   - **字符串处理告警**：手动字符串操作改为内置方法\n     - `ends_with() + slice` → `strip_suffix()`\n     - `starts_with() + slice` → `strip_prefix()`\n   - **控制流优化**：\n     - 单分支match → if语句\n     - 复杂if链 → match表达式\n   - **冗余代码**：\n     - 删除未使用的imports\n     - 合并重复代码块\n\n3. **验证修复**\n   - 运行 `cargo check` 确保无编译错误\n   - 运行 `cargo clippy` 确保告警已消除\n   - 运行 `cargo test` 确保功能不变\n\n4. **批量处理策略**\n   - 按文件或模块分批处理\n   - 优先修复高频出现的告警类型\n   - 使用 `#[allow(clippy::warning_type)]` 仅对特殊情况禁用告警\n\n### 注意事项\n- 保持功能等价：修复前后行为必须完全一致\n- 代码可读性：修复后的代码应更易读\n- 性能考虑：某些修复可能影响性能，需要基准测试\n\n### 可选工具\n- `cargo fix --clippy`：自动修复部分告警\n- `clippy --fix`：实验性自动修复功能"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust项目配置验证",
+  "content": "### Rust项目配置验证方法论\n\n验证流程：\n1. 文件结构验证\n   - 检查所有必要的Cargo.toml和build.rs文件是否存在\n   - 确认目录结构符合版本隔离要求\n\n2. Cargo.toml配置验证\n   - 检查crate-type=[\"rlib\",\"dylib\"]配置正确性\n   - 确保没有违规的path依赖\n   - 验证版本号和其他关键配置项\n\n3. build.rs链接验证 \n   - 检查链接路径是否正确指向published_dylib目录\n   - 验证路径使用相对路径还是绝对路径\n   - 确保链接库名称正确\n\n4. 混合构建验证\n   - 确保不同版本的构建产物完全隔离\n   - 检查是否有交叉污染风险\n\n工具组合：\n- 使用find+grep命令批量检查文件\n- 通过read_code工具精确检查关键配置项\n- 组合使用execute_script进行快速验证\n\n注意事项：\n- 必须严格遵守全局约束条件\n- 关注路径引用的正确性\n- 特别检查隐藏的path依赖\n- 确保版本隔离无漏洞"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "UTF-16/UTF-32字符串字面量测试验证方法论",
+  "content": "问题重述：验证UTF-16/UTF-32字符串字面量解析功能的测试用例是否完整覆盖转义字符处理、Unicode字符编码、空字符串、边界情况和编码转换准确性。\n\n可复用解决流程：\n1. **代码定位**：使用read_code工具查找测试文件（src/util/string.rs 600-935行）\n2. **测试分类验证**：\n   - **转义字符测试**：检查test_c_standard_escapes、test_parse_escape_sequences_boundary\n   - **Unicode字符测试**：检查test_utf8_to_utf16_*和test_utf8_to_utf32_*系列测试\n   - **空字符串测试**：验证utf8_to_utf16(\"\")、utf8_to_utf32(\"\")用例\n   - **边界情况**：检查边界值测试和代理对处理\n3. **测试执行验证**：运行`cargo test string::test_ -- --nocapture`确保测试通过\n4. **覆盖率评估**：确认测试覆盖0x0000-0x10FFFF全Unicode范围\n\n注意事项：\n- 注意边界测试可能过于宽松（如\\U转义位数不足）\n- 验证代理对生成的准确性\n- 检查大字符串性能测试\n\n可选步骤：\n- 使用rg或grep搜索特定测试用例\n- 验证测试命名规范性和可读性"
+}

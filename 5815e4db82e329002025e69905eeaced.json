@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust枚举值不匹配验证",
+  "content": "## 问题重述\n当遇到\\\"枚举值不匹配\\\"或\\\"未找到枚举变体\\\"等编译错误时，需要系统性地验证枚举定义与使用是否一致。\n\n## 可复用解决流程\n\n### 步骤1：定位枚举定义\n```bash\n# 查找枚举定义位置\ngrep -rn \\\"pub enum EnumName\\\" --include=\\\"*.rs\\\" src/\n# 或使用LSP\nsearch_symbol EnumName src/main.rs\n```\n\n### 步骤2：验证枚举变体\n使用read_code工具查看枚举完整定义，记录所有变体名称。\n\n### 步骤3：检查使用位置\n```bash\n# 查找所有使用位置\ngrep -rn \\\"EnumName::\\\" --include=\\\"*.rs\\\" src/\n# 重点关注测试文件\ngrep -rn \\\"EnumName::\\\" --include=\\\"*.rs\\\" src/ | grep test\n```\n\n### 步骤4：编译验证\n```bash\ncargo check  # 快速验证\ncargo test   # 完整验证\n```\n\n### 步骤5：模式对比\n人工对比使用位置的枚举值与定义是否完全一致，特别注意：\n- 大小写敏感性（Rust枚举变体区分大小写）\n- 拼写错误\n- 过时的变体名称\n\n## 注意事项\n1. Rust的枚举变体在2018版之后不需要前缀，直接使用`Variant`而非`EnumName::Variant`\n2. 测试代码中可能使用完全限定名`crate::path::EnumName::Variant`\n3. 注意Module路径是否正确导入\n\n## 可选步骤\n如果确认是误报（如本例），可记录为\\\"预期错误-实际无问题\\\"，避免重复检查。"
+}

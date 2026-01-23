@@ -1,0 +1,4 @@
+{
+  "problem_type": "C函数到Rust的TDD转译-find_macro",
+  "content": "## TDD执行计划：find_macro转译\n\n### 阶段1：Red - 编写测试\n1. 修改macro.rs，添加Macro结构体定义\n2. 更新全局存储为HashMap<String, Macro>\n3. 在#[cfg(test)]中添加测试模块\n4. 设计测试用例：\n   - test_find_macro_non_ident_token: Token不是Ident返回None\n   - test_find_macro_not_found: Token是Ident但宏不存在返回None\n   - test_find_macro_found: Token是Ident且宏存在返回Some(&Macro)\n\n### 阶段2：Green - 实现功能\n1. 实现find_macro函数：\n   - 检查token.kind != TokenKind::Ident\n   - 使用token.text作为键查找全局MACROS\n   - 返回Option<&'static Macro>\n\n### 阶段3：Refactor - 优化\n1. 检查是否需要使用lazy_static和Mutex\n2. 验证与C语义的一致性\n3. 确保生命周期正确"
+}

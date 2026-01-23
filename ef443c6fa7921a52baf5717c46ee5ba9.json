@@ -1,0 +1,4 @@
+{
+  "problem_type": "验证stub函数实现状态",
+  "content": "|||# 验证stub函数实现状态的方法论\n\n## 问题重述\n需要验证某个函数是否仍保持stub实现状态，特别是add_type函数这类需要后续完善的功能。\n\n## 可复用解决流程\n\n### 步骤1：代码快照对比\n- 使用`read_code`读取当前函数实现（指定行号范围）\n- 使用`execute_script`执行`git show HEAD~n:file_path`查看历史版本\n- 对比stub实现的特征：空函数体、todo注释、panic!/todo!宏、默认返回值\n\n### 步骤2：stub特征识别\nstub实现通常具有以下特征：\n1. 函数体为空或只有注释\n2. 包含\"stub\"字样注释\n3. 返回默认值（如0、false、Ok(0)等）\n4. 参数使用下划线前缀（如_node）\n5. 包含panic!/todo!/unimplemented!宏\n\n### 步骤3：验证方法\n- 使用`rg -A 10 \"pub fn 函数名\" 文件路径`查看函数定义\n- 使用`git log --grep=\"函数名\\|stub\" --oneline -10`查找相关提交\n- 使用`git show commit_hash`查看具体变更内容\n\n### 注意事项\n- stub状态可能通过注释伪装，需要仔细检查函数体\n- 注意参数变化（如&mut Node -> &Node）可能掩盖stub本质\n- 需要检查至少最近3-5个commit的变化\n\n### 可选步骤\n- 运行相关测试用例验证功能是否真正实现\n- 查看C源码对比实现完整性|||"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust symbol compatibility verification",
+  "content": "1. Verify Cargo.toml contains correct crate-type configuration\n2. Verify build.rs or Cargo.toml contains explicit symbol-mangling-version=v0 parameter\n3. Verify final binary contains v0-compatible symbols\n4. If parameters missing but output appears correct, investigate build system defaults\n5. Always document explicit configurations even when defaults work"
+}

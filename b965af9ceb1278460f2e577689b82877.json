@@ -1,0 +1,4 @@
+{
+  "problem_type": "C到Rust转译功能一致性修复",
+  "content": "方法论：C到Rust转译功能一致性修复\n\n问题重述：\n在C到Rust转译过程中，Rust实现与原始C实现在功能行为上出现不一致，需要最小化修复以保持功能等价性。\n\n可复用解决流程：\n\n阶段1：差异识别\n1. 使用read_code对比C和Rust的关键实现片段\n2. 使用lsp_client定位相关符号的所有引用位置\n3. 标记出功能行为差异（而非语法差异）\n\n阶段2：最小修复设计\n1. **保持结构**：不重构整体架构，仅修复差异点\n2. **函数适配**：为C风格的简单调用创建Rust兼容版本\n3. **类型映射**：确保C类型系统正确映射到Rust类型系统\n\n阶段3：实现修复\n1. 优先使用sed进行精准单行修改\n2. 需要函数签名调整时，使用edit_file进行局部修改\n3. 避免rewrite_file除非需要大范围重写\n\n阶段4：验证闭环\n1. cargo test -- --nocapture 验证所有测试\n2. 如果测试失败，使用git diff查看变更影响\n3. 回归问题修复后重新验证\n\n工具组合使用：\n- lsp_client.document_symbols - 快速定位符号\n- read_code - 查看上下文实现\n- execute_script + sed - 精准单行修改\n- cargo test - 功能验证\n- git diff - 影响范围检查\n\n注意事项：\n- 禁止引入新的依赖库\n- 保持原有注释语言（中文）\n- 每个修复必须有测试覆盖\n- 修复后立即验证，避免累积问题"
+}

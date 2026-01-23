@@ -1,0 +1,4 @@
+{
+  "problem_type": "分析flush_icache_user_range的SMP行为",
+  "content": "ARM32架构下flush_icache_user_range的SMP行为分析：\n1. SMP同步机制：\n   - 通过设置SCTLR.BR位(bit[6])启用SMP/nAMP模式\n   - 使用广播机制确保所有CPU核心的缓存同步\n   - 依赖CPU的硬件广播功能(Cache/TLB ops broadcasting)\n\n2. 关键代码路径：\n   - flush_icache_user_range -> __cpuc_coherent_user_range\n   - 最终执行CPU特定的缓存操作指令(如ICIALLU)\n\n3. 多核同步保证：\n   - 在proc-v7.S中通过设置SMP相关控制位\n   - 对于支持广播的CPU(如Cortex-A系列)，操作会自动广播\n   - 需要配合内存屏障指令确保顺序性\n\n4. 性能考虑：\n   - 按页大小分块处理减少总线锁定时间\n   - 支持条件性刷新(仅当需要时广播)"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust编译警告和测试失败修复",
+  "content": "## 问题重述\n修复Rust项目中的编译警告（如unused_mut、dead_code等）和测试失败（包括并发测试导致的Mutex污染）\n\n## 可复用解决流程\n1. **诊断阶段**\n   - 执行 `cargo test -- --nocapture` 获取完整错误和警告信息\n   - 识别警告类型（unused_mut、unused_variables、dead_code等）\n   - 定位失败测试的具体位置和原因\n\n2. **警告修复**\n   - 使用 `read_code` 工具读取警告位置的代码\n   - 根据编译器建议精准修复：\n     * unused_mut → 移除mut关键字\n     * unused_variables → 改为下划线前缀或移除\n     * dead_code → 移除或使用#[allow(dead_code)]\n   - 避免过度修复，保持代码功能不变\n\n3. **测试失败修复**\n   - **PoisonError处理**：使用 `lock().unwrap_or_else(|e| e.into_inner())`\n   - **全局状态污染**：在测试前重置全局变量状态\n   - **并发测试问题**：确保测试间的独立性，避免共享可变状态\n\n4. **验证阶段**\n   - 执行 `cargo test -- --nocapture` 验证0警告、0失败\n   - 如果失败，重复步骤1-3直到通过\n   - 使用 `cargo clippy -- -D warnings` 进行额外检查\n\n## 注意事项\n- 修复警告时不要改变代码功能\n- 并发测试要特别关注全局状态管理\n- 修复后必须进行完整验证，不要假设成功\n- 保留关键调试信息直到问题完全解决\n\n## 可选步骤\n- 对于复杂警告，使用 `cargo fix` 自动修复简单警告\n- 对于难以定位的问题，添加临时调试输出\n- 使用 `cargo test <test_name>` 单独运行特定测试加速调试"
+}

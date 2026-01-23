@@ -1,0 +1,4 @@
+{
+  "problem_type": "Python代码质量检查",
+  "content": "### 问题重述\n在Python项目中进行代码质量审查时，需要系统性地解决代码风格规范、静态检查工具依赖冲突等问题\n\n### 最优解决方案\n1. (工具: execute_script) 使用pylint进行基本代码质量检查\n2. (工具: execute_script) 使用flake8进行PEP8规范检查\n3. (工具: execute_script) 当出现依赖冲突时：\n   - 升级mccabe到0.6.1版本\n   - 降级configparser到3.5.0兼容版本\n   - 强制重新安装flake8套件\n4. (工具: edit_file) 根据检查结果修复：\n   - 优先解决语法错误\n   - 拆分超长代码行\n   - 清理空白字符\n\n### 注意事项\n1. Python 2.7环境下需特别注意backports包的版本兼容性\n2. 企业级私有仓库需指定正确的pip源\n3. 当出现\"ImportError: cannot import name\"时优先检查依赖树\n\n### 可选步骤\n- 对于新项目建议直接使用black+isort自动化格式化\n- 复杂依赖环境可使用pipenv管理虚拟环境"
+}

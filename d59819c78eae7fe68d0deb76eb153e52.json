@@ -1,0 +1,4 @@
+{
+  "problem_type": "automated_commit",
+  "content": "1. Problem Restatement: Need to stage changes in the code and commit them with an automatically generated message based on the complete patch content.\n2. Optimal Solution: Stage changes using 'git add', analyze changes with 'git diff --cached' to generate a commit message, and execute the commit command.\n3. Notes: Ensure that the working directory is clean before staging, confirm the accuracy of the staged files, and verify the commit results."
+}

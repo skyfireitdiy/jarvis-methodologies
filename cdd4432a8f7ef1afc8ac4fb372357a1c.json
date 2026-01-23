@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust测试状态污染修复",
+  "content": "问题重述：\nRust测试中，单独运行时通过的测试在完整测试套件中失败，表现为全局状态污染、Mutex被poisoned、临时数据泄漏等问题。\n\n可复用解决流程：\n1. 问题识别阶段\n   - 使用 `cargo test [module] -- --nocapture` 运行单个测试确认通过\n   - 使用 `cargo test [module]` 运行完整测试套件确认失败\n   - 观察是否有Mutex被poisoned警告或间歇性失败\n\n2. 状态分析阶段\n   - 定位所有全局状态变量（使用`rg \"static.*mut\"`或`rg \"global\"`）\n   - 检查测试间共享的可变状态\n   - 确认状态初始化/清理时机\n\n3. 修复实施阶段\n   - 实现reset_xxx()清理函数，使用drain(..)而非clear()\n   - 添加对Mutex被poisoned的处理：使用unwrap_or_else(|e| e.into_inner())\n   - 在每个#[test]函数的开头和结尾调用reset函数\n   - 添加详细的状态验证断言\n\n4. 验证阶段\n   - 多次运行完整测试套件：重复`cargo test`至少5次\n   - 使用`cargo test -- --test-threads=1`验证单线程行为\n   - 检查是否有残留文件或状态\n\n注意事项：\n- 避免在测试中使用全局可变状态，优先考虑参数传递\n- 清理函数应处理文件删除失败的情况，不影响后续测试\n- 使用临时文件时考虑使用tempfile::tempdir()的自动清理\n- 测试断言应验证状态的正确性，而不仅仅是功能正确性\n\n可选步骤：\n- 使用`ctor`crate在每个测试模块前自动清理状态\n- 实现自定义的TestRunner来统一处理状态管理\n- 考虑使用`serial_test`crate强制测试串行执行"
+}

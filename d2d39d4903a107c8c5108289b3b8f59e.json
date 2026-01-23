@@ -1,0 +1,4 @@
+{
+  "problem_type": "tmux代码重构与迁移",
+  "content": "问题重述：\n在jarvis项目中需要将现有tmux直接操作代码迁移到新的dispatch_command_to_panel函数，实现统一的tmux面板管理逻辑。\n\n可复用解决流程：\n1. 识别tmux操作：使用`rg -n 'tmux' --type py src/ | grep -v '__pycache__' | grep -v 'tmux_wrapper.py'`查找所有tmux相关代码\n2. 分类tmux操作：区分直接subprocess调用tmux命令和间接使用tmux工具函数\n3. 分析依赖关系：检查各tmux操作的输入输出和错误处理逻辑\n4. 设计迁移方案：确定哪些可以直接替换为dispatch_command_to_panel，哪些需要保留\n5. 实施替换：逐步将tmux直接调用替换为新函数调用\n6. 验证功能：确保替换后功能行为一致\n7. 测试覆盖：运行相关测试验证迁移正确性\n\n注意事项：\n- dispatch_command_to_panel函数提供了智能面板管理功能，会自动查找panel数<4的window进行复用，或创建新window\n- 需要确保新函数的错误处理与原代码一致\n- 注意保留必要的tmux会话/窗口管理逻辑\n\n可选步骤：\n- 如果某些tmux操作有特殊需求（如特定布局、特殊参数），可能需要扩展dispatch_command_to_panel函数\n- 对于复杂的批量任务场景，可能需要保留部分原始的tmux管理逻辑"
+}

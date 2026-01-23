@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust中处理空字符串作为集合键的问题",
+  "content": "问题重述：\n在Rust中使用空字符串(\"\")作为HashMap或其他集合的键时，可能会遇到查找失败或测试断言失败的问题。\n\n可复用解决流程：\n1. **验证键的创建**：确认Token::new(\"\")确实创建空字符串\n2. **检查存储逻辑**：验证push_tag_scope是否正确存储空字符串键\n3. **检查查找逻辑**：确认find_tag是否正确处理空字符串作为查询键\n4. **调试步骤**：\n   - 打印存储的键值对确认空字符串已正确存储\n   - 使用assert_eq!验证查找结果\n   - 检查HashMap的get方法行为\n5. **修复策略**：\n   - 通常不需要修改HashMap行为，空字符串作为键是合法的\n   - 修复测试断言或查找逻辑中的类型不匹配\n   - 确保查找时使用的键与存储时完全一致\n\n注意事项：\n- 空字符串\"\"是有效的HashMap键，问题通常不在键本身\n- 重点关注类型系统和生命周期问题\n- 使用git diff确认修复的改动范围\n\n示例修复：\n```rust\n// 错误：类型不匹配\nassert_eq!(find_tag(&token), Some(ty)); // ty是&mut Type\n\n// 正确：类型匹配\nassert_eq!(find_tag(&token), Some(&*ty)); // &*ty转换为&T\n```\n\n可选工具：\n- 使用cargo test -- --nocapture查看测试输出\n- 使用println!调试存储的键值"
+}

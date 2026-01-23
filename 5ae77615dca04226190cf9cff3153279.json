@@ -1,0 +1,4 @@
+{
+  "problem_type": "git_history_author_rewrite",
+  "content": "1. 问题重述: 需要批量修改git历史提交中的作者信息\n2. 最优解决方案:\n   - 确认目标提交: 使用`git log --author=\"原作者\"`命令\n   - 执行重写: 使用`git filter-branch`命令配合环境变量修改\n   - 验证结果: 使用`git log --author=\"新作者\"`命令\n3. 注意事项:\n   - 操作前确保仓库已备份\n   - 重写后需要强制推送(git push -f)\n   - 协作仓库需要通知所有成员重新克隆\n4. 可选步骤:\n   - 可使用`--tag-name-filter`参数同时重写标签\n   - 可使用`--tree-filter`参数同时修改文件内容"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "修复Rust clippy警告",
+  "content": "方法论：Rust Clippy警告修复流程\n\n问题重述：\n需要消除Rust项目中的clippy警告，使项目能够通过`cargo clippy -- -D warnings`检查。\n\n可复用解决流程：\n1. **自动修复** - 优先尝试自动修复\n   ```bash\n   cargo clippy --fix --allow-dirty --allow-staged -- -D warnings\n   ```\n\n2. **验证状态** - 检查自动修复结果\n   ```bash\n   cargo clippy -- -D warnings\n   ```\n\n3. **手动修复** - 处理剩余警告\n   - 重复属性：删除重复标注\n   - if链重构：使用match表达式替代\n   - field_reassign_with_default：使用结构体初始化语法\n\n4. **最终验证** - 确保无回归\n   ```bash\n   cargo test -- --nocapture\n   cargo clippy -- -D warnings\n   ```\n\n注意事项：\n- 始终先备份或使用git进行版本控制\n- 修复后必须运行完整测试验证无功能回归\n- 保持最小改动原则，避免不必要重构"
+}

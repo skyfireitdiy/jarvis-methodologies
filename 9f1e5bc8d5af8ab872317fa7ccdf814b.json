@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust并发测试调试",
+  "content": "# Rust并发测试调试方法论\n\n## 问题重述\n在多线程测试环境下，使用全局状态的测试用例出现间歇性失败，表现为断言失败但实际逻辑正确。\n\n## 可复用解决流程\n\n### 步骤1: 识别并发问题\n1. 运行 `cargo test -- --nocapture` 获取完整错误信息\n2. 记录失败的测试用例名称和错误模式\n3. 检查是否涉及全局状态（`static`、`lazy_static`、`once_cell`）\n\n### 步骤2: 隔离测试\n```bash\n# 单独运行失败的测试\ncargo test <test_name> -- --nocapture\n\n# 串行运行所有测试\ncargo test -- --test-threads=1\n```\n\n### 步骤3: 状态分析\n使用 `read_code` 工具检查：\n- 全局变量的定义位置\n- 测试用例中的状态重置逻辑\n- 并发访问模式\n\n### 步骤4: 解决方案选择\n1. **测试隔离**：在测试前后调用重置函数（如 `reset_include_next_idx()`）\n2. **串行执行**：使用 `--test-threads=1` 作为临时解决方案\n3. **状态隔离**：为每个测试创建独立的测试环境\n\n### 步骤5: 验证修复\n1. 多次运行并发测试确认稳定性\n2. 使用 `timeout` 防止测试挂起\n3. 最终验证：连续运行测试10次以上无失败\n\n## 注意事项\n- 全局状态测试必须使用 `#[test]` 而非 `#[tokio::test]`\n- 避免在测试间共享可变静态变量\n- 考虑使用 `serial_test` crate 进行显式串行化\n- 对于文件系统操作，使用 `tempfile` crate 确保测试隔离"
+}

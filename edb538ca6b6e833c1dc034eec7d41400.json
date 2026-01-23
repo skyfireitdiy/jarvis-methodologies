@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust测试修复",
+  "content": "|||\n# Rust测试失败修复通用方法论\n\n## 问题识别阶段\n1. 运行`cargo test -- --nocapture`获取完整失败信息\n2. 识别失败测试名称、期望值与实际值\n3. 检查是否为并发问题（使用`--test-threads=1`验证）\n\n## 修复执行阶段\n1. 使用`read_code`读取失败测试代码（包含断言）\n2. 使用`read_code`读取被测试函数实现\n3. 对比期望行为与实际实现\n4. 使用`edit_file`进行最小必要修改\n5. 边界值处理：整数运算使用`wrapping_*`方法\n\n## 验证阶段\n1. 运行完整测试`cargo test -- --nocapture`\n2. 确认所有测试通过（包括边界值测试）\n3. 检查无编译警告：`cargo check`\n4. 检查无clippy警告：`cargo clippy -- -D warnings`\n\n## 注意事项\n- 避免破坏现有功能的回归\n- 边界值测试优先使用wrapping运算\n- 并发测试问题考虑串行化执行\n- 每次修改后必须完整验证\n|||"
+}

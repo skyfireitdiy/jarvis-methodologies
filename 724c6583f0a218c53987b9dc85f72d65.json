@@ -1,0 +1,5 @@
+{
+  "problem_type": "Rust测试修复方法论",
+  "content": "Rust测试修复方法论：\n1. 全局状态管理最佳实践：当使用Mutex管理全局状态时，应始终处理PoisonError情况。使用match TMPFILES.lock()并在Err分支使用e.into_inner()获取锁。对于测试，每个测试函数应调用reset函数清理全局状态，测试结束时清理创建的资源，确保测试隔离性\n2. 并发测试全局状态管理模式：在测试模块顶部添加use std::sync::Mutex; 定义static TEST_LOCK: Mutex<()> = Mutex::new(()); 所有涉及全局状态的测试函数开头添加let _guard = TEST_LOCK.lock().unwrap(); 验证时运行cargo test确保并发环境下测试通过\n3. Rust并发测试最佳实践：线程安全全局状态使用Mutex或RwLock包装共享可变状态；线程本地存储使用thread_local!宏为每个线程创建独立状态；测试串行化创建测试级别的互斥锁，避免并发测试间的状态冲突；状态清理机制为测试提供清理函数，确保测试间状态隔离；原子操作使用Atomic*系列类型处理简单计数器场景",
+  "scope": "global"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "UTF-16字符串字面量验证方法",
+  "content": "问题重述：验证UTF-16字符串字面量是否正确实现UTF-8到UTF-16转换，包括代理对处理、字节序和内存布局\n\n可复用解决流程：\n1. 代码审查阶段：\n   - 检查BMP字符处理(0x0000-0xFFFF)是否正确使用u16存储\n   - 验证非BMP字符代理对计算：code_point -= 0x10000; high = 0xD800 + ((code_point >> 10) & 0x3FF); low = 0xDC00 + (code_point & 0x3FF)\n   - 确认小端字节序使用.to_le_bytes()\n   - 验证null终止符添加(2字节0x0000)\n   - 检查转义字符处理完整性\n\n2. 内存布局验证：\n   - str_data字段存储UTF-16编码字节数组\n   - ty字段设置为ushort数组类型(Type::array_of(Type::ushort(), len/2))\n\n3. 测试用例设计：\n   - BMP字符测试：\"hello\"(0x0068,0x0065,0x006C,0x006C,0x006F)\n   - 代理对测试：包含U+1F600(😀)等字符\n   - 转义字符测试：\"\\n\\t\\\"\\\\\"\n   - 边界测试：空字符串、最大BMP字符(0xFFFF)、最小代理对字符(0x10000)\n\n4. 编译验证：\n   - 运行cargo test确保无编译错误\n   - 验证所有测试用例通过\n\n注意事项：\n- 注意Rust借用检查器问题，避免value moved after use错误\n- 确保Token结构体包含str_data和ty字段\n- UTF-16代理对必须使用正确的范围：高位0xD800-0xDBFF，低位0xDC00-0xDFFF"
+}

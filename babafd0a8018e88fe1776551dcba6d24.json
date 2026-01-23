@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust临时文件创建与验证",
+  "content": "问题重述：Rust中使用tempfile库创建临时文件时，需要确保返回的路径对应的文件真实存在，且需要正确管理文件生命周期。\n\n可复用解决流程：\n1. 问题定位：运行`cargo test temp模块 -p 项目名 -- --nocapture`查看失败测试\n2. 代码审查：检查create_tmpfile函数是否正确使用NamedTempFile的创建和keep过程\n3. 修复步骤：\n   - 使用NamedTempFile::with_prefix_in创建带前缀的临时文件\n   - 调用keep()方法获取(文件句柄, 路径)的tuple\n   - 忽略文件句柄，只使用路径确保文件不被删除\n   - 添加完整的错误处理链\n4. 验证方法：\n   - 运行单个测试验证修复：`cargo test test_create_tmpfile_returns_valid_path -- --nocapture`\n   - 运行多个文件测试：`cargo test test_multiple_tmpfiles -- --nocapture`\n   - 使用Path::new(&path).exists()验证文件存在\n5. 测试最佳实践：\n   - 每个测试前调用reset_tmpfiles()重置全局状态\n   - 测试后使用fs::remove_file清理临时文件\n   - 并发测试使用Mutex保护全局状态\n\n注意事项：\n- keep()方法返回的是(File, PathBuf)的tuple，需要正确处理返回值\n- NamedTempFile默认会在drop时删除文件，必须调用keep()才能保持文件\n- 路径需要转换为String类型返回，注意处理非UTF-8路径\n\n可选步骤：\n- 添加更详细的错误日志记录\n- 使用tempfile::Builder提供更多配置选项"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "C 函数 TDD 转译方法论",
+  "content": "【问题】将单个 C 函数使用 TDD 流程移植到 Rust 时，确保文件级无冲突。\n【复用流程】\n1. 用 read_code 读取目标模块，确认已有 Type/常量定义。\n2. 在 `#[cfg(test)]` 中先写最小可编译测试，断言返回值的已知字段（如 size）。\n3. 实现函数体，保持与 C 参数、返回值语义一致，常量值直接照搬。\n4. 运行 cargo clippy；若出现 `mod type` + `mod r#type` 重复，删除多余的 `mod type` 行。\n5. 验证测试通过即完成。\n【注意事项】\n- 禁止同时存在 `pub mod type;` 与 `pub mod r#type;`，后者是 Rust 关键字转义写法。\n- 若后续需补充 `new_type`、`TY_STRUCT` 等依赖，同流程递归 TDD。\n【可选步骤】如需对齐对齐或额外字段，再扩展 Type 结构体并补充测试。"
+}

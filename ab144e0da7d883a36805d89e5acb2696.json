@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust项目编译警告清理",
+  "content": "# Rust项目编译警告清理方法论\n\n## 问题重述\n消除Rust项目中的所有编译警告，同时保持功能完整性和向后兼容性。\n\n## 可复用解决流程\n\n### 步骤1：警告收集与分类\n```bash\n# 收集所有警告\ncargo check 2>&1 | grep \"warning:\" | sort | uniq -c\n```\n\n### 步骤2：按类型批量处理\n1. **未使用导入**：直接删除`use`语句\n2. **未使用变量**：改为下划线前缀（如`_name`）\n3. **死代码处理**：优先添加`#[allow(dead_code)]`而非删除\n\n### 步骤3：精准修改\n- 使用`read_code`确认修改上下文\n- 对于函数参数：仅修改参数名，保持函数签名\n- 对于函数体：添加注解而非删除代码\n\n### 步骤4：增量验证\n每次修改后立即执行：\n```bash\ncargo check\ncargo test\n```\n\n### 步骤5：最终确认\n```bash\n# 静默检查无警告\ncargo check --quiet\n\n# 运行完整测试套件\ncargo test --quiet\n```\n\n## 注意事项\n- 不要删除可能有未来用途的函数\n- 保持测试兼容性\n- 遵循项目现有代码风格\n- 每次修改范围最小化\n\n## 可选步骤\n- 为保留函数添加TODO注释说明未来用途\n- 运行`cargo clippy`检查额外建议\n- 考虑使用`#[cfg(test)]`标记测试专用代码"
+}

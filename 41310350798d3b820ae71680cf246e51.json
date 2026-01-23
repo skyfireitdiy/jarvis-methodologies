@@ -1,0 +1,4 @@
+{
+  "problem_type": "UTF-8路径处理优化",
+  "content": "方法：处理非UTF-8路径时应使用PathBuf::to_string_lossy()，将无效UTF-8序列替换为Unicode替换字符U+FFFD，确保即使路径包含非UTF-8字符也能正确处理，保持与C实现的兼容性。"
+}

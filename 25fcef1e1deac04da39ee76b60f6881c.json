@@ -1,0 +1,4 @@
+{
+  "problem_type": "修复Rust编译错误：模块不支持在trait或impl中",
+  "content": "方法论：Rust测试模块位置修复流程\n\n### 问题识别\n- 编译错误：`error: module is not supported in trait`s or impl`s`\n- 根本原因：测试模块`#[cfg(test)] mod tests {...}`被错误地嵌套在impl/trait块内\n\n### 解决流程\n1. **定位错误**：查看错误信息中的行号，确认测试模块位置\n2. **备份文件**：使用`cp filename.rs /tmp/backup_$(date +%Y%m%d_%H%M%S).rs`\n3. **删除错误模块**：使用edit_file删除嵌套的测试模块\n4. **重新定位**：将测试模块移动到文件末尾的模块作用域中\n5. **验证修复**：运行`cargo build`和`cargo test`\n\n### 注意事项\n- 可能存在多个重复测试模块，需要全部检查\n- 保留测试用例的完整性，避免功能测试丢失\n- 确认测试模块使用`#[cfg(test)]`条件编译，避免影响发布构建\n\n### 最佳实践\n- 测试模块应始终位于文件末尾的模块作用域中\n- 使用`super::*`导入父模块符号\n- 避免在impl/trait块内定义任何模块"
+}

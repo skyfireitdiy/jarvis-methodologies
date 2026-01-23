@@ -1,0 +1,4 @@
+{
+  "problem_type": "C++ MakeSptr内存分配安全修复",
+  "content": "问题重述：修复MakeSptr函数中new操作无检查问题，确保内存分配失败时不会产生空指针解引用。\n\n可复用解决流程：\n1. 定位问题代码：使用read_code读取指定文件和行号（base/include/refbase.h第895行）\n2. 分析当前实现：检查new操作是否使用std::nothrow，是否有空指针检查\n3. 实施修复：\n   - 将`new T(...)`改为`new (std::nothrow) T(...)`\n   - 添加空指针检查：`if (ptr == nullptr)`\n   - 失败处理：返回空sptr `return sptr<T>()`\n4. 验证修复：\n   - 确认使用std::nothrow\n   - 确认空指针检查覆盖所有路径\n   - 确认失败时返回空sptr\n   - 保持函数签名不变\n\n注意事项：\n- 保持代码风格一致性（缩进、命名规范）\n- 使用项目现有日志宏（如UTILS_LOGE）\n- 确保向后兼容，不改变API\n- 禁止引入新依赖\n\n工具使用：\n- read_code：查看特定位置代码\n- execute_script：搜索相关代码模式或编译验证\n- save_memory：记录修复方案和最佳实践"
+}

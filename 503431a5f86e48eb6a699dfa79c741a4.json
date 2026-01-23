@@ -1,0 +1,4 @@
+{
+  "problem_type": "上市公司财报获取",
+  "content": "# 上市公司财报获取\n## 问题重述\n如何系统获取并整理上市公司财务报告\n\n## 最优解决方案\n1. 通过官网投资者关系页面定位财报入口（使用playwright.browser_navigate）\n2. 尝试直接下载PDF文件（使用playwright.browser_click）\n3. 如直接下载失败，尝试通过URL直接访问（使用read_webpage）\n4. 如官网渠道均失败，建议使用第三方数据源（如Yahoo Finance等）\n\n## 注意事项\n- 官网PDF链接可能有访问频率限制\n- 注意HTTP协议错误可能是服务器端限制\n- 优先记录已获取的部分数据\n- 及时向用户反馈失败原因\n\n## 可选步骤\n- 对于中国上市公司，可尝试访问巨潮资讯等监管指定披露平台\n- 对于美国上市公司，可访问SEC EDGAR系统"
+}

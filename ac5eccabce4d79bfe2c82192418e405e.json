@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust函数参数边界验证",
+  "content": "## Rust函数参数边界验证方法论\n\n### 问题重述\n在Rust代码中，当处理可能超出数组/集合边界的索引参数时，需要实施安全的边界验证机制，避免使用`unwrap_or`等可能隐藏错误的处理方式。\n\n### 可复用解决流程\n\n**步骤1：识别边界风险点**\n- 检查所有使用索引访问数组/集合的地方\n- 特别注意`get().unwrap_or()`模式\n\n**步骤2：设计验证策略**\n- 在函数入口处添加参数验证\n- 使用`Result`返回错误，而非默认值\n\n**步骤3：实施验证代码**\n```rust\nif parameter >= BOUND {\n    return Err(std::io::Error::new(\n        std::io::ErrorKind::InvalidInput,\n        format!(\"Invalid parameter: {}\", parameter),\n    ));\n}\n```\n\n**步骤4：替换不安全的访问**\n- 将`array.get(index).unwrap_or(&default)`改为`array[index]`\n- 让越界情况显式panic或通过Err返回\n\n**步骤5：验证修改**\n- 确保函数签名不变\n- 测试边界条件（正常值和异常值）\n\n### 注意事项\n- 保持函数签名向后兼容\n- 使用中文注释说明验证逻辑\n- 在错误信息中提供足够上下文\n\n### 可选步骤\n- 使用自定义错误类型替代`std::io::Error`\n- 添加调试级别的日志记录"
+}

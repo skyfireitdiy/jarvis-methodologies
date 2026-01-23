@@ -1,0 +1,4 @@
+{
+  "problem_type": "C到Rust结构体扩展后的编译错误修复",
+  "content": "问题重述：\n在C到Rust移植过程中，扩展结构体字段后，测试代码中的实例化语法常因重复字段导致E0062编译错误。\n\n可复用解决流程：\n1. 确认结构体字段完整清单\n   - 使用`rg \\\"pub struct Type\\\" -A 50`查看完整定义\n   - 记录所有新添加的字段名和类型\n\n2. 查找所有实例化位置\n   - `rg \\\"Type {\\\" src/ --type rust`查找所有Type实例\n   - 重点检查测试文件（*_test.rs, initializer.rs等）\n\n3. 批量修复重复字段\n   - 使用编辑器全局搜索替换\n   - 或脚本自动修复：查找重复的`field_name: value,`并移除\n\n4. 验证修复\n   - `cargo check`确保无编译错误\n   - `cargo test`验证所有测试通过\n\n注意事项：\n- 注意结构体更新时的向后兼容性\n- 测试代码中的默认值通常可保持简化\n- 使用`..Default::default()`模式减少重复代码\n\n可选步骤：\n- 创建TypeBuilder模式减少直接实例化错误\n- 添加编译时检查脚本预防此类错误"
+}

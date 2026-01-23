@@ -1,0 +1,5 @@
+{
+  "problem_type": "Rust内存分配优化",
+  "content": "Rust内存分配优化最佳实践：\n1. 预分配策略：Vec::with_capacity(n+padding)避免动态扩容\n2. smallvec使用：SmallVec<[T; N]>对小数组优化效果显著\n3. 内存对齐：#[repr(C, align(64))]提升缓存效率\n4. 性能验证：使用perf建立基线，量化优化效果\n5. 安全优先：保持Rust内存安全，避免unsafe代码",
+  "scope": "global"
+}

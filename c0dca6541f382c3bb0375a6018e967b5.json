@@ -1,0 +1,4 @@
+{
+  "problem_type": "删除远程非默认分支",
+  "content": "## 问题重述\n需要删除远程仓库中除默认分支(如main/master)外的所有分支\n\n## 最优解决方案\n1. 列出所有远程分支：`git branch -r` (使用execute_script工具)\n2. 过滤出非默认分支：`grep -v \"origin/main\"` (使用execute_script工具)\n3. 批量删除匹配的分支：`git push origin --delete <branch>` (使用execute_script工具)\n\n## 注意事项\n- 操作前确认分支名称正确\n- 确保有删除远程分支的权限\n- 删除前建议备份重要分支\n- 注意分支名称中的特殊字符需要转义\n\n## 可选步骤\n- 可以添加确认步骤，逐个分支确认删除\n- 可以先将分支列表保存到文件再处理\n- 对于大量分支，可以考虑使用脚本批量处理"
+}

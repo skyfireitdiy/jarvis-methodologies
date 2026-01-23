@@ -1,0 +1,4 @@
+{
+  "problem_type": "C指针+长度转Rust字符串切片键",
+  "content": "## 方法论：C指针+长度转Rust字符串切片键匹配\n\n### 适用场景\n当需要将C代码中`hashmap_get(ptr, len)`模式迁移到Rust，且源数据为`String + usize`字段组合时。\n\n### 解决流程\n1. **字段验证**  \n   用`read_code`确认Rust结构体包含：  \n   - 字符串字段（如`loc: String`）  \n   - 长度字段（如`len: usize`）\n\n2. **键提取修复**  \n   将C的`ptr`/`len`参数转换为Rust的切片：  \n   ```rust\n   // 原C代码：hashmap_get(&map, tok->loc, tok->len)\n   let key = &tok.loc[..tok.len]; // Rust等价\n   map.get(key)\n   ```\n\n3. **边界检查**  \n   若`tok.len`可能越界，添加断言：  \n   ```rust\n   assert!(tok.len <= tok.loc.len(), \"Invalid token length\");\n   ```\n\n4. **测试验证**  \n   运行`cargo test`确保修改后功能等价，特别关注边界情况（空字符串、最大长度）。\n\n### 注意事项\n- 保持最小改动：仅修改键提取逻辑，不引入新类型。  \n- 性能：切片操作是零成本抽象，无额外分配。  \n- 安全性：Rust切片自动处理边界，无需手动检查（除非手动实现unsafe逻辑）。"
+}

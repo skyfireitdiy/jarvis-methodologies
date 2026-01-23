@@ -1,0 +1,4 @@
+{
+  "problem_type": "Python项目代码质量检查",
+  "content": "1. 问题重述: 如何系统性地检查Python项目中的代码质量问题\n2. 最优解决方案:\n   - 步骤1: 确认pylint安装(使用execute_script验证版本)\n   - 步骤2: 创建.pylintrc配置文件(使用execute_script创建基础配置)\n   - 步骤3: 排除第三方库干扰(在配置中设置ignore参数)\n   - 步骤4: 扫描项目代码(使用execute_script执行pylint命令)\n   - 步骤5: 验证结果(使用execute_script过滤和统计错误)\n3. 注意事项:\n   - 确保扫描范围只包含项目代码\n   - 优先关注error级别问题\n   - 不同项目可能需要调整.pylintrc配置\n4. 可选步骤:\n   - 可添加更多检查规则(warning级别)\n   - 可集成到CI/CD流程中"
+}

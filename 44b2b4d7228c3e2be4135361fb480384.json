@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust测试假阳性失败诊断",
+  "content": "# Rust测试假阳性失败诊断方法论\n\n## 问题重述\n当`cargo test`报告显示测试失败，但代码逻辑看起来正确时，可能存在假阳性失败。\n\n## 可复用解决流程\n\n### 步骤1: 隔离验证\n```bash\n# 运行单个失败测试\ncargo test <module>::<test_name> -- --nocapture\n```\n\n### 步骤2: 环境清理\n```bash\n# 清理构建缓存\ncargo clean\n# 重新编译并测试\ncargo test --release\n```\n\n### 步骤3: 并发测试验证\n```bash\n# 运行多次验证稳定性\nfor i in {1..5}; do\n  cargo test -- --nocapture\ndone\n```\n\n### 步骤4: 工具辅助分析\n使用`execute_script`工具批量验证：\n```json\n{\"interpreter\": \"bash\", \"script_content\": \"cargo test --message-format=short 2>&1 | grep -E '(FAILED|panicked|error)'\"}\n```\n\n### 注意事项\n1. **不要立即修改代码**：先验证是否为环境问题\n2. **保持最小改动**：确认真实问题后再进行修复\n3. **记录测试状态**：使用task_list_manager跟踪验证过程\n4. **回归测试**：修复后必须运行全量测试验证\n\n### 可选步骤\n- 检查测试隔离性（全局状态、文件系统操作）\n- 验证测试数据构造是否正确\n- 检查并发竞态条件"
+}

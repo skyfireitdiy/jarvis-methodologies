@@ -1,0 +1,4 @@
+{
+  "problem_type": "C到Rust函数移植（TDD方法）",
+  "content": "## C到Rust函数移植方法论（TDD方法）\n\n### 问题重述\n将C函数移植到Rust，保持语义等价性，使用测试驱动开发方法确保正确性。\n\n### 可复用解决流程\n\n#### 1. 分析阶段（RESEARCH）\n- 读取C源码，分析函数逻辑\n- 识别关键数据结构映射关系\n- 确认依赖函数是否已实现\n- 使用工具：`read_code`, `lsp_client`, `read_symbols`\n\n#### 2. 设计测试阶段（RED）\n- 在tests模块中添加测试用例\n- 覆盖主要功能路径：正常情况、边界情况、错误情况\n- 测试用例模板：\n  ```rust\n  #[test]\n  fn test_[函数名]_[场景描述]() {\n      // 准备测试数据\n      // 调用被测函数\n      // 断言验证\n  }\n  ```\n\n#### 3. 实现阶段（GREEN）\n- 添加函数实现到正确模块（非测试区域）\n- 保持最小变更原则\n- 函数签名转换规则：\n  - `char*` → `&str`\n  - `return NULL` → `None`\n  - `struct*` → `Option<Box<Struct>>`\n\n#### 4. 验证阶段（REVIEW）\n- 运行测试：`cargo test`\n- 检查内存安全性\n- 验证边界行为一致性\n\n### 注意事项\n1. 测试用例必须放在`#[cfg(test)] mod tests`中\n2. 避免在正式代码中使用`todo!/unimplemented!`\n3. 处理指针转换时的安全性\n4. 线程局部变量的测试需要cleanup_scope辅助函数\n\n### 可选步骤\n- 性能优化（基准测试）\n- 文档完善\n- 集成测试"
+}

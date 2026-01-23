@@ -1,0 +1,4 @@
+{
+  "problem_type": "TDD_enter_scope_implementation",
+  "content": "TDD流程：\n1. 先写测试：test_enter_scope_basic、test_enter_scope_multiple_calls、test_enter_scope_leave_scope\n2. 实现Scope结构体：包含next指针的链表结构\n3. 实现全局scope变量：使用static mut或更安全的方案\n4. 实现enter_scope函数：创建新Scope，链接到链表头\n5. 确保测试通过后进行重构优化"
+}

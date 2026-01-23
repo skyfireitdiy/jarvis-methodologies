@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust结构体字段缺失修复",
+  "content": "# Rust结构体字段缺失修复方法论\n\n## 问题重述\nRust编译器报错E0063：结构体初始化时缺少必需字段，常见于大型重构或代码迁移后。\n\n## 可复用解决流程\n\n### 1. 错误识别与定位\n```bash\n# 获取精确错误信息\ncargo build 2>&1 | grep -E \\\"error:|missing field\\\"\n```\n\n### 2. 问题影响范围评估\n```bash\n# 找出所有受影响文件\nfind . -name \\\"*.rs\\\" -exec grep -l \\\"结构体名称.*{\\\" {} \\\\;\n```\n\n### 3. 精准修复策略\n- **单文件修复**：使用`sed`直接替换\n```bash\n  sed -i 's/结构体名称 {/结构体名称 { 缺失字段: 默认值,/' 文件名.rs\n```\n- **多文件修复**：批量查找替换\n```bash\n  find src -name \\\"*.rs\\\" -exec sed -i 's/结构体名称 {/结构体名称 { 缺失字段: 默认值,/' {} \\\\;\n```\n\n### 4. 验证与清理\n```bash\ncargo build\n# 检查重复字段\ncargo check 2>&1 | grep -E \\\"field.*specified more than once\\\"\n```\n\n### 5. 测试修复\n```bash\ncargo test\n```\n\n## 注意事项\n1. **避免重复字段**：修复后检查是否有重复字段定义\n2. **保持代码风格**：与原有代码风格保持一致\n3. **默认值选择**：根据字段类型选择合适的默认值\n4. **依赖关系**：检查修复是否影响其他模块\n\n## 可选步骤\n- 使用`cargo fix --edition`自动修复部分问题\n- 添加集成测试验证修复效果\n- 使用`rustfmt`统一代码格式"
+}

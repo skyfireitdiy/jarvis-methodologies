@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust全局变量测试失败修复",
+  "content": "问题重述：Rust项目中使用全局变量时，测试用例出现assert_eq!(actual, expected)失败，但输出显示值相同，通常涉及字符串生命周期或内存管理问题。\n\n可复用解决流程：\n1. **问题诊断阶段**\n   - 运行特定测试确认失败：`cargo test test_name -- --nocapture`\n   - 检查全局变量的类型定义：是否为Option<T>包装，String字段所有权\n   - 定位断言失败行号，分析左右值来源\n\n2. **状态隔离修复**\n   - 创建重置函数：`pub fn reset_xxx_state() { /* 重置全局变量 */ }`\n   - 在测试函数开头显式调用重置函数（见reset_builtin_state示例）\n   - 对Mutex/OnceCell等同步原语，处理可能的poisoned状态\n\n3. **字符串生命周期修复**\n   - 全局变量中的String必须使用.to_string()创建独立所有权\n   - 避免存储引用类型的字符串切片(&str)\n   - 确保全局变量的初始化在每次测试前都重新执行\n\n4. **验证步骤**\n   - 单个测试验证：`cargo test specific_test_name`\n   - 全量测试验证：`cargo test`\n   - 清理检查：`cargo clippy -- -D warnings`\n\n注意事项：\n- 禁止改变函数签名，通过内部实现调整修复\n- 最小化改动：仅修改全局变量初始化和重置逻辑\n- 保持测试隔离性：每个测试用例必须独立运行\n\n可选步骤：\n- 对于复杂全局状态，考虑使用lazy_static或once_cell替代static mut\n- 添加测试用例验证重置函数的正确性"
+}

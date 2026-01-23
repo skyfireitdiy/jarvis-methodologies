@@ -1,0 +1,4 @@
+{
+  "problem_type": "排查Rust内存释放错误",
+  "content": "问题重述：\nRust项目中出现 `free(): invalid pointer`, `free(): invalid size` 等内存释放错误，通常发生在手动内存管理或FFI交互场景中。\n\n可复用解决流程：\n1. **问题定位**\n   - 使用 `cargo test -- --nocapture` 获取完整错误信息\n   - 使用 `valgrind --tool=memcheck` 或 `cargo +nightly miri test` 检测内存错误\n   - 重点关注涉及 `alloc`, `dealloc`, `Box`, `Vec`, 手动指针操作的代码\n\n2. **代码审查**\n   - 检查 `unsafe` 代码块中的内存操作\n   - 验证 `Layout` 在分配和释放时的一致性\n   - 确认指针非空且指向有效内存区域\n   - 检查数组边界和容量计算\n\n3. **修复验证**\n   - 确保 `alloc` 和 `dealloc` 使用相同的 `Layout`\n   - 添加空指针和容量检查\n   - 使用 `std::alloc::Layout::array::<T>(len)` 确保正确对齐\n   - 测试修复后的内存操作\n\n4. **预防措施**\n   - 尽可能使用安全Rust API替代手动内存管理\n   - 使用 `Box`/`Vec` 管理动态内存\n   - 添加单元测试验证内存操作的正确性\n\n注意事项：\n- 手动内存管理时必须严格匹配分配和释放的Layout\n- 避免重复释放同一块内存\n- 释放后立即将指针设为null防止use-after-free\n- 考虑使用 `std::ptr::drop_in_place` 和 `Box::from_raw` 等安全抽象"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "C到Rust函数TDD转译-lfs_mount_",
+  "content": "基于C函数lfs_mount_的Rust TDD实现计划：\n\n1. 分析阶段：\n   - C函数lfs_mount_完成文件系统挂载，扫描目录块查找超级块\n   - 依赖：lfs_init(已实现), lfs_pair_isnull, lfs_tortoise_detectcycles, lfs_dir_fetchmatch, lfs_tag_isdelete, lfs_dir_get, lfs_superblock_fromle32(已实现), lfs_fs_disk_version_major(已实现), lfs_fs_disk_version_minor(未实现), lfs_fs_prepsuperblock(已实现), lfs_dir_getgstate, lfs_gstate_iszero, lfs_tag_isvalid, lfs_alloc_drop, lfs_unmount_(已实现)\n\n2. RED阶段：\n   - 在src/lfs/mount.rs中创建测试模块\n   - 设计测试用例：正常挂载、版本不匹配、配置不匹配、块大小不匹配等\n\n3. GREEN阶段：\n   - 实现mount函数：pub fn mount(lfs: &mut Lfs, config: &Config) -> Result<(), LfsError>\n   - 实现缺失的依赖函数：disk_version_minor, pair_isnull, tortoise_detectcycles等\n   - 确保语义与C代码等价\n\n4. REFACTOR阶段：\n   - 优化代码结构，保持测试通过"
+}

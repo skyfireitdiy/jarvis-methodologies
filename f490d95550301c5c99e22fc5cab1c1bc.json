@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust构建配置验证",
+  "content": "Rust构建配置文件验证方法论：\n1. 文件存在性验证\n   - 使用execute_script检查目标文件路径\n   - 示例命令：`ls -l path/to/build.rs`\n\n2. 内容验证\n   a) 链接路径配置检查\n      - 使用read_code验证link-search指令\n      - 必须包含至少一个有效的库搜索路径\n  \n   b) 库链接配置检查  \n      - 使用read_code验证link-lib指令\n      - 必须正确指定动态库名称\n\n3. 编译参数验证\n   - 使用read_code检查整个文件\n   - 确认不包含任何rustc-args或特殊编译参数\n\n注意事项：\n- 建议按顺序验证上述三个检查点\n- 任一检查失败应立即终止并报告问题\n- 路径验证要考虑跨平台兼容性\n\n扩展检查项（可选）：\n- 检查路径是否存在环境变量引用\n- 验证路径是否使用项目相对路径"
+}

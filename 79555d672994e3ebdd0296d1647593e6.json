@@ -1,0 +1,4 @@
+{
+  "problem_type": "C-to-Rust函数移植TDD方法",
+  "content": "1. 分析C函数行为，确定Rust中的等效操作\n2. 检查Token结构体是否有对应字段（text字段已包含完整标识符）\n3. 设计测试用例：正常Ident token、非Ident token错误\n4. 实现函数：检查kind，返回text或错误\n5. 不需要strndup等效，因为text字段已包含完整字符串"
+}

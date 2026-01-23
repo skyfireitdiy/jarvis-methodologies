@@ -1,0 +1,4 @@
+{
+  "problem_type": "C-to-Rust类型兼容性检查移植",
+  "content": "问题重述：将C语言的类型兼容性检查函数is_compatible移植到Rust，需确保语义一致性\n\n可复用解决流程：\n1. **语义分析阶段**\n   - 使用read_code读取C源码，明确关键检查点：origin递归、符号性、函数参数、数组长度\n   - 建立C语义与Rust实现的映射表\n\n2. **结构体设计验证**\n   - 验证Type结构体字段完整性：is_unsigned, origin, return_ty, params, is_variadic, array_len(isize)\n   - 使用cargo check确认结构体定义编译通过\n\n3. **函数实现验证**\n   - 实现is_compatible函数，逐条验证：\n     a. 指针相同性检查（std::ptr::eq）\n     b. origin递归检查（t1.origin与t2.origin递归匹配）\n     c. 类型种类匹配（t1.kind == t2.kind）\n     d. 符号性检查（整数类型的is_unsigned字段）\n     e. 函数类型检查（返回类型、参数链表、可变参数标志）\n     f. 数组类型检查（基础类型兼容+长度匹配，支持负值）\n\n4. **测试验证**\n   - 编写单元测试覆盖：基本类型、指针、函数、数组、嵌套类型\n   - 使用cargo test验证所有测试通过\n   - 边界测试：负长度数组、空参数列表、类型别名\n\n5. **集成验证**\n   - 清理编译错误（如字段重复初始化）\n   - 运行完整测试套件确认无回归\n\n注意事项：\n- 需特别注意C中-1表示未知数组长度的语义\n- 函数参数需用链表结构遍历next字段\n- 浮点类型在C中总是兼容，无需符号性检查\n\n可选步骤：\n- 使用自动化代码审查工具检查Rust代码质量\n- 添加性能基准测试确保移植后性能合理"
+}

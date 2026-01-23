@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust Mutex错误处理改进",
+  "content": "# Rust Mutex错误处理改进方法论\n\n## 问题重述\n需要修复Rust代码中大量使用`Mutex::lock().unwrap()`的模式，改为提供更meaningful错误信息的处理方式。\n\n## 可复用解决流程\n\n### 步骤1：问题识别\n- 使用工具搜索代码中的`.unwrap()`模式：\n  ```bash\n  rg \"\\\\.unwrap\\\\(\\\\)\" src/\n  ```\n- 重点关注`Mutex::lock().unwrap()`、`Condvar::wait().unwrap()`等同步原语相关用法\n\n### 步骤2：分类处理\n- **业务代码**：将`unwrap()`改为`expect(\"context: reason\")`\n- **测试代码**：可保持`unwrap()`或改为`expect(\"test: context\")`\n- **基础设施代码**：panic是合理行为，只需改进错误信息\n\n### 步骤3：错误信息格式化\n- **业务代码格式**：`\"{module_name} {resource} lock poisoned\"`\n- **测试代码格式**：`\"test: {context} lock poisoned\"`\n- **条件变量格式**：`\"{module_name} condvar wait failed\"`\n\n### 步骤4：验证流程\n1. 执行`cargo check`确保编译通过\n2. 检查是否有遗漏的unwrap使用\n3. 验证错误信息是否清晰有用\n\n## 注意事项\n- 不要改变原有的错误处理策略（继续panic）\n- 不要改变锁的获取逻辑\n- 测试代码中的unwrap()可以根据需要选择是否改进\n- 注意第96行这类被忽略的join()结果保持现状\n\n## 可选步骤\n- 运行`cargo clippy`检查是否有其他可改进之处\n- 考虑添加单元测试验证错误处理行为"
+}

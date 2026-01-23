@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rich表格显示配置",
+  "content": "1. 问题重述：\n   当使用Rich库创建表格需要实现自动换行功能时，如何正确配置表格参数\n\n2. 解决流程：\n   - 步骤1: 创建Table对象时确保启用expand=True参数以使用最大可用宽度\n   - 步骤2: 添加列时设置no_wrap=False参数以启用自动换行\n   - 步骤3: 结合overflow=\"fold\"参数控制长文本的折叠方式\n   - 步骤4: 使用ratio参数调整列宽比例\n\n3. 典型配置示例:\n   ```python\n   table.add_column(\n       \"\", \n       style=\"bright_white\", \n       overflow=\"fold\",  # 控制超长内容处理方式\n       ratio=10,  # 设置列宽比例\n       no_wrap=False  # 启用自动换行\n   )\n   ```\n\n4. 注意事项:\n   - overflow参数与no_wrap参数需要配合使用\n   - ratio参数会影响自动换行的效果，需要根据实际内容调整\n   - expand=True必须设置才能让表格充分利用可用宽度"
+}

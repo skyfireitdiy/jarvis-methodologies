@@ -1,0 +1,4 @@
+{
+  "problem_type": "C到Rust函数TDD转译-assign_lvar_offsets",
+  "content": "## TDD 实施计划：assign_lvar_offsets 函数转译\n\n### 阶段1：RESEARCH - 已完成的分析\n- ✅ 分析了目标文件结构（x86_64.rs为空文件）\n- ✅ 确认了Obj和Type结构定义\n- ✅ 识别了未实现依赖：has_flonum, align_to\n\n### 阶段2：INNOVATE - 测试用例设计\n设计的测试用例覆盖：\n1. 空函数列表测试\n2. 无参数无局部变量测试\n3. 寄存器参数测试（整型、浮点型）\n4. 栈参数测试\n5. 局部变量测试\n6. 结构体参数测试（has_flonum逻辑）\n7. 数组对齐测试（>16字节特殊对齐）\n8. 混合情况测试\n\n### 阶段3：PLAN - 具体实施步骤\n\n#### 步骤3.1：添加测试模块和基础结构\n- 在x86_64.rs中添加#[cfg(test)] mod tests\n- 创建测试辅助函数：create_test_function, create_test_var等\n- 实现基础测试用例\n\n#### 步骤3.2：实现依赖函数\n- 实现 align_to 函数（对齐函数）\n- 实现 has_flonum 函数（浮点成员检测）\n- 确保这些函数先测试后实现\n\n#### 步骤3.3：实现主体函数\n- 实现 assign_lvar_offsets 函数\n- 确保所有测试通过\n\n#### 步骤3.4：验证和重构\n- 验证行为与C代码完全一致\n- 代码风格优化\n\n### 阶段4：EXECUTE - 分步实施\n按上述顺序逐步实施，每一步确保编译通过"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust UTF-16字符串字面量转义解析集成",
+  "content": "问题重述：\n在Rust项目中需要将UTF-16字符串字面量的转义字符解析功能集成到词法分析器，同时保持接口兼容性。\n\n可复用解决流程：\n1. **依赖验证**：首先确认转义解析器已存在（parse_escape_sequences和encode_utf16函数）\n2. **接口分析**：检查现有接口签名（如`fn read_utf16_string_literal(text: &str) -> Token`）保持不变\n3. **集成实现**：\n   - 导入必要的工具函数：`use crate::util::string::{parse_escape_sequences, encode_utf16};`\n   - 更新字符串处理函数，使用`parse_escape_sequences`解析转义字符\n   - 调用`encode_utf16`完成UTF-8到UTF-16编码转换\n   - 保持返回类型与原有接口一致\n4. **错误处理**：转义解析失败时返回原始文本，确保系统不中断\n5. **测试验证**：\n   - 空字符串处理测试\n   - 转义字符解析测试（\\n, \\t, \\r等）\n   - Unicode转义序列测试（\\uXXXX）\n   - 边界情况测试\n\n注意事项：\n- 必须使用`match`表达式处理Result类型的返回值\n- 保持十六进制字符串格式与现有接口兼容\n- 确保所有现有单元测试继续通过\n\n可选步骤：\n- 添加UTF-32字符串字面量支持时可复用相同模式"
+}

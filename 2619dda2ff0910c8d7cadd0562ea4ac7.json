@@ -1,0 +1,4 @@
+{
+  "problem_type": "fish shell命令补全功能实现",
+  "content": "1. **问题重述**: 如何可靠地为fish shell实现命令补全功能\n\n2. **最优解决方案**:\n   - 使用`get_shell_name()`确认当前shell类型 (read_code)\n   - 使用`type -q`命令检查函数是否已加载 (execute_script)\n   - 检查config.fish文件内容确认函数是否已定义但未加载 (read_code)\n   - 追加函数定义到config.fish文件 (PATCH)\n   - 提供明确的用户指导(source命令)\n\n3. **注意事项**:\n   - 必须区分\"已加载\"和\"已定义但未加载\"两种状态\n   - 文件写入后需要用户手动source或重启shell\n   - 优先使用fish命令检查函数状态而非仅检查文件内容\n   - 确保config.fish文件存在，必要时创建\n\n4. **可选步骤**:\n   - 可以添加自动source功能，但需要考虑安全性\n   - 对于复杂函数定义，可以拆分为单独文件并通过config.fish加载"
+}

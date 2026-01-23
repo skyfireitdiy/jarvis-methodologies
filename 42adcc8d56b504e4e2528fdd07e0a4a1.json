@@ -1,0 +1,4 @@
+{
+  "problem_type": "UTF-32单元测试验证",
+  "content": "问题重述：验证UTF-32相关功能是否已添加全面的单元测试，确保覆盖所有边界条件、字符类型和转义场景。\n\n可复用解决流程：\n1. **代码检查阶段**：使用read_code工具查看src/util/string.rs文件，确认UTF-32相关函数（utf8_to_utf32）和测试函数是否存在\n2. **测试用例验证**：通过execute_script运行`cargo test test_utf8_to_utf32_*`验证具体测试用例\n3. **边界条件检查**：验证测试是否覆盖U+0000到U+10FFFF完整Unicode范围的关键边界值\n4. **字符类型验证**：确认测试包含ASCII、BMP字符、辅助平面字符、emoji、多语言字符、组合字符等\n5. **转义字符测试**：验证parse_escape_sequences函数是否包含完整的Unicode转义序列测试\n6. **结果确认**：确保所有测试通过cargo test验证\n\n注意事项：\n- 必须验证测试覆盖率报告是否存在（如果要求）\n- 边界测试必须包含：U+0000, U+007F, U+FFFF, U+10000, U+10FFFF\n- 转义测试必须覆盖\\uXXXX和\\UXXXXXXXX格式\n- 所有测试必须实际可运行并通过\n\n可选步骤：\n- 如需要覆盖率报告，可配置cargo-tarpaulin工具\n- 可添加无效Unicode码点处理测试"
+}

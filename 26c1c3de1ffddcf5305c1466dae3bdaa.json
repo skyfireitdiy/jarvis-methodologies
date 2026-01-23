@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust测试函数重复定义修复",
+  "content": "# Rust测试函数重复定义修复方法论\n\n## 问题重述\nRust项目中测试函数被重复定义，导致编译错误：error[E0428]: the name `test_xxx` is defined multiple times。\n\n## 可复用解决流程\n\n1. **问题识别**\n   - 使用工具：read_code + execute_script\n   - 步骤：扫描文件查找#[test]标记的重复函数定义\n   - 重点检查：模块外独立#[test]函数 vs #[cfg(test)] mod tests块内函数\n\n2. **定位重复项**\n   ```bash\n   # 查找所有测试函数定义\n   grep -n \"^#\\\\[test\\\\]\" src/**/*.rs\n   # 查找函数名重复情况\n   grep -E \"fn test_[a-zA-Z_]+\" src/**/*.rs | sort | uniq -d\n   ```\n\n3. **标准化修复**\n   - 保留：#[cfg(test)] mod tests块内的测试函数\n   - 删除：模块外独立定义的重复测试函数\n   - 工具：execute_script (sed -i '行号范围d' 文件)\n\n4. **验证修复**\n   - 执行 cargo check 确保无编译错误\n   - 执行 cargo test 确保测试仍可运行\n   - 检查剩余测试函数功能完整性\n\n## 注意事项\n- 删除前确认mod tests块内确实有对应的测试函数\n- 确认被删除的函数没有特殊用途（如集成测试）\n- 保持代码风格一致性\n\n## 可选步骤\n- 可以添加自动化检查到CI流程防止重复定义\n- 考虑使用工具统一格式化测试代码结构"
+}

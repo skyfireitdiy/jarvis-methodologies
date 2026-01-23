@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust项目crate批量分析",
+  "content": "问题重述：需要分析Rust项目中多个crate的目录结构、依赖关系和构建配置，为批量操作做准备。\n\n可复用解决流程：\n1. **定位目标crate**\n   - 使用`find <目录列表> -name \\\"Cargo.toml\\\"`获取所有crate路径\n   - 通过`wc -l`验证总数是否符合预期\n\n2. **分析crate状态**\n   - 对于每个Cargo.toml文件，使用dirname获取crate根目录\n   - 检查build.rs存在状态：`[ -f \\\"$dir/build.rs\\\" ]`\n   - 识别主源文件：`[ -f \\\"$dir/src/main.rs\\\" ]`或`[ -f \\\"$dir/src/lib.rs\\\" ]`\n\n3. **提取依赖信息**\n   - 使用`rg -i \\\"依赖名\\\" \\\"$cargo\\\"`搜索特定依赖格式\n   - 记录依赖的具体声明形式（包括path、features等）\n\n4. **生成结构化报告**\n   - 按目录结构分类整理结果\n   - 标记每个crate的特殊状态（已有build.rs、需要处理等）\n\n注意事项：\n- 使用sort确保输出顺序一致，便于验证\n- 对于大量crate，使用head/tail限制输出长度\n- 考虑使用parallel工具加速批量操作\n\n可选步骤：\n- 生成JSON格式报告便于程序处理\n- 创建差异报告对比处理前后的变化"
+}

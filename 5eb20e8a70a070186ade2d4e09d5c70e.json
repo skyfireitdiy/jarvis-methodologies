@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust原子操作下溢修复",
+  "content": "## 问题重述\n当需要将C语言的无符号整数下溢行为转换到Rust时，原子操作可能导致panic或测试失败。\n\n## 可复用解决流程\n\n### 步骤1：识别下溢问题\n- 运行测试：`cargo test -- --nocapture`\n- 查找panic信息：\"attempt to subtract with overflow\"\n- 定位到涉及原子操作减法的代码\n\n### 步骤2：分析期望行为\n- 检查测试用例期望（如返回usize::MAX）\n- 确认是否需要模拟C语言的无符号回绕行为\n- 验证边界条件测试\n\n### 步骤3：精确修复\n使用以下模式替换：\n```rust\n// 旧代码（会panic）\nlet result = atomic.fetch_sub(1, Ordering::Relaxed) - 1;\n\n// 新代码（正确处理下溢）\nlet old_value = atomic.fetch_sub(1, Ordering::Relaxed);\nlet result = old_value.wrapping_sub(1);\n```\n\n### 步骤4：验证修复\n1. 运行完整测试：`cargo test`\n2. 验证边界测试：`cargo test test_name -- --nocapture`\n3. 检查无回归：确保其他测试仍通过\n\n### 注意事项\n- 始终使用 `wrapping_sub` 而不是普通减法处理原子操作\n- 对于 `fetch_add` 同样适用 `wrapping_add`\n- 确认测试用例确实期望下溢行为，而非逻辑错误\n\n### 可选步骤\n如需调试，可添加：\n```rust\neprintln!(\"DEBUG: old_value={}, new_value={}\", old_value, result);\n```"
+}

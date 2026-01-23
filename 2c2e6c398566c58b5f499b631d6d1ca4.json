@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust作用域管理测试失败修复",
+  "content": "问题重述：Rust作用域管理模块测试中，test_push_tag_scope_normal标签查找失败，test_push_tag_scope_multiple_scopes作用域计数错误。\n\n可复用解决流程：\n1. **复现问题**：运行具体测试用例，收集错误信息\n   ```bash\n   cargo test test_push_tag_scope_normal -- --nocapture\n   cargo test test_push_tag_scope_multiple_scopes -- --nocapture\n   ```\n\n2. **分析测试逻辑**：\n   - 检查clear_scopes()是否正确重置作用域状态\n   - 验证add_tag和find_tag的键值一致性\n   - 确认作用域层级和遍历顺序\n\n3. **定位具体错误**：\n   - 查找重复的状态清理调用（如clear_scopes()被调用多次）\n   - 检查初始作用域计数计算逻辑\n   - 验证作用域链遍历是否正确\n\n4. **修复验证**：\n   - 确保clear_scopes()正确重置为单作用域状态\n   - 验证push_scope()正确增加作用域数量\n   - 确认find_tag能正确遍历作用域链\n\n5. **测试通过确认**：重新运行所有相关测试确保通过\n\n注意事项：\n- 使用全局状态管理时，测试隔离性至关重要\n- clear_scopes()实现应包括：scopes.clear() + 添加默认作用域\n- 避免在测试中重复调用状态清理函数\n- 使用TEST_LOCK确保测试串行执行\n\n可选步骤：\n- 添加调试输出验证作用域状态\n- 创建专门的测试辅助函数确保状态一致性"
+}

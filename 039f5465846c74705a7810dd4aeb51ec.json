@@ -1,0 +1,4 @@
+{
+  "problem_type": "C到Rust原子操作移植",
+  "content": "问题重述：\n在将C代码移植到Rust时，C中的原子操作`depth += sz/8`与Rust的`AtomicUsize::fetch_add`行为不一致。C返回新值，而Rust返回旧值，导致计数器更新逻辑错误。\n\n可复用解决流程：\n1. **识别差异**：明确C和Rust原子操作的行为差异\n   - C: `variable += increment` 返回新值\n   - Rust: `AtomicUsize::fetch_add(increment)` 返回旧值\n\n2. **定位问题代码**：\n   ```bash\n   rg -A2 -B2 \"fetch_add\" src/\n   ```\n\n3. **修复模式**：\n   ```rust\n   // 原C代码：depth += sz/8;\n   // 错误Rust移植：DEPTH.fetch_add(depth_add, Ordering::Relaxed);\n   // 正确Rust移植：DEPTH.fetch_add(depth_add, Ordering::Relaxed) + depth_add;\n   ```\n\n4. **验证修复**：\n   - 运行特定测试：`cargo test test_push_struct_aligned_size`\n   - 检查期望值vs实际值\n   - 确保所有相关测试通过\n\n5. **回归测试**：\n   ```bash\n   cargo test codegen::x86_64::tests::test_push_struct_\n   ```\n\n注意事项：\n- 确保原子操作的顺序一致性要求（Ordering参数）\n- 检查是否有类似模式的其他函数需要修复（如pop函数）\n- 使用wrapping_add处理溢出以保持与C行为一致\n\n可选步骤：\n- 使用clippy检查潜在问题：`cargo clippy`\n- 添加边界值测试验证溢出处理"
+}

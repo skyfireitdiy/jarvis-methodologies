@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust项目配置自定义编译器",
+  "content": "问题重述: 如何在Rust项目中配置特定架构的自定义C编译器\n\n最优解决方案:\n1. 项目结构分析: 使用fd命令确认项目结构\n2. 创建配置: 在.cargo目录下创建config.toml文件\n3. 指定编译器: 在config.toml中为目标架构配置linker路径\n4. 验证配置: 使用cargo build -v命令验证编译器是否生效\n\n注意事项:\n- 确保指定的编译器路径存在且可执行\n- 确认目标架构名称正确(如x86_64-unknown-linux-gnu)\n- 如果项目有跨平台需求，需要为不同平台分别配置\n\n可选步骤:\n- 可以通过环境变量RUSTFLAGS临时覆盖配置\n- 对于复杂项目，可以在build.rs中进一步控制编译过程"
+}

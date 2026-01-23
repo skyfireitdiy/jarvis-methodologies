@@ -1,0 +1,4 @@
+{
+  "problem_type": "delete_pycache_directories",
+  "content": "# 删除所有__pycache__目录\n## 问题重述\n需要删除项目中的所有__pycache__目录，以清理Python编译缓存。\n\n## 最优解决方案\n使用`find`命令递归查找并删除所有__pycache__目录。\n\n## 注意事项\n确保在执行删除操作前备份重要数据，避免误删其他目录。"
+}

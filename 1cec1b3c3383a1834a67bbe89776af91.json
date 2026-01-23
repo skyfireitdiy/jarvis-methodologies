@@ -1,0 +1,4 @@
+{
+  "problem_type": "C函数到Rust的TDD转译",
+  "content": "# C函数到Rust的TDD转译方法论\n\n## 问题重述\n将C语言函数转换为Rust实现，使用测试驱动开发(TDD)方法，确保行为一致性。\n\n## 可复用解决流程\n\n### 阶段1：RESEARCH（信息收集）\n- 使用`read_code`获取C函数源码和上下文\n- 使用`read_symbols`识别未转换的符号\n- 确认Type结构体定义和依赖关系\n- 检查目标文件结构\n\n### 阶段2：PLAN（计划制定）\n- 识别需要扩展的枚举/结构体（如TypeKind::LongDouble）\n- 设计测试用例覆盖所有分支：\n  - 主要功能路径\n  - 边界情况（size=1,2,4,8,...）\n  - 类型变种（signed/unsigned）\n  - 特殊类型（Array, Struct等）\n\n### 阶段3：RED（测试先行）\n- 在测试模块中添加`#[cfg(test)]`测试函数\n- 测试命名规范：`test_<function_name>_<scenario>`\n- 每个测试验证特定输出或行为\n\n### 阶段4：GREEN（实现功能）\n- 实现必要的枚举扩展（如添加LongDouble）\n- 添加辅助构造函数（如Type::long_double()）\n- 实现核心函数逻辑，匹配C代码分支\n- 使用println!输出汇编指令\n\n### 阶段5：验证\n- 运行针对性测试：`cargo test test_<function>_`\n- 运行完整测试套件：`cargo test`\n- 检查编译：`cargo check`\n\n## 注意事项\n- 常量值必须与原始C程序保持一致\n- 测试用例必须可编译通过才能进入GREEN阶段\n- 保持最小变更，避免无关重构\n- 中文注释，禁止通配导入\n- 资源释放类函数可通过RAII自动管理\n\n## 可选步骤\n- 添加边界值测试（size=0, 极大值）\n- 添加错误情况测试（如有）\n- 性能优化（如必要）"
+}

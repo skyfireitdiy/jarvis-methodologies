@@ -1,0 +1,4 @@
+{
+  "problem_type": "C-to-Rust TDD移植",
+  "content": "TDD实现get_file_type任务列表：\n\n1. 补全FileType枚举 - 添加Obj, Ar, Dso变体\n2. 编写测试用例 - 覆盖所有扩展名(.c,.s,.o,.a,.so)、opt_x优先、未知扩展名错误处理\n3. 实现get_file_type函数 - 严格映射C逻辑：opt_x优先→扩展名匹配→未知扩展名返回Err\n4. 运行测试验证 - 确保所有用例通过\n5. 清理代码 - 保持Rust风格，添加必要注释"
+}

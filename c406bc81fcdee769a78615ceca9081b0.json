@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust测试状态污染问题修复",
+  "content": "# Rust测试状态污染问题修复方法论\n\n## 问题重述\n当Rust测试批量运行时失败，但单独运行时成功，通常是测试间状态污染导致的。全局静态变量或共享状态在测试间未正确清理。\n\n## 可复用解决流程\n\n### 步骤1：确认问题性质\n```bash\n# 运行单个测试验证逻辑正确性\ncargo test test_name -- --nocapture\n\n# 运行所有测试验证状态污染\ncargo test -- --nocapture\n```\n\n### 步骤2：定位污染源\n- 识别所有全局静态变量或共享状态\n- 检查测试用例间的依赖关系\n- 确认是否有测试修改全局状态但未清理\n\n### 步骤3：实现完全清理\n对于全局静态变量，实现彻底的清理函数：\n\n```rust\n#[cfg(test)]\npub fn clear_global_state() {\n    // 方法1: 完全重新初始化\n    let mut vec = GLOBAL_VEC.lock().unwrap();\n    *vec = Vec::new(); // 清空所有容量\n   \n    // 方法2: 清空并保留容量（如果性能重要）\n    vec.clear();\n   \n    // 方法3: 重置其他相关状态\n    drop(vec); // 显式释放锁\n    clear_related_states();\n}\n```\n\n### 步骤4：验证修复\n```bash\n# 重跑所有测试确认修复\ncargo test -- --nocapture\n```\n\n## 注意事项\n- 优先使用完全重新初始化（Vec::new()）确保无残留状态\n- 清理函数应在每个测试前调用，或使用#[test]属性确保执行\n- 检查是否有其他测试修改了同一全局状态\n- 考虑使用thread_local!隔离测试状态\n\n## 可选步骤\n- 添加调试输出定位具体哪个测试导致污染\n- 考虑重构代码减少全局状态依赖\n- 使用测试框架的setup/teardown机制"
+}

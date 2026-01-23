@@ -1,0 +1,4 @@
+{
+  "problem_type": "分析cacheflush系统调用实现",
+  "content": "ARM32架构下cacheflush系统调用实现分析：\n1. 系统调用号定义在arch/arm/include/uapi/asm/unistd.h中\n2. 主要实现在arch/arm/kernel/traps.c文件中\n3. 调用流程：\n   - arm_syscall()处理系统调用(NR(cacheflush)分支)\n   - 调用do_cache_op()进行参数校验\n   - 调用__do_cache_op()执行实际缓存操作\n   - 最终调用flush_icache_user_range()完成缓存刷新\n4. 关键参数：\n   - start: 缓存刷新起始地址\n   - end: 缓存刷新结束地址\n   - flags: 保留参数(当前必须为0)\n5. 实现特点：\n   - 按页大小分块处理\n   - 支持用户空间地址校验\n   - 处理信号中断"
+}

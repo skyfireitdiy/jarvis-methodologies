@@ -1,0 +1,5 @@
+{
+  "problem_type": "Rust测试验证方法论",
+  "content": "通用Rust测试验证方法论：\n1. 测试完整性验证流程：\n   - 执行cargo test -- --nocapture获取完整输出\n   - 验证测试计数（expected vs actual）\n   - 确认新增边界测试用例存在\n   - 检查特定功能模块测试覆盖率\n2. 边界测试用例设计模式：\n   - Unicode字符处理\n   - Null字符边界\n   - 长字符串压力测试\n   - 错误处理分支\n3. 验证策略：只运行相关的测试用例以提升验证速度\n4. 回归测试验证：重点检查修复的问题是否引入新的失败",
+  "scope": "global"
+}

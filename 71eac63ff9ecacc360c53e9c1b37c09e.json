@@ -1,0 +1,4 @@
+{
+  "problem_type": "bzip2并行解压性能验证",
+  "content": "问题重述：\n验证bzip2-rust的并行解压实现是否成功，需要运行bench_three_way.sh脚本对比修改前后的性能，确认解压结果正确且性能有显著提升。\n\n可复用解决流程（步骤化）：\n1. 环境准备阶段\n   - 检查bench_three_way.sh脚本是否存在且可执行\n   - 确认bzip2-c、bzip2-rust、bzip2_rs三个可执行文件路径正确\n   - 清理旧的测试报告和缓存文件\n\n2. 编译构建阶段\n   - 重新编译bzip2_rs库：`cargo build --release`\n   - 重新编译bzip2-rust：`cd ../bzip2 && make`\n   - 验证可执行文件生成成功\n\n3. 性能测试阶段\n   - 运行完整测试：`./bench_three_way.sh`\n   - 监控测试进度，确保覆盖text/binary/random三种数据类型\n   - 检查测试报告three_way_benchmark_report.md生成\n\n4. 结果验证阶段\n   - 验证bench_three_way.sh运行成功（报告文件存在且完整）\n   - 分析解压性能数据对比bzip2-c vs bzip2-rust\n   - 确认所有测试数据正确解压（需要检查脚本中的校验逻辑）\n\n5. 性能分析阶段\n   - 对比不同数据规模下的解压时间\n   - 计算性能提升倍数\n   - 验证并行化带来的性能优势\n\n注意事项：\n- 大数据测试可能需要较长时间，建议在空闲时段运行\n- 测试前确保系统有足够磁盘空间（50MB测试数据）\n- 检查CPU核心数是否支持并行化测试\n\n可选步骤：\n- 如需精确验证，可在run_test函数中添加：\n  ```\n  # 解压正确性验证\n  if ! cmp -s \"$data_file\" \"${data_file}.dec\"; then\n      echo \"ERROR: 解压数据与原始数据不匹配\"\n      exit 1\n  fi\n  ```"
+}

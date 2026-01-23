@@ -1,0 +1,4 @@
+{
+  "problem_type": "Python包安装验证",
+  "content": "1. 安装验证流程：\n   - 使用`pip3 install -e .`进行可编辑模式安装（优先使用Python3环境）\n   - 使用`pip3 list`或`pip3 freeze`验证安装结果\n   - 使用`python3 -c \"import pkg_resources; print(pkg_resources.get_distribution('包名').version)\"`精确验证\n\n2. 注意事项：\n   - 优先使用pip3而不是pip，避免Python2.7兼容性问题\n   - 对于可编辑安装(-e)，确保在项目根目录执行\n   - 检查安装警告信息，特别是版本冲突提示\n\n3. 工具组合：\n   - execute_script：执行安装和验证命令\n   - file_analyzer：检查setup.py/pyproject.toml文件\n\n4. 常见问题处理：\n   - 如果出现权限问题，添加`--user`参数\n   - 如果出现版本冲突，使用`pip3 check`检查依赖关系\n   - 安装失败时，检查Python环境是否匹配(python3 --version)"
+}

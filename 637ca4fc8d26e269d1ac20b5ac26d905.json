@@ -1,0 +1,4 @@
+{
+  "problem_type": "git_diff_remote_to_head",
+  "content": "1. 问题重述\n   - 需要生成从远程分支到本地HEAD之间的差异文件（diff）。\n2. 最优解决方案\n   - 使用git diff命令比较远程分支和本地HEAD，并将结果保存到文件中。\n3. 最优方案执行步骤\n   - 检查本地仓库状态是否正常。\n   - 确认远程分支名称。\n   - 使用git diff命令生成diff文件。\n   - 检查生成的diff文件是否存在并确认其大小。"
+}

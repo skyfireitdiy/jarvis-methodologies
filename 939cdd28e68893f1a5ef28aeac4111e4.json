@@ -1,0 +1,4 @@
+{
+  "problem_type": "C函数find_tag的TDD转译",
+  "content": "# TDD实现find_tag函数的计划\n\n## 阶段1：结构准备\n1. 在scope.rs中定义Scope结构\n2. 定义全局SCOPES变量（静态作用域链）\n3. 定义TAGS映射（HashMap<String, &'static Type>）\n\n## 阶段2：测试编写（RED）\n1. 编写测试用例：空作用域返回None\n2. 编写测试用例：找到tag返回对应Type\n3. 编写测试用例：未找到tag返回None\n4. 编写测试用例：作用域嵌套优先级\n\n## 阶段3：实现（GREEN）\n1. 实现find_tag函数\n2. 实现测试辅助函数：add_tag, clear_tags\n3. 确保测试通过\n\n## 阶段4：优化（REFACTOR）\n1. 检查代码风格\n2. 验证与C实现行为一致性\n3. 清理临时代码"
+}

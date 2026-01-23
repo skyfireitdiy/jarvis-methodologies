@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust原子操作边界值测试失败诊断",
+  "content": "问题重述：\n当使用Rust原子操作（如AtomicUsize.fetch_add）进行边界值测试时，测试失败，特别是在处理usize::MAX边界值时。\n\n可复用解决流程：\n1. 验证测试失败\n   - 运行：cargo test test_name -- --nocapture\n   - 记录失败信息：期望vs实际值\n\n2. 代码审查\n   - 使用read_code检查原子操作的具体实现\n   - 关注返回值处理逻辑（fetch_add的prev值如何处理）\n\n3. 边界值分析\n   - 识别边界场景：usize::MAX-1 → usize::MAX\n   - 分析整数溢出行为：prev+1可能溢出为0\n\n4. 修复验证\n   - 使用wrapping_add替代简单加法：prev.wrapping_add(1)\n   - 验证修复：重新运行测试\n\n5. 回归测试\n   - 运行所有相关测试确保无破坏\n   - 使用cargo test -- --nocapture确认整体状态\n\n注意事项：\n- Rust在debug模式下溢出会panic，release模式下会wrap\n- 原子操作返回的是操作前的值，需要正确处理结果\n- 边界值测试必须覆盖usize::MIN和usize::MAX\n\n可选步骤：\n- 创建自定义测试用例验证特定边界条件\n- 使用println!调试输出边界值状态变化\n- 考虑使用常量如usize::MAX-1, usize::MAX-2进行测试"
+}

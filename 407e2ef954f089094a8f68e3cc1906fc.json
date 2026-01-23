@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust panic到Result转换",
+  "content": "问题重述：\n将Rust代码中的panic!调用转换为合适错误处理机制，保持功能不变，确保测试通过。\n\n可复用解决流程（步骤化+工具）：\n\n1. **识别阶段**（工具：rg）\n   ```bash\n   rg \"panic!\" src/ --type rust\n   ```\n   输出所有包含panic!的代码位置\n\n2. **分析阶段**（工具：read_code）\n   - 读取panic上下文，理解触发条件\n   - 确定函数签名是否需要更改（从T改为Result<T, E>）\n   - 评估错误类型：String还是自定义Error\n\n3. **实施阶段**\n   - 修改函数签名：返回Result<(), String>或Result<T, String>\n   - 替换panic!(\"message\")为return Err(format!(\"message\"))\n   - 确保错误信息包含有用上下文\n\n4. **调用者适配阶段**（工具：rg）\n   - 搜索所有调用点：`rg \"函数名\\(\" src/`\n   - 测试代码：使用.unwrap()处理成功预期，.is_err()验证错误\n   - 生产代码：使用?操作符或match处理\n\n5. **验证阶段**（工具：execute_script）\n   ```bash\n   cargo test -- --nocapture\n   ```\n   - 确保所有测试通过\n   - 检查无新的panic引入\n   - 验证错误处理行为正确\n\n注意事项：\n- 保持功能不变，仅改变错误处理方式\n- 测试用例需同步更新，移除#[should_panic]属性\n- 考虑错误类型的语义化，必要时创建自定义Error类型\n- 注意Result的must_use警告，调用者需显式处理\n\n可选步骤：\n- 创建错误类型枚举提高类型安全性\n- 使用thiserror crate简化错误处理\n- 添加更多边界测试验证错误处理"
+}

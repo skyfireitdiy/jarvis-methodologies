@@ -1,0 +1,4 @@
+{
+  "problem_type": "git_patch_generation",
+  "content": "# 生成并打包git补丁文件\n\n## 问题重述\n需要生成从特定分支到当前HEAD的git补丁文件，打包成压缩包，并清理临时目录\n\n## 最优解决方案\n使用git format-patch命令生成补丁，然后使用tar命令打包\n\n## 解决步骤\n1. 创建临时目录：`mkdir -p patches`\n2. 生成补丁文件：`git format-patch <base_branch> -o patches/`\n3. 打包补丁文件：`tar -czvf <output_name>.tar.gz patches/`\n4. 清理临时目录：`rm -rf patches`\n\n## 注意事项\n- 确保有足够的磁盘空间存放补丁文件\n- 在执行前确认base_branch名称正确\n- 打包前检查补丁文件是否完整生成"
+}

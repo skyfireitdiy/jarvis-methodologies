@@ -1,0 +1,4 @@
+{
+  "problem_type": "代码规范化-移除打印语句开头换行符",
+  "content": "# 代码规范化-移除打印语句开头换行符方法论\n\n## 问题重述\n项目中存在大量打印语句字符串以 \\\\n 开头的情况，需要统一清理以规范输出格式。修改规则：只删除字符串开头的 \\\\n，保持字符串中间和末尾的 \\\\n 不变。涉及的打印函数包括：print(), rprint(), console.print(), PrettyOutput.print(), PrettyOutput.auto_print()。\n\n## 可复用解决流程\n1. 查找目标目录下所有包含打印语句的文件\n   - 使用命令：find directory/ -name '*.py' -type f\n  \n2. 搜索需要修改的具体位置\n   - 使用命令：rg -F \\\"\\\\n\\\" src/directory/ | grep -E \\\"(print|console\\\\.print|PrettyOutput\\\\.print|PrettyOutput\\\\.auto_print|rprint)\\\\(\\\"\n  \n3. 对每个匹配项进行精准修改\n   - 只删除字符串开头的 \\\\n，保持字符串中间和末尾的 \\\\n 不变\n   - 使用 edit_file 工具进行精确修改\n  \n4. 验证修改结果\n   - 重复步骤2的搜索命令，确认不再存在匹配项\n   - 检查代码逻辑是否保持正常\n\n## 注意事项\n- 只修改打印语句中的字符串，不要影响其他非打印相关的字符串\n- 确保只删除字符串开头的 \\\\n，不影响字符串中间和末尾的换行符\n- 修改后验证代码逻辑正常\n- 对于复杂表达式如 `emoji + (\\\"\\\\n\\\" + emoji).join(output_lines)`，需要特别注意不要破坏原有逻辑\n\n## 可选步骤\n- 可以使用版本控制工具（如git）在修改前创建备份\n- 修改后运行相关测试确保功能正常"
+}

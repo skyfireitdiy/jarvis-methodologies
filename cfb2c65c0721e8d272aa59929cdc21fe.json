@@ -1,0 +1,4 @@
+{
+  "problem_type": "分析LittleFS文件系统代码",
+  "content": "问题重述：需要理解LittleFS文件系统Rust实现中的特定代码段功能\n\n可复用解决流程：\n1. **项目初始化识别**  \n   - 确认项目为LittleFS文件系统Rust移植版本  \n   - 识别核心文件：src/lfs/dir.rs（目录管理）、src/lfs/fs.rs（文件系统）等\n\n2. **符号定位**  \n   - 使用`lsp_client document_symbols`获取文件符号列表  \n   - 使用`execute_script \"grep -n 函数名 文件路径\"`精确定位函数定义  \n   - 使用`lsp_client definition`跳转到符号定义\n\n3. **上下文分析**  \n   - 读取目标代码前后50行获取完整上下文  \n   - 识别函数调用链：主函数→辅助函数→底层函数  \n   - 关注指针操作、错误处理、状态管理\n\n4. **数据结构理解**  \n   - 识别关键结构：Mdir（目录）、Mattr（元数据属性）、Lfs（文件系统实例）  \n   - 理解原始指针使用模式：`*const _`类型转换、内存地址操作\n\n5. **验证逻辑**  \n   - 检查测试用例：查找test_开头的函数  \n   - 验证状态常量：LFS_OK_RELOCATED、LFS_TYPE_DELETE等\n\n注意事项：\n- LittleFS使用大量unsafe代码和原始指针，需特别注意内存安全\n- 函数命名遵循C版本移植，通常以lfs_或dir_前缀开头\n- 状态管理通过返回值和全局状态结构实现\n\n可选步骤：\n- 对比C版本LittleFS源码验证Rust实现正确性\n- 使用`rg \"常量名\"`全局搜索相关定义"
+}

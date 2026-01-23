@@ -1,0 +1,4 @@
+{
+  "problem_type": "并发测试状态污染修复",
+  "content": "## Rust并发测试状态污染修复方法论\n\n### 问题重述\n当多个测试共享全局状态时（如静态变量、文件系统、数据库等），测试间可能产生状态污染，导致：\n- 单独运行测试通过\n- 完整测试套件运行失败\n- 测试结果不稳定\n\n### 解决流程\n\n1. **识别污染源**\n   ```bash\n   # 发现症状\n   cargo test -- --nocapture  # 观察失败模式\n   cargo test test_name        # 单独验证\n  \n   # 定位共享状态\n   rg \"static.*:\" src/         # 查找全局静态变量\n   ```\n\n2. **状态清理机制设计**\n   - 为每个共享状态创建重置函数\n   - 使用Mutex/Atomic确保线程安全\n   - 在测试模块中添加清理工具\n\n3. **测试修复**\n   ```rust\n   #[test]\n   fn test_example() {\n       let _guard = TEST_LOCK.lock().unwrap();\n       reset_state();  // 关键：测试前重置\n      \n       // 测试逻辑\n      \n       reset_state();  // 测试后清理（可选）\n   }\n   ```\n\n4. **验证修复**\n   ```bash\n   # 多次运行验证稳定性\n   for i in {1..5}; do cargo test; done\n  \n   # 并行测试验证\n   cargo test -- --test-threads=8\n   ```\n\n### 注意事项\n- 避免在测试间共享可变全局状态\n- 优先使用测试框架的setup/teardown机制\n- 考虑使用 `std::sync::Once` 确保初始化只执行一次\n- 对于复杂状态，使用临时文件或内存数据库"
+}

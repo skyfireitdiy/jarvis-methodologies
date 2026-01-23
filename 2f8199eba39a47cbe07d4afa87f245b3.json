@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust项目覆盖率分析",
+  "content": "问题重述: 如何正确分析Rust项目的代码覆盖率\n\n最优解决方案:\n1. 安装覆盖率工具:\n   - cargo install cargo-llvm-cov (优先选择)\n   - cargo install cargo-tarpaulin (备选)\n   - 使用execute_script验证工具是否安装\n\n2. 准备测试环境:\n   - 确保项目有足够的测试用例\n   - 使用execute_script运行cargo test验证测试\n\n3. 运行覆盖率分析:\n   - cargo llvm-cov --html --output-dir ./coverage (推荐)\n   - 或 cargo tarpaulin --out Html --output-dir ./coverage --ignore-tests\n\n4. 查看报告:\n   - 打开生成的HTML报告\n\n注意事项:\n1. 确保程序不会异常退出，否则会导致覆盖率数据损坏\n2. 需要足够的测试用例才能获得有意义的覆盖率数据\n3. 对于随机返回结果的函数，需要多次运行或mock测试\n\n可选步骤:\n1. 对于简单项目可直接使用llvm-cov run手动收集数据\n2. 对于持续集成环境可添加--json参数生成机器可读报告"
+}

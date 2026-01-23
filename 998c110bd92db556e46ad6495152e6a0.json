@@ -1,0 +1,4 @@
+{
+  "problem_type": "为命令行工具添加历史记录功能",
+  "content": "问题重述: 如何为命令行交互工具添加持久化历史记录功能\n\n最优解决方案:\n1. 项目结构分析: 使用fd/rg查找相关输入处理文件\n2. 确定历史存储位置: 使用项目统一的数据目录管理函数(get_data_dir)而非硬编码路径\n3. 实现历史记录:\n   - 导入prompt_toolkit.history.FileHistory\n   - 使用get_data_dir获取存储路径\n   - 初始化PromptSession时传入FileHistory实例\n4. 静态检查: 使用pylint验证修改\n\n注意事项:\n- 确保历史目录可写\n- 保持原有功能不变\n- 优先使用项目已有的配置管理函数\n\n可选步骤:\n- 对于简单工具可直接使用~目录\n- 可添加历史记录大小限制"
+}

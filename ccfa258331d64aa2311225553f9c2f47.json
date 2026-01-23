@@ -1,0 +1,4 @@
+{
+  "problem_type": "Linux capabilities",
+  "content": "# Linux capabilities\n## Problem Restatement\nUnderstand and manage Linux capabilities to grant specific privileges to non-root processes.\n\n## Optimal Solution\nUse the `setcap` command to assign specific POSIX capabilities to binaries or scripts, allowing them to perform privileged operations without requiring root access.\n\n## Notes\n- Always assign the minimum required capabilities to minimize security risks.\n- Be cautious when applying capabilities to shell scripts; consider the implications of inheriting capabilities.\n- Regularly review and audit capabilities assigned to files to ensure they align with security policies.\n- Refer to the official Linux manual page (`man 7 capabilities`) for the complete and authoritative list of capabilities."
+}

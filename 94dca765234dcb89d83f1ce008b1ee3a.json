@@ -1,0 +1,4 @@
+{
+  "problem_type": "C-to-Rust-function-TDD-translation",
+  "content": "## TDD实现计划：push_cond_incl函数\n\n### 阶段1：定义数据结构和常量\n1. 定义CondInclCtx枚举：包含IN_THEN, IN_ELIF, IN_ELSE三个变体\n2. 定义CondIncl结构体：包含next指针、ctx、tok、included字段\n3. 定义全局状态：COND_INCL链表头指针\n\n### 阶段2：设计测试用例\n1. 测试基本功能：创建新节点，验证字段值\n2. 测试链表操作：验证头插法正确性\n3. 测试边界情况：链表初始状态\n4. 测试多次调用：链式创建节点\n\n### 阶段3：实现函数逻辑\n1. 实现push_cond_incl函数：创建Box<CondIncl>，设置字段，头插链表\n2. 实现全局状态访问：获取和更新COND_INCL指针\n\n### 阶段4：验证和重构\n1. 运行所有测试确保通过\n2. 检查内存安全性\n3. 优化代码风格和注释"
+}

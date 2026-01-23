@@ -1,0 +1,4 @@
+{
+  "problem_type": "nginx_source_installation",
+  "content": "# Nginx源码部署方法论\n## 问题重述\n从源码构建并部署Nginx服务到指定端口\n\n## 最优解决方案\n1. 源码获取：\n   - 使用search_web工具查找最新稳定版下载URL\n   - 使用execute_script工具下载并解压源码包\n\n2. 编译安装：\n   - 使用execute_script工具检查编译环境(gcc/make)\n   - 标准三步：./configure → make → make install\n   - 可定制参数：--prefix指定安装目录\n\n3. 服务配置：\n   - 使用execute_script工具修改nginx.conf关键参数\n   - 执行nginx -t测试配置\n\n4. 服务管理：\n   - 启动：nginx -c /path/to/nginx.conf\n   - 检查端口：netstat -tulnp | grep [port]\n\n## 注意事项\n- 确保目标端口未被占用\n- 生产环境建议使用非root用户运行\n- 重要配置修改前备份原文件\n- 配置文件修改后必须执行nginx -t测试语法\n\n## 验证方法\n1. 检查进程：ps aux | grep nginx\n2. 检查端口：netstat -tulnp | grep [port]\n3. 访问测试：curl http://localhost:[port]"
+}

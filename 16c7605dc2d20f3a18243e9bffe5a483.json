@@ -1,0 +1,4 @@
+{
+  "problem_type": "C到Rust内存管理转换",
+  "content": "# C到Rust内存管理转换方法论\n\n## 问题重述\n将C代码中的裸指针和手动内存管理转换为Rust的所有权系统，保持功能一致性同时确保内存安全。\n\n## 可复用解决流程\n\n### 1. 分析阶段\n- 使用read_code读取C源实现\n- 识别关键数据结构（如VarScope）\n- 分析内存分配和释放模式\n\n### 2. 设计阶段\n- 为C结构体创建对应的Rust结构体\n- 设计智能指针（Box/Vec）替代裸指针\n- 规划所有权生命周期\n\n### 3. 实现阶段\n- 使用Box::new()替代malloc\n- 使用Box::into_raw()存储到哈希表\n- 在Drop trait中实现安全的资源清理\n\n### 4. 验证阶段\n- 编译检查所有权问题\n- 运行测试验证功能正确性\n- 检查内存泄漏\n\n## 注意事项\n- 避免clone()导致的双重释放\n- 在Drop中添加空指针检查\n- 保持与C版本API兼容性\n\n## 关键模式\n```rust\n// 安全存储和清理\nlet ptr = Box::into_raw(val);\nhashmap_put(&mut map, key, ptr);\n\n// Drop实现\nif !ptr.is_null() && ptr as usize != usize::MAX {\n    let _ = Box::from_raw(ptr as *mut T);\n}\n```"
+}

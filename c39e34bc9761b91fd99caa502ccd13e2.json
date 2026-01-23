@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust递归处理HashMap可变借用",
+  "content": "## Rust中递归处理HashMap可变借用的解决流程\n\n### 问题场景\n当需要在Rust中递归遍历并修改HashMap中的值时，会遇到\\\"cannot borrow as mutable more than once\\\"的错误。\n\n### 解决流程\n1. **问题识别**：确认是递归调用导致的可变借用冲突\n2. **策略选择**：\n   - 方法一：先收集所有key，然后逐个处理（适用于简单场景）\n   - 方法二：clone-remove-insert模式（推荐用于递归场景）\n3. **实现步骤**：\n   ```\n   // 步骤1：收集需要处理的keys\n   let keys: Vec<K> = map.keys().cloned().collect();\n  \n   // 步骤2：逐个处理\n   for key in keys {\n       if let Some(mut value) = map.remove(&key) {\n           // 步骤3：执行处理逻辑\n           process_recursive(&mut value, map);\n          \n           // 步骤4：插回map\n           map.insert(key, value);\n   }\n   }\n   ```\n4. **注意事项**：\n   - 确保clone的成本在可接受范围\n   - 处理顺序可能影响结果（如果需要严格顺序，使用Vec存储原始顺序）\n   - 考虑循环引用的情况（本例中通过is_live标志避免无限递归）\n\n### 应用示例\n见`mark_live`函数实现：递归标记函数为live状态时，使用此方法解决HashMap&lt;String, Obj&gt;的可变借用问题。"
+}

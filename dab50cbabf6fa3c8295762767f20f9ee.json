@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust项目文件结构调整",
+  "content": "问题重述: 需要调整Rust项目的文件结构，如将lib.rs改为main.rs等\n\n最优解决方案:\n1. 使用fd工具确认当前项目结构 (execute_script)\n2. 使用read_code检查源文件内容 (read_code)\n3. 确认文件重命名不会影响功能 (execute_script)\n4. 执行重命名操作 (execute_script)\n5. 验证重命名后的项目能否正常编译 (execute_script)\n\n注意事项:\n1. 确保重命名后Cargo.toml配置仍然正确\n2. 检查是否有其他文件引用了被重命名的文件\n3. 保留文件内容不变，只修改文件名\n\n可选步骤:\n1. 如果需要同时修改文件内容，应先完成重命名再修改内容\n2. 对于复杂项目，可以先创建新文件再逐步迁移内容"
+}

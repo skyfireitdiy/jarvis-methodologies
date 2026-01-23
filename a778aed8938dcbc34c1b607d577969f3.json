@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust全局状态测试污染问题",
+  "content": "# Rust全局状态测试污染解决方法论\n\n## 问题识别\n- 现象：测试单独运行通过，批量运行失败\n- 根因：全局静态变量状态在测试间未正确隔离\n- 关键指标：测试顺序依赖性、状态计数异常\n\n## 解决流程\n1. **定位污染源**：使用调试输出追踪状态变化\n   - 在测试前后输出全局状态计数\n   - 标记关键状态变化点\n\n2. **修复清理函数**：\n   ```rust\n   pub fn clear_state() {\n       let mut state = GLOBAL_STATE.lock().unwrap();\n       *state = Default::default(); // 完全重置\n       // 或 *state = Vec::new(); 对于Vec类型\n   }\n   ```\n\n3. **验证修复**：\n   - 单独运行每个测试：`cargo test test_name -- --nocapture`\n   - 批量运行所有相关测试：`cargo test module::tests`\n   - 对比状态计数和行为\n\n4. **最佳实践**：\n   - 避免全局可变状态\n   - 使用测试隔离模式\n   - 每个测试独立setup/teardown\n\n## 工具使用\n- `cargo test -- --nocapture`：查看调试输出\n- `RUST_BACKTRACE=1`：获取完整错误信息\n- 调试宏：在关键位置添加`println!`输出状态"
+}

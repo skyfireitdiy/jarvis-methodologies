@@ -1,0 +1,4 @@
+{
+  "problem_type": "修复 Rust 代码中的 unwrap() 错误处理问题",
+  "content": "问题重述：需要将 Rust 代码中的 unwrap() 调用替换为 expect() 并提供有意义的错误信息，同时保持原有逻辑不变。\n\n可复用解决流程：\n1. 定位目标代码：使用 read_code 工具读取指定文件的指定行号，确认存在 unwrap() 调用\n2. 分析上下文：检查 unwrap() 的使用场景，确定合适的错误信息\n3. 执行替换：将 unwrap() 改为 expect(\"meaningful error message\")\n4. 验证修改：执行 cargo check 确保代码能正常编译\n5. 测试验证：如果涉及功能变更，运行相关测试确保行为正确\n\n注意事项：\n- 对于 Mutex::lock() 等同步原语，unwrap() 通常可安全替换为 expect()，因为锁中毒表示程序状态已损坏\n- 错误信息应具体到被操作的对象，如 \\\"waiters lock poisoned\\\" 比 \\\"lock failed\\\" 更有用\n- 保持向后兼容，不改变公开 API\n- 修改后必须能通过 cargo check\n\n可选步骤：\n- 如果涉及复杂逻辑，可先添加测试确保修改前后行为一致\n- 对于可能失败的操作，考虑是否需要返回 Result 而不是 panic\n- 检查是否有类似的 unwrap() 模式需要批量修复"
+}

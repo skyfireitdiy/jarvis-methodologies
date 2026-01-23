@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust clippy警告修复",
+  "content": "## Rust Clippy警告修复方法论\n\n### 问题重述\n消除Rust项目中的clippy警告，确保代码质量和风格一致性。\n\n### 可复用解决流程\n\n**步骤1：自动修复**\n```bash\ncargo clippy --fix --allow-dirty --allow-staged -- -D warnings\n```\n\n**步骤2：手动修复剩余警告**\n- 分析clippy输出中的具体警告类型\n- 对于`field_reassign_with_default`：使用结构体字面量初始化\n- 对于`items_after_test_module`：将函数移动到测试模块之前\n- 对于`unnecessary_cast`：移除不必要的类型转换\n\n**步骤3：验证修复**\n```bash\ncargo clippy -- -D warnings  # 确保无警告\ncargo test -- --nocapture    # 确保功能正确\n```\n\n### 注意事项\n- 保持最小改动原则\n- 修复后必须验证测试通过\n- 复杂警告需理解上下文再修复\n- 可添加`#[allow(...)]`注解处理特殊情况，但需说明原因\n\n### 可选步骤\n- 使用`cargo clippy --message-format=short`获取简短格式错误信息\n- 运行`cargo check`快速检查编译错误"
+}

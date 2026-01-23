@@ -1,0 +1,4 @@
+{
+  "problem_type": "find_gcc_libpath_tdd_implementation",
+  "content": "## TDD 实现 find_gcc_libpath 的详细计划\n\n### Phase 1: 准备依赖\n1. 添加 glob crate 到 Cargo.toml\n2. 确认当前模块结构\n\n### Phase 2: 编写测试 (Red)\n1. 在 driver.rs 的 #[cfg(test)] mod tests 中添加 find_gcc_libpath 测试\n2. 测试用例设计：\n   - test_find_gcc_libpath_returns_valid_path - 验证返回路径格式\n   - test_find_gcc_libpath_error_when_not_found - 验证错误处理\n   - test_find_gcc_libpath_path_patterns - 验证路径模式匹配\n\n### Phase 3: 实现功能 (Green)\n1. 实现 pub fn find_gcc_libpath() -> Result<String, String>\n2. 使用 glob::glob 匹配三个 C 实现中的路径模式\n3. 使用 Path::parent 获取目录路径\n4. 错误时返回 Err(\"gcc library path is not found\")\n\n### Phase 4: 验证测试 (Green)\n1. 运行 cargo test 验证所有测试通过\n2. 验证行为与 C 实现一致\n\n### Phase 5: 清理 (Refactor)\n1. 移除旧的 find_libpath 函数（如果不再需要）\n2. 清理重复代码\n3. 保持 API 稳定性"
+}

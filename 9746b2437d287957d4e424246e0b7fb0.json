@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust结构体初始化字段缺失修复",
+  "content": "方法论：Rust结构体初始化字段缺失修复\n\n问题场景：\n- 测试代码中创建结构体实例时缺少必需字段\n- 编译错误：missing fields `field1`, `field2`... in initializer of `StructName`\n- 从C代码迁移到Rust时的类型映射问题\n\n解决流程：\n1. **定位结构体定义**\n   - 使用 read_code 读取结构体完整定义\n   - 或 lsp_client 搜索符号获取字段列表\n\n2. **修复初始化代码**\n   - 使用 edit_file 批量补全缺失字段\n   - 为缺失字段添加合理默认值\n   - 保持字段顺序与定义一致\n\n3. **验证修复结果**\n   - 执行 cargo test 验证测试通过\n   - 运行 cargo build 确保编译成功\n\n注意事项：\n- 优先使用结构体提供的构造函数（如 new_type()）\n- 对于复杂类型，考虑使用 Default::default()\n- 保持字段命名和类型与定义完全一致\n\n示例修复模式：\n```rust\n// 修复前（报错）\nlet ty = Type { kind: TypeKind::TY_INT, size: 4, align: 4 };\n\n// 修复后（完整）\nlet ty = Type {\n    kind: TypeKind::TY_INT,\n    size: 4,\n    align: 4,\n    origin: None,\n    is_unsigned: false,\n    base: None,\n    array_len: 0,\n    members: Vec::new(),\n    is_flexible: false,\n    return_ty: None,\n    params: Vec::new(),\n    is_variadic: false,\n    vla_len: None,\n};\n```"
+}

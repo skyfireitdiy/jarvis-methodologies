@@ -1,0 +1,4 @@
+{
+  "problem_type": "Python项目打包数据文件",
+  "content": "问题重述: 如何在Python项目打包时包含数据文件\n\n最优解决方案:\n1. 确认数据文件位置: 使用execute_script检查文件结构\n2. 修改打包配置:\n   - setup.py: 使用edit_file添加package_data配置\n   - 确保include_package_data=True\n3. 验证打包结果: \n   - 使用execute_script执行python -m build --wheel\n   - 使用unzip检查whl包内容\n\n注意事项:\n1. 确保文件路径相对于包目录正确\n2. 不同构建工具(setuptools/pipenv/poetry)配置方式不同\n3. 平台兼容性问题可能导致安装失败\n\n可选步骤:\n1. 对于复杂项目可考虑MANIFEST.in文件\n2. 可使用check-manifest工具验证文件包含"
+}

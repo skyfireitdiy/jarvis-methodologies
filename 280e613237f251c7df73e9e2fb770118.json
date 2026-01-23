@@ -1,0 +1,4 @@
+{
+  "problem_type": "rust_crate_conversion_to_dynamic_library",
+  "content": "# Rust Crate Conversion to Dynamic Library\n## Problem Restatement\nNeed to convert a Rust crate from a static library to a dynamic library and ensure dependent crates can properly use it.\n\n## Optimal Solution\n1. Modify the crate's Cargo.toml to specify `crate-type = [\"cdylib\"]` under the `[lib]` section\n2. Verify the crate builds correctly as a dynamic library\n3. Update dependent crates to reference the dynamic library\n4. Test integration between the dynamic library and dependent crates\n\n## Notes\n- Ensure proper linking and compatibility between crates\n- Verify the dynamic library works across different platforms\n- Consider versioning and dependency management implications"
+}

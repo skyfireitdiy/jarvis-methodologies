@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust中实现C语言表达式求值功能",
+  "content": "问题重述：在Rust中将C语言的eval函数移植为独立的表达式求值函数，要求支持完整运算符集，安全处理Option值，无unwrap调用。\n\n可复用解决流程：\n1. 函数签名设计：使用 `pub fn eval(node: &Node) -> Result<i64, CompileError>` 签名，不接收label参数\n2. 运算符支持清单：\n   - 算术运算：Mul、Div、Mod、Neg\n   - 位运算：BitAnd、BitOr、BitXor\n   - 移位运算：Shl、Shr\n   - 比较运算：Eq、Ne、Lt、Le\n   - 逻辑运算：Not、BitNot、LogAnd、LogOr\n3. 安全Option处理模式：\n   - 使用 `ok_or_else(|| error_tok(\"...\"))?` 代替 unwrap()\n   - 统一错误类型：CompileError\n   - 利用Rust的?操作符进行错误传播\n4. 实现结构：\n   - match node.kind 处理每种NodeKind\n   - 递归调用eval处理子表达式\n   - 类型检查和安全转换\n   - 边界条件处理（如除零、溢出）\n\n注意事项：\n- 确保正确处理有符号和无符号类型的差异\n- 注意移位运算中的符号扩展问题\n- 比较运算结果转换为i64（0或1）\n- 递归调用时注意栈溢出风险\n\n可选步骤：\n- 添加单元测试覆盖每种运算\n- 性能优化：使用尾递归或循环替代部分递归\n- 错误信息本地化"
+}

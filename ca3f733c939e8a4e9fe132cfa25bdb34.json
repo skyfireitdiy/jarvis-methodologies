@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust中Unicode字符宽度计算实现",
+  "content": "## 方法论：Rust Unicode字符宽度计算实现\n\n### 问题重述\n在Rust中实现CJK字符宽度计算，正确处理零宽、单宽、双宽字符的显示宽度。\n\n### 可复用解决流程\n\n#### 步骤1：定义字符范围\n- 创建两个静态数组：\n  - `RANGE1`: 零宽字符Unicode范围数组\n  - `RANGE2`: 双宽字符Unicode范围数组\n- 使用`u32::MAX`作为数组结束标记\n\n#### 步骤2：实现范围检查函数\n```rust\npub fn in_range(range: &[u32], c: u32) -> bool {\n    let mut i = 0;\n    while i + 1 < range.len() && range[i] != u32::MAX {\n        if range[i] <= c && c <= range[i + 1] {\n            return true;\n}\n        i += 2;\n}\n    false\n}\n```\n\n#### 步骤3：实现主函数\n```rust\npub fn char_width(c: char) -> usize {\n    let code = c as u32;\n    if in_range(&RANGE1, code) { return 0; }\n    if in_range(&RANGE2, code) { return 2; }\n    1\n}\n```\n\n#### 步骤4：验证测试\n运行测试用例验证三类字符：\n- 零宽字符：控制字符、组合标记\n- 单宽字符：ASCII、拉丁字符\n- 双宽字符：CJK字符、全角符号\n\n### 注意事项\n- 使用静态数组避免运行时内存分配\n- 范围数组大小需准确（常见错误：数组大小定义错误）\n- 测试需覆盖边界条件（如0x200B零宽空格）\n\n### 可选步骤\n如需高性能场景，可将线性扫描改为二分查找"
+}

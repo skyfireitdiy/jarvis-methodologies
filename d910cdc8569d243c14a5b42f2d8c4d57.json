@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust测试并发问题诊断",
+  "content": "问题重述：Rust测试运行出现\"double free\"、\"memory corruption\"或\"thread panicked while processing panic\"等错误。\n\n可复用解决流程：\n1. 初步诊断：使用单线程运行测试\n   cargo test -- --test-threads=1\n\n2. 结果分析：\n   - 如果单线程通过 → 并发竞态条件\n   - 如果单线程失败 → 实际代码缺陷\n\n3. 深度分析（并发问题）：\n   - 检查全局静态变量\n   - 确认是否有文件系统共享资源\n   - 分析测试间数据依赖\n\n4. 修复策略：\n   - 使用测试隔离（--test-threads=1）\n   - 重构共享状态为局部状态\n   - 添加适当的同步机制\n\n5. 验证：\n   - 多次运行确保稳定性\n   - 并行和单线程模式都通过\n\n注意事项：\n- 并发测试问题通常不是代码缺陷\n- 优先考虑测试隔离而非复杂同步\n- 记录并发问题的具体表现以便复现"
+}

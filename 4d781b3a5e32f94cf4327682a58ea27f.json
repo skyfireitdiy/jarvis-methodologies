@@ -1,0 +1,4 @@
+{
+  "problem_type": "文件描述符安全验证修复",
+  "content": "问题重述：修复C++ Socket类中文件描述符未验证导致的潜在安全问题，包括Write/Read函数和析构函数中socketHandler的有效性检查。\n\n可复用解决流程：\n1. 识别问题位置：通过安全扫描报告定位未验证文件描述符的IO操作\n2. 制定验证规则：根据项目规范确定有效性判断条件（通常fd > 0为有效）\n3. 实施最小化修改：\n   - Write函数：在write调用前添加 `if (socketHandler <= 0) { return -1; }`\n   - Read函数：添加 `if (buffer == nullptr || socketHandler <= 0) { return -1; }`\n   - 析构函数：将 `close(socketHandler)` 改为 `if (socketHandler > 0) { close(socketHandler); }`\n4. 验证修改：使用read_code工具逐行验证每个修复点\n5. 确保向后兼容：保持API签名不变，仅添加安全检查\n\n注意事项：\n- 禁止修改已有安全检查的函数（如CloseHandler）\n- 遵循项目错误处理模式，统一使用返回-1表示错误\n- 保持代码风格一致性\n\n可选步骤：\n- 检查项目中其他Socket类的类似问题\n- 验证编译是否通过\n- 运行相关测试确保功能不受影响"
+}

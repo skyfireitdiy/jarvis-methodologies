@@ -1,0 +1,4 @@
+{
+  "problem_type": "软件工具版本升级",
+  "content": "### Docker镜像源配置更新流程\n1. **检查当前配置**\n   - 工具: execute_script\n   ```bash\n   docker info | grep -i registry\n   ```\n2. **修改配置文件**\n   - 优先方式: edit_file工具编辑/etc/docker/daemon.json\n   - 如果权限不足: execute_script使用sudo重写文件\n3. **重启服务**\n   ```bash\n   sudo systemctl restart docker\n   ```\n4. **验证配置**\n   ```bash\n   docker info | grep -i registry\n   ```\n\n### 注意事项\n1. 由于系统权限问题，可能需要使用sudo操作\n2. 即使配置修改成功，docker info可能不会立即显示mirrors信息\n3. 建议通过实际拉取镜像测试源是否生效\n4. 常见失败原因：\n   - 配置文件格式错误\n   - 服务重启失败\n   - 镜像源地址不可访问\n\n### 最佳实践\n1. 配置修改前备份原文件\n2. 使用jq命令验证JSON格式\n3. 通过尝试拉取镜像验证配置"
+}

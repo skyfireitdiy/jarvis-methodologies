@@ -1,0 +1,4 @@
+{
+  "problem_type": "rust_workspace_creation",
+  "content": "# 创建Rust工作空间和多个crate\n## 问题重述\n需要创建一个Rust工作空间并在其中添加多个crate\n\n## 最优解决方案\n1. 创建工作空间目录\n2. 使用`cargo new --lib`创建所需的库crate\n3. 手动创建并配置工作空间的Cargo.toml文件，指定members列表\n\n## 注意事项\n- 不要使用`cargo new --workspace`命令，因为它不是有效的参数\n- 确保工作空间的Cargo.toml文件格式正确\n- 每个crate应作为独立项目创建后再添加到workspace\n\n## 可选步骤\n- 可以一次性创建所有crate后再配置workspace\n- 也可以逐个创建crate并逐步添加到workspace配置"
+}

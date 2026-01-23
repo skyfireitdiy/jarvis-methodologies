@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust宏参数解析测试修复",
+  "content": "问题重述：read_macro_arg_one函数需要修复4个失败的测试用例，涉及空参数、括号嵌套、逗号停止和EOF错误处理。\n\n可复用解决流程：\n1. **测试分析阶段**\n   - 使用`cargo test test_read_macro_arg_one_`运行具体测试获取失败详情\n   - 分析每个测试的期望行为：空参数返回None，括号嵌套正确计数，逗号作为分隔符，EOF触发panic\n\n2. **代码审查阶段**\n   - 使用`read_code`读取src/preprocessor/macro.rs查看具体实现\n   - 重点检查：链表构建逻辑、token复制、边界条件处理、panic触发点\n\n3. **分步修复策略**\n   - 空参数：`if level == 0 && (*ptr).kind == TokenKind::Punct && (*ptr).text == \")\"`是否正确处理\n   - 括号嵌套：level计数是否在遇到\"(\"时+1，遇到\")\"时-1\n   - 逗号停止：`level == 0 && !read_rest`条件下的逗号处理\n   - EOF错误：确保在token.next为None时触发panic\n\n4. **验证修复**\n   - 运行`cargo test`验证所有测试通过\n   - 使用`cargo check`确保无编译错误或警告\n\n注意事项：\n- 链表构建需要正确处理Box<Token>的所有权\n- unsafe块中的指针操作需要格外小心\n- 克隆token时注意保留所有必要字段\n- 测试用例中使用clone()构建链表可能引入问题\n\n可选步骤：\n- 添加更多边界测试用例\n- 考虑重构为更安全的Rust代码结构"
+}

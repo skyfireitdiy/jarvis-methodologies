@@ -1,0 +1,4 @@
+{
+  "problem_type": "查找Python项目静态检查工具配置",
+  "content": "问题重述: 如何查找Python项目中使用的静态检查工具(pylint/flake8/mypy等)及其配置\n\n最优解决方案:\n1. 首先检查项目根目录下的配置文件(pyproject.toml, setup.cfg等)\n2. 使用fd命令查找可能的配置文件: `fd -e cfg -e toml -e rc -e ini -e yml -e yaml`\n3. 使用rg命令搜索特定工具关键词: `rg -i \"pylint|flake8|mypy|black|isort\"`\n4. 重点检查pyproject.toml文件中的[project.optional-dependencies]和[tool.*]部分\n5. 如果没有找到显式配置，检查项目文档或README\n\n注意事项:\n- 不同项目可能将静态检查工具配置在不同文件中\n- 有些项目可能只在开发依赖中列出工具而没有显式配置\n- 现代Python项目倾向于使用pyproject.toml作为主要配置文件\n\n可选步骤:\n- 对于大型项目，可以先检查.gitignore或文档了解项目结构\n- 可以检查CI/CD配置文件了解实际使用的检查工具"
+}

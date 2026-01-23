@@ -1,0 +1,4 @@
+{
+  "problem_type": "C-to-Rust-TDD-porting",
+  "content": "TDD流程：\n1. RED阶段：在x86_64.rs中添加#[cfg(test)] mod tests块，编写test_builtin_alloca_*系列测试用例\n   - 测试16字节对齐：输入15应该对齐到16\n   - 测试0值处理\n   - 测试负值处理\n   - 测试边界值测试\n   - 验证汇编输出格式\n2. GREEN阶段：实现pub fn builtin_alloca函数，生成与C代码等价的汇编输出\n3. REFACTOR阶段：优化代码结构，保持测试通过"
+}

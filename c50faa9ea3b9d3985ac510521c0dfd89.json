@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust调试日志清理验证",
+  "content": "|||\n问题重述：验证Rust项目中调试日志是否已正确删除，确保功能不受影响\n\n可复用解决流程：\n1. 定位阶段：使用grep -n \"eprintln!\" src/**/*.rs 快速定位所有调试输出位置\n2. 分类阶段：区分调试日志和必要错误输出（检查是否受verbosity控制）\n3. 验证阶段：\n   a) 逐文件检查确认eprintln!已删除\n   b) 运行cargo check确保编译无误\n   c) 运行cargo clippy确保无新增警告\n   d) 运行cargo test确保功能正常\n4. 文档阶段：记录保留的eprintln!及其理由（如verbosity控制或错误输出）\n\n注意事项：\n- 受verbosity参数控制的eprintln!可能是合法功能而非调试日志\n- 错误处理中的eprintln!通常是必要的用户反馈\n- 测试代码中的eprintln!可以保留用于调试\n\n可选步骤：\n- 使用cargo fix --allow-dirty --allow-staged自动修复简单警告\n- 使用clippy::print_stdout等lint检查其他输出类型\n|||"
+}

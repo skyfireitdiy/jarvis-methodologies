@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust空指针安全修复",
+  "content": "问题重述：\nRust unsafe代码中使用 std::slice::from_raw_parts 时出现 \"unsafe precondition(s) violated\" 错误\n\n可复用解决流程：\n1. **问题定位**：使用cargo test定位具体失败的测试用例\n2. **代码分析**：使用read_code工具查看相关函数的unsafe代码块\n3. **安全前提检查**：\n   - 检查指针是否为null (is_null())\n   - 检查长度是否为0\n   - 检查内存对齐要求\n4. **边界处理**：\n   - 对于空指针或零长度，返回空切片 &[]\n   - 对于有效输入，使用条件判断安全调用\n5. **验证修复**：\n   - 执行 cargo test 验证不再出现安全错误\n   - 测试边界情况（空字符串、零长度等）\n\n注意事项：\n- 保持函数签名不变，避免破坏现有接口\n- 添加详细的边界检查注释\n- 优先使用条件判断而非panic\n\n示例实现：\n```rust\nlet key_slice = if key.is_null() || keylen == 0 {\n    &[]\n} else {\n    std::slice::from_raw_parts(key, keylen as usize)\n};\n```"
+}

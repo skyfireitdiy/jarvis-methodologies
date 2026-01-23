@@ -1,0 +1,4 @@
+{
+  "problem_type": "cmp_zero TDD测试方案",
+  "content": "TDD测试方案设计：\n\n1. Red阶段 - 测试用例设计：\n   - Float类型测试：验证生成xorps和ucomiss指令\n   - Double类型测试：验证生成xorpd和ucomisd指令  \n   - LongDouble类型测试：验证生成fldz、fucomip、fstp指令\n   - 32位整数类型测试（size<=4）：验证生成cmp $0, %eax指令\n   - 64位整数类型测试（size>4）：验证生成cmp $0, %rax指令\n   - 边界情况：各种整数子类型（Char, Short, Int, Long）\n\n2. Green阶段 - 实现方案：\n   - 使用match表达式处理TypeKind枚举\n   - 为每种浮点类型生成对应汇编指令\n   - 使用is_integer辅助函数判断整数类型\n   - 根据size决定使用eax还是rax寄存器\n\n3. 辅助函数：\n   - is_integer函数：判断类型是否为整数（包括Char, Short, Int, Long, Bool等）"
+}

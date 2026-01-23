@@ -1,0 +1,4 @@
+{
+  "problem_type": "Gerrit代码提交",
+  "content": "# Gerrit代码提交标准流程\n\n## 问题重述\n如何规范地将代码变更提交到Gerrit进行code review\n\n## 最优解决方案\n1. 检查未提交变更: `git status --porcelain`\n2. 使用jgc工具提交:\n   - 自动添加变更文件\n   - 生成符合规范的提交信息\n   - 包含Change-Id\n3. 推送至Gerrit: `git review <分支名>`\n\n## 注意事项\n- 必须使用jgc工具而非直接git commit\n- 确保提交信息符合约定式提交规范\n- 推送前确认目标分支正确\n- 遇到冲突时先解决再提交\n\n## 常见错误处理\n1. 若已错误提交:\n   - `git reset HEAD~1`撤销提交\n   - 重新执行jgc流程\n2. 若jgc报错无变更:\n   - 确认文件是否已`git add`\n   - 检查git status输出"
+}

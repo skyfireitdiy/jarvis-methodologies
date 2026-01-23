@@ -1,0 +1,4 @@
+{
+  "problem_type": "rust_debug_system_implementation",
+  "content": "# Rust调度系统调试模块实现方法论\n\n## 问题重述\n如何在Rust调度系统中实现高效的调试信息收集和展示功能\n\n## 最优解决方案\n1. 分层设计调试信息结构\n   - Job级调试信息(JobDebugInfo)\n   - 任务级调试信息(ScheTaskDebugInfo)\n   - 特殊事件记录(LongTimeMsg)\n\n2. 异步调试消息处理\n   - 使用独立线程处理调试消息\n   - 通过channel实现线程间通信\n\n3. 性能敏感数据统计\n   - 采用BinaryHeap维护Top N记录\n   - 使用Instant进行精确耗时测量\n   - 分区间统计消息处理时长\n\n## 注意事项\n1. 线程安全考虑\n   - 调试消息发送需实现Send trait\n   - 共享数据需加锁或使用原子操作\n\n2. 性能影响控制\n   - 长时间消息记录应有阈值配置\n   - 统计采样频率需可配置\n\n3. 扩展性设计\n   - 通过feature flag控制高级调试功能\n   - 预留调试信息扩展字段\n\n## 可选步骤\n1. BBX集成(需bbx特性)\n   - 注册BBX处理器\n   - 实现调试消息持久化存储\n\n2. 动态过滤配置\n   - 支持运行时修改消息过滤器\n   - 可按任务/消息类型过滤"
+}

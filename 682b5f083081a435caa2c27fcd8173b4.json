@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust FFI与C静态库集成",
+  "content": "问题重述：\n在Rust项目中调用C静态库函数，实现Rust与C的混合编程。\n\n可复用解决流程：\n1. 项目初始化：创建Rust项目结构，包括src目录、Cargo.toml等文件\n2. C代码准备：创建C源文件(.c)和头文件(.h)，实现所需功能\n3. 依赖配置：在Cargo.toml中添加cc构建依赖和libc运行时依赖\n4. 构建脚本：编写build.rs使用cc crate编译C源码为静态库\n5. FFI声明：在Rust代码中使用extern \"C\"声明C函数原型\n6. 链接配置：使用#[link(name = \"库名\")]属性链接静态库\n7. 安全调用：在unsafe块中调用C函数，注意类型转换\n\n注意事项：\n- 确保C函数使用extern \"C\"链接，防止C++名称修饰\n- 使用libc::c_int等类型确保ABI兼容性\n- FFI调用必须在unsafe块中进行\n- build.rs中的cargo:rerun-if-changed指令确保变更时重新编译\n- C代码必须提供正确的头文件供Rust引用\n\n可选步骤：\n- 添加错误处理和边界检查\n- 使用bindgen自动生成C函数绑定\n- 实现内存安全的包装器避免直接FFI调用\n- 添加单元测试验证C-Rust接口"
+}

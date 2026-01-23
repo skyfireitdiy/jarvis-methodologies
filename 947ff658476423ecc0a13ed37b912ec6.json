@@ -1,0 +1,4 @@
+{
+  "problem_type": "Python性能分析",
+  "content": "# Python性能分析方法论\n\n## 问题重述\n如何定位Python程序的性能瓶颈\n\n## 最优解决方案\n1. 使用cProfile生成性能分析文件（工具：execute_script）\n   ```bash\n   python3 -m cProfile -o /tmp/profile.prof 脚本命令\n   ```\n2. 分析性能分析文件（工具：execute_script）\n   ```bash\n   python3 -c \"import pstats; p = pstats.Stats('/tmp/profile.prof'); p.sort_stats('cumtime').print_stats(20)\"\n   ```\n3. 优化热点函数（工具：edit_file/rewrite_file）\n\n## 注意事项\n1. 确保输出文件路径可写\n2. 分析时关注cumtime(累计时间)列\n3. 优先优化最耗时的前几个函数\n4. 注意区分系统库调用和项目代码\n\n## 可选步骤\n1. 对于复杂项目，可以使用snakeviz可视化分析\n2. 可以结合line_profiler进行行级分析\n3. 对于IO密集型应用，可以添加内存分析"
+}

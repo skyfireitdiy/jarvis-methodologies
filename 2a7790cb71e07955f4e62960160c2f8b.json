@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust测试属性缺失修复",
+  "content": "问题重述：\nRust测试函数缺少#[test]属性或与#[should_panic]等属性组合使用不当。\n\n可复用解决流程：\n1. **问题定位**：\n   - 使用read_code查看测试模块完整定义\n   - 确认测试函数的属性组合是否正确\n   - 注意#[test]与#[should_panic]的顺序和共存关系\n\n2. **修复执行**：\n   - 使用edit_file在测试函数前添加缺失的#[test]属性\n   - 保持现有属性（如#[should_panic]）不变\n   - 确保属性顺序符合Rust规范（#[test]在前）\n\n3. **验证确认**：\n   - 执行cargo build验证语法正确性\n   - 执行cargo test验证测试功能\n   - 确认只有一个#[test]标记\n\n注意事项：\n- 每个测试函数必须有且仅有一个#[test]属性\n- #[should_panic]需要与#[test]共存使用\n- 避免重复#[test]标记（这是常见错误）"
+}

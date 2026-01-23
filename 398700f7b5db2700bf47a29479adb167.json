@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust全局状态测试污染修复",
+  "content": "问题重述：Rust测试中因全局静态变量在测试用例间共享导致状态污染，测试失败。\n\n可复用解决流程：\n1. 识别问题：通过测试失败分析定位全局状态污染源\n2. 定位状态：找到相关的全局静态变量（如DEPTH、COUNTER等）\n3. 创建重置函数：在mod tests中添加reset_xxx()函数\n   - 使用#[cfg(test)]属性标记\n   - 实现中使用原子操作的store(0, Ordering::Relaxed)重置状态\n4. 集成测试：在每个测试用例开始处调用reset函数\n5. 验证修复：运行cargo test确保测试通过且状态隔离\n\n注意事项：\n- 重置函数必须使用#[cfg(test)]避免污染生产代码\n- 优先使用原子操作而非unsafe代码\n- 对于Mutex/RefCell类型，需要适当的锁定和重置策略\n\n可选步骤：\n- 考虑使用测试专用的setup/teardown函数\n- 评估是否可以重构为依赖注入模式避免全局状态"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "JavaScript代码检查工具安装",
+  "content": "问题重述：在Node.js环境中安装和配置JavaScript代码检查工具（如ESLint），使其能够对JavaScript/TypeScript代码进行静态分析和质量检查。\n\n可复用解决流程：\n1. 环境检查\n   - 使用 `node --version && npm --version` 确认Node.js和npm已安装\n   - 确保版本满足工具的最低要求\n\n2. 工具安装\n   - 使用 `npm install -g <tool-name>` 进行全局安装（以ESLint为例：`npm install -g eslint`）\n   - 验证安装成功：`<tool-name> --version`\n\n3. 配置文件创建\n   - 根据工具版本创建相应格式的配置文件\n   - 对于ESLint 9.x：创建 `eslint.config.js` 文件（使用ES模块导出数组格式）\n   - 对于旧版ESLint：可创建 `.eslintrc.json` 或 `.eslintrc.js`\n   - 配置基本规则，如环境设置、语言选项、规则配置等\n\n4. 功能验证\n   - 创建简单的JavaScript测试文件\n   - 使用工具命令检查测试文件（如：`eslint test.js`）\n   - 确认输出符合预期\n\n注意事项：\n- ESLint 9.x版本更改了默认配置文件格式，使用 `eslint.config.js` 而不是 `.eslintrc.*`\n- 新版eslintrc.config.js使用ES模块语法导出配置数组\n- 全局安装使用 `-g` 参数，项目级安装应使用 `--save-dev`\n\n可选步骤：\n- 根据项目类型安装额外插件（如 `eslint-plugin-react`、`eslint-plugin-vue` 等）\n- 配置编辑器集成（VSCode等）\n- 在构建流程中集成代码检查"
+}

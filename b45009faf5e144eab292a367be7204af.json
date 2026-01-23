@@ -1,0 +1,5 @@
+{
+  "problem_type": "Rust项目测试修复",
+  "content": "Rust项目测试修复流程：1. 运行具体测试 cargo test 模块::测试名 -- --nocapture 2. 查看测试代码理解预期行为 3. 分析实际与预期差异 4. 最小化修改解决问题 5. 验证测试通过。对于tag查找问题，重点检查作用域清理和查找逻辑。验证Rust panic测试的标准流程：1) 使用cargo test test_name -- --nocapture单独运行特定测试；2) 检查panic信息是否与#[should_panic(expected = \"...\")]匹配；3) 确认测试状态显示为ok；4) 运行完整测试套件确保没有回归",
+  "scope": "global"
+}

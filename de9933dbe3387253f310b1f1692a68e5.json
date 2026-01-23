@@ -1,0 +1,4 @@
+{
+  "problem_type": "git_patch_management",
+  "content": "# Git补丁管理方法论\n\n## 问题重述\n处理Git补丁应用时，需要正确处理Git仓库内外的文件修改\n\n## 最优解决方案\n1. 使用`_is_file_in_git_repo`函数检查文件是否在Git仓库中（使用`git rev-parse --show-toplevel`命令）\n2. 对于Git仓库内的文件：\n   - 使用`git diff`获取差异\n   - 使用`git commit`提交修改\n3. 对于Git仓库外的文件：\n   - 直接应用补丁\n   - 跳过Git相关操作\n\n## 注意事项\n1. 应用补丁前必须检查文件是否已读取\n2. 对于Git仓库外的文件修改，需要明确告知用户\n3. 确保文件路径处理正确，避免跨目录问题\n\n## 可选步骤\n1. 可以添加文件权限检查步骤（使用`os.access`）\n2. 对于大型项目，可以添加并发处理机制"
+}

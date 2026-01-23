@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust clippy too_many_arguments警告修复",
+  "content": "问题重述：Rust clippy发出too_many_arguments警告，提示函数参数超过7个限制。\n\n可复用解决流程：\n1. 识别警告：运行 `cargo clippy -- -D warnings` 确认警告存在\n2. 分析参数：检查函数参数列表，识别可分组的相关参数\n3. 设计封装：\n   - 创建结构体封装相关参数（推荐方式）\n   - 或使用元组/Builder模式分组参数\n4. 重构签名：更新函数定义，将多参数替换为结构体或其他封装\n5. 更新调用点：同步修改所有调用该函数的代码位置\n6. 验证修复：\n   - 运行 `cargo clippy -- -D warnings` 确认警告消除\n   - 运行 `cargo test` 确保功能正确性\n\n注意事项：\n- 保持向后兼容性，避免破坏现有API\n- 结构体命名要语义明确，字段命名清晰\n- 考虑使用Default trait简化结构体初始化\n- 大规模重构时，可分步进行，先标记废弃再逐步迁移\n\n可选步骤：\n- 对复杂场景可考虑Builder模式\n- 对性能敏感代码，注意结构体传递的开销\n- 对外部API，可考虑保持兼容层"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "处理Rust重复定义错误E0428",
+  "content": "## 问题重述\nRust编译错误E0428：\\\"the name X is defined multiple times\\\"，通常由以下原因引起：\n- 测试函数定义重复（#[test]函数）\n- use语句重复导入同一模块\n- 常量或类型定义重复\n\n## 可复用解决流程\n1. **定位重复定义**\n   - 使用 `cargo build` 获取精确文件和行号信息\n   - 使用 `read_code` 查看重复定义上下文\n\n2. **分析重复内容**\n   - 如果是测试函数：检查是否为完全重复或功能相似\n   - 如果是use语句：合并或删除重复导入\n   - 如果是类型定义：考虑合并或重命名\n\n3. **执行删除操作**\n   ```bash\n   # 精准删除指定行范围\n   sed -i 'START_LINE,END_LINEd' src/path/to/file.rs\n  \n   # 删除匹配模式的行\n   sed -i '/PATTERN/d' src/path/to/file.rs\n   ```\n\n4. **验证修复**\n   - 重新运行 `cargo build` 确认编译通过\n   - 运行 `cargo test` 确认不影响功能测试\n\n## 注意事项\n- 删除前确认哪个定义是最新的/正确的\n- 保留注释和文档字符串\n- 考虑是否需要重命名而非删除\n- 保持git提交粒度小而清晰\n\n## 可选步骤\n- 如果是测试重复，考虑提取公共测试辅助函数\n- 如果是业务代码重复，考虑重构提取公共逻辑"
+}

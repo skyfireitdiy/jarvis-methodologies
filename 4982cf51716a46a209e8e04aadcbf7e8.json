@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust整数溢出修复验证",
+  "content": "问题重述：\n修复Rust代码中的整数溢出问题，特别是在边界情况下需要正确处理wrapping语义，确保测试用例通过。\n\n可复用解决流程：\n1. 问题识别\n   - 运行测试确认失败模式：`cargo test 测试名称 -- --nocapture`\n   - 识别失败类型：整数溢出panic、边界值错误返回等\n\n2. 代码定位与分析\n   - 使用read_code工具读取相关源代码\n   - 定位涉及整数运算的关键行\n   - 分析当前实现：检查是否使用普通算术运算(+,-,*,/)而非wrapping运算\n\n3. 修复实施\n   - 对于可能溢出的整数运算：\n     * 加法：将`a + b`改为`a.wrapping_add(b)`\n     * 减法：将`a - b`改为`a.wrapping_sub(b)`\n     * 其他运算类似处理\n   - 对于原子操作：\n     * `fetch_add`返回值处理：`prev.wrapping_add(1)`而非`prev + 1`\n\n4. 边界测试验证\n   - 运行特定边界测试：`cargo test test_boundary_values`\n   - 验证usize::MAX、usize::MAX-1、0、1等关键边界值\n   - 确认wrapping行为符合预期\n\n5. 回归测试\n   - 运行完整测试套件：`cargo test -- --nocapture`\n   - 确认修复未引入新问题\n\n注意事项：\n- 原子操作（Atomic*类型）的fetch_add/sub返回值需要特别注意wrapping处理\n- 边界测试应覆盖所有可能的整数溢出场景\n- 确保修复的代码变更最小化，只解决特定问题\n\n可选步骤：\n- 对于复杂场景，使用println调试输出边界值\n- 创建专门的wrapping运算测试用例"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust结构体字段变更修复",
+  "content": "## Rust结构体字段变更修复方法论\n\n### 适用场景\n当向现有Rust结构体添加新字段时，需要更新所有初始化语法。\n\n### 解决流程\n1. **影响分析**\n   - 使用`execute_script`查找所有结构体初始化：`find . -name \\\"*.rs\\\" -exec grep -l \\\"StructName\\\\s*{\\\" {} \\\\;`\n   - 使用`lsp_client`查找所有引用位置\n\n2. **批量修复**\n   - 对简单重复错误使用`sed`批量处理\n   - 对复杂初始化使用`edit_file`精确修复\n\n3. **测试验证**\n   - 运行`cargo check`检查语法错误\n   - 运行`cargo test`确保功能正确\n\n### 注意事项\n- 新字段必须是`Option<T>`类型或提供默认值，避免破坏现有代码\n- 测试用例中的初始化必须包含所有字段\n- 考虑向后兼容性，优先使用`Option<T>`类型\n\n### 工具组合\n- `execute_script` + `sed` → 批量简单修复\n- `edit_file` → 复杂情况精确修复\n- `cargo test` → 最终验证"
+}

@@ -1,0 +1,5 @@
+{
+  "problem_type": "CLI命令批量操作优化",
+  "content": "## 问题重述\n当CLI工具需要多次调用外部命令执行相似操作时（如逐个安装工具、逐个处理文件），存在性能瓶颈和代码冗余问题。需要将循环调用优化为批量操作。\n\n## 可复用解决流程\n\n### 步骤1: 识别循环调用模式\n- 使用`execute_script`工具搜索循环调用外部命令的代码：\n```bash\nrg \"for.*in.*subprocess\\.run\" src/ --type py\nrg \"while.*subprocess\\.run\" src/ --type py\n```\n\n### 步骤2: 分析命令批量支持\n- 检查目标CLI命令是否支持批量参数（如多个文件名、多个操作）\n- 查看命令帮助：`command --help` 或 `man command`\n- 测试批量调用格式：`command arg1 arg2 arg3`\n\n### 步骤3: 重构为批量操作\n**工具使用**：\n- `read_code`：分析现有循环逻辑\n- `edit_file`：替换为批量操作代码\n\n**代码重构模板**：\n```python\n# 原循环模式\nfor item in items:\n    cmd = [\"tool\", \"operation\", item]\nsubprocess.run(cmd)\n\n# 优化后批量模式\ncombined_args = \" \".join(items)  # 或适当分隔符\ncmd = [\"tool\", \"operation\", combined_args]\nsubprocess.run(cmd)\n```\n\n### 步骤4: 保持兼容性\n- 保持原有错误处理逻辑\n- 保持用户输出格式一致\n- 保持函数签名不变\n- 添加适当的注释说明优化\n\n### 步骤5: 验证优化效果\n- 功能测试：确保批量操作结果与循环调用一致\n- 性能测试：对比执行时间改善\n- 错误测试：验证异常情况处理\n\n## 注意事项\n- 命令参数长度限制：避免构建过长的命令行\n- 错误粒度：批量操作可能降低错误定位精度\n- 内存使用：批量处理大量数据时注意内存消耗\n- 兼容性测试：不同环境下命令行为可能不同\n\n## 可选步骤\n- 添加批量大小限制：对大量项目分批处理\n- 实现进度显示：长时间操作时提供反馈\n- 添加dry-run模式：先预览要执行的操作\n- 支持并行执行：对独立操作使用多进程加速",
+  "scope": "global"
+}

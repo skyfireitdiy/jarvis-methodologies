@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust测试并发失败诊断与修复",
+  "content": "## Rust测试并发失败诊断与修复方法论\n\n### 问题重述\n当运行`cargo test`时出现测试失败，但单独运行`cargo test <test_name>`时通过，表明存在测试间干扰或竞态条件。\n\n### 可复用解决流程\n\n**步骤1：复现问题**\n```bash\n# 运行完整测试套件\ncargo test -- --nocapture\n\n# 单独运行失败测试\ncargo test <test_name> -- --nocapture\n```\n\n**步骤2：识别干扰源**\n- 检查全局状态：静态变量、文件系统、临时文件\n- 检查测试顺序依赖\n- 检查资源清理是否完整\n\n**步骤3：修复策略**\n- 添加测试隔离：使用`#[serial]`或设置独立测试环境\n- 确保资源清理：在每个测试后清理创建的临时文件/目录\n- 使用线程安全的全局状态管理\n- 添加适当的同步机制\n\n**步骤4：验证修复**\n```bash\n# 多次运行验证稳定性\nfor i in {1..5}; do cargo test; done\n\n# 并行运行测试\ncargo test -- --test-threads=8\n```\n\n### 注意事项\n1. 临时文件测试应使用独立目录或唯一命名\n2. 全局状态应在每个测试后重置\n3. 避免测试间共享可变状态\n4. 使用`tempfile` crate可简化临时文件管理\n\n### 可选步骤\n- 添加调试输出定位问题测试\n- 使用`cargo test -- --nocapture`查看详细输出\n- 考虑使用`proptest`进行更全面的测试"
+}

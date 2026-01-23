@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust和C代码集成",
+  "content": "## 问题重述\n需要在Rust项目中直接链接C编译生成的对象文件(.o)，而不是创建静态库或动态库，实现最小化的C-Rust集成Demo。\n\n## 可复用解决流程\n1. 创建Rust项目结构，包含src/main.rs、build.rs、C源码目录\n   - 使用cargo new project_name创建基础项目\n   - 在项目中创建存放C源码的目录(如c_lib/)\n\n2. 编写C源码文件\n   - 实现需要被Rust调用的函数\n   - 确保函数使用C兼容的接口(避免C++特性)\n\n3. 配置Cargo.toml\n   - 添加[build-dependencies]并引入cc crate用于编译C代码\n   - 设置适当的编译配置(如opt-level)\n\n4. 实现build.rs构建脚本\n   - 使用std::process::Command调用C编译器编译C源码\n   - 使用-c参数编译为对象文件，-fPIC生成位置无关代码\n   - 使用cargo:rustc-link-arg指令指定链接对象文件\n\n5. 在Rust代码中声明和调用C函数\n   - 使用extern \\\"C\\\"块声明C函数接口\n   - 在unsafe块中调用C函数\n   - 可创建安全包装函数避免直接使用unsafe\n\n6. 验证集成效果\n   - 编译项目确认无错误\n   - 运行程序验证C函数被正确调用\n\n## 注意事项\n- build.rs脚本会在每次构建时执行，确保C源码发生变化时能重新编译\n- 需要确保系统安装了C编译器(gcc/clang)\n- .o文件路径必须正确传递给链接器\n- FFI函数签名必须与C函数完全匹配\n\n## 可选步骤\n- 可添加错误处理机制检测C编译器是否存在\n- 可添加编译参数验证确保编译选项兼容\n- 可使用cc crate替代手动命令行调用(更简洁但功能略有不同)"
+}

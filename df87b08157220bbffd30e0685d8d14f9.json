@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust全局状态测试隔离性验证",
+  "content": "# Rust全局状态测试隔离性验证方法论\n\n## 问题重述\n当Rust代码使用全局可变状态（如static变量）时，测试用例之间可能相互影响，导致测试隔离性问题。\n\n## 可复用解决流程\n\n### 1. 识别全局状态\n- 查找代码中的`static mut`或`static`变量\n- 确认这些变量在测试中会被修改\n\n### 2. 添加重置函数\n在源码中添加重置函数：\n```rust\n#[cfg(test)]\npub fn reset_xxx() {\n    // 重置全局状态到初始值\n    unsafe { GLOBAL_VAR = Default::default(); }\n}\n```\n\n### 3. 验证测试隔离\n运行测试命令：\n```bash\ncargo test -- --nocapture 模块名\n```\n\n### 4. 添加边界测试用例\n为每个功能补充测试：\n- 空值处理测试（如`test_empty_filename`）\n- 边界条件测试（如`test_path_with_parent_directory`）  \n- 缓存覆盖测试（如`test_cache_overwrite_same_filename`）\n\n### 5. 验证覆盖率提升\n统计测试用例数量变化：\n```bash\ngrep -c \"test_\" 文件路径\n```\n\n## 注意事项\n- 重置函数必须标记`#[cfg(test)]`，避免污染生产代码\n- 使用`tempfile`创建临时测试环境，避免文件系统污染\n- 每个测试用例应独立，不依赖前一个测试的状态\n\n## 可选步骤\n- 使用`cargo tarpaulin`生成详细的覆盖率报告\n- 添加基准测试验证性能影响\n- 集成到CI/CD流程确保测试始终通过"
+}

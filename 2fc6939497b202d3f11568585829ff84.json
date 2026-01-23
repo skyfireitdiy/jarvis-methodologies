@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust原子操作测试失败修复",
+  "content": "问题重述：\n在使用Rust的AtomicUsize进行栈深度计数时，push/pop函数需要返回正确的栈深度值。测试期望返回递增/递减后的新值，但fetch_add/fetch_sub返回旧值，导致测试失败。\n\n可复用解决流程：\n1. **问题识别**：\n   - 确认测试失败的具体断言内容\n   - 使用`cargo test 测试名 -- --nocapture`单独运行测试\n   - 记录期望vs实际值差异\n\n2. **代码分析**：\n   - 使用`read_code`检查相关函数实现（push/pop等）\n   - 确认是否使用fetch_add/fetch_sub返回旧值\n   - 检查测试逻辑是否正确理解了原子操作行为\n\n3. **修复方案**：\n   - push函数：`old_depth + 1`（old_depth是fetch_add的返回值）\n   - pop函数：`old_depth - 1`（old_depth是fetch_sub的返回值）\n   - 确保返回值与测试期望一致\n\n4. **测试验证**：\n   - 单独运行每个相关测试确认修复\n   - 验证全局状态隔离（检查是否有reset函数）\n   - 运行完整测试套件确认无回归\n\n5. **状态管理**：\n   - 确认测试使用reset_xxx()函数重置全局状态\n   - 在测试模块中添加或验证reset函数：\n     ```rust\n     #[cfg(test)]\n     pub fn reset_depth() {\n         DEPTH.store(0, Ordering::SeqCst);\n     }\n     ```\n\n注意事项：\n- AtomicUsize的fetch_add/fetch_sub总是返回操作前的旧值\n- 测试可能存在状态污染，需要单独运行测试验证\n- 修复后确保所有相关测试通过，包括push和pop函数\n\n可选步骤：\n- 检查是否需要创建测试隔离工具\n- 考虑将全局状态改为线程局部存储以避免并发测试冲突"
+}

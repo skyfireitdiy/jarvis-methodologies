@@ -1,0 +1,4 @@
+{
+  "problem_type": "对话记录存储与检索",
+  "content": "### 问题重述\n如何在Jarvis Agent中实现对话记录的自动存储和检索\n\n### 最优解决方案\n1. **初始化阶段**：\n   - 在Agent类中增加`conversation_history`列表成员变量\n   - 工具：`edit_file`修改`__init__.py`\n\n2. **记录对话**：\n   - 在`_call_model`方法中记录用户输入和模型响应\n   - 格式：[User]: xxx 和 [Agent]: yyy\n   - 工具：`edit_file`修改`__init__.py`\n\n3. **存储到mem**：\n   - 在任务完成时(`_complete_task`)调用`jarvis_mem.add_mem()`\n   - 将对话记录转为字符串格式存储\n   - 工具：`edit_file`修改`__init__.py`\n\n4. **检索记忆**：\n   - 在首次对话时自动加载相关记忆\n   - 使用`jarvis_mem.load_mem()`函数\n   - 工具：`edit_file`修改`__init__.py`\n\n### 注意事项\n1. 确保mem模块已正确初始化\n2. 对话记录格式要保持一致\n3. 存储前检查对话记录是否为空\n4. 注意敏感信息过滤\n\n### 可选步骤\n1. 可添加定期自动存储功能(非首次对话时)\n2. 可增加对话记录过滤功能\n3. 可添加记忆分类存储功能"
+}

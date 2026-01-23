@@ -1,0 +1,4 @@
+{
+  "problem_type": "GitHub_repository_analysis",
+  "content": "# GitHub Repository Analysis\n## 问题重述\n需要分析一个GitHub仓库的内容、功能和技术栈，以便理解其用途和实现方式。\n\n## 最优解决方案\n1. 使用搜索引擎或GitHub直接搜索目标仓库。\n2. 分析仓库的README文件、目录结构和代码文件。\n3. 检查依赖文件和配置文件（如requirements.txt、package.json）。\n4. 运行仓库中的示例代码或脚本（如有）。\n5. 记录仓库的功能、技术栈和使用方法。\n\n## 注意事项\n- 确保信息来源可靠，优先选择官方文档或仓库README。\n- 注意仓库的维护状态和最后更新时间。\n- 检查仓库的许可证和贡献指南（如有）。"
+}

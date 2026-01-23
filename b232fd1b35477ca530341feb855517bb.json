@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust测试隔离性和状态污染修复",
+  "content": "问题重述：\nRust项目中出现测试间状态污染，表现为：\n1. 测试顺序执行导致后续测试失败\n2. Mutex/RwLock出现PoisonError\n3. 全局状态未正确清理\n4. 初始化状态不符合预期\n\n可复用解决流程：\n1. **识别污染源**：运行单个测试确认是否为状态污染\n   ```bash\n   cargo test specific_test -- --nocapture\n   cargo test full_module -- --nocapture\n   ```\n\n2. **检查全局状态**：查找static/once_cell/lazy_static等全局变量\n   - 优先检查Mutex/RwLock保护的共享状态\n   - 确认是否有适当的清理机制\n\n3. **实现测试隔离**：\n   - 在测试开始前重置全局状态\n   - 使用setup/teardown模式\n   - 考虑使用test-each-file隔离或serial_test crate\n\n4. **修复实现逻辑**：\n   - 检查作用域管理逻辑（push/pop是否正确配对）\n   - 验证初始化默认值是否符合预期\n   - 确保查找逻辑遵循正确的作用域规则\n\n5. **验证修复**：\n   - 运行单个测试确认通过\n   - 运行模块所有测试确认无回归\n   - 运行完整测试套件确保无影响\n\n注意事项：\n- 避免在测试中unwrap() Mutex/RwLock结果，使用match处理PoisonError\n- 测试后务必清理全局状态，特别是Mutex/RwLock\n- 考虑使用std::sync::atomic而非Mutex处理简单状态\n- 添加debug断言帮助识别状态泄漏\n\n可选步骤：\n- 使用cargo test -- --test-threads=1验证线程安全问题\n- 添加测试fixture模式封装状态管理\n- 使用内存数据库或临时文件避免文件系统污染"
+}

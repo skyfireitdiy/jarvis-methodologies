@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust测试全局状态污染修复",
+  "content": "# Rust测试全局状态污染修复方法论\n\n## 问题重述\n当Rust测试用例使用全局可变状态时，测试之间会相互影响，导致断言失败或不稳定行为。\n\n## 可复用解决流程\n\n### 步骤1: 问题识别\n- 症状：测试失败但单独运行通过\n- 诊断：运行`cargo test -- --nocapture`查看完整错误信息\n- 确认：检查是否存在全局静态变量或共享状态\n\n### 步骤2: 状态隔离\n- 创建reset工具函数重置全局状态\n```rust\n#[cfg(test)]\nfn reset_depth() {\n    DEPTH.store(0, Ordering::Relaxed);\n}\n```\n\n### 步骤3: 测试修复\n- 在每个测试用例开始时调用reset函数\n- 将绝对值断言改为相对值验证\n- 示例转换：\n```rust\n// 错误：硬编码绝对值\nassert_eq!(DEPTH.load(Ordering::Relaxed), 1);\n\n// 正确：相对值验证\nlet initial = DEPTH.load(Ordering::Relaxed);\n// ...操作...\nassert_eq!(DEPTH.load(Ordering::Relaxed) - initial, expected_increment);\n```\n\n### 步骤4: 验证修复\n1. 运行`cargo test -- --nocapture`确认所有测试通过\n2. 单独运行每个测试确认独立性\n3. 多次运行测试确认稳定性\n\n## 注意事项\n- 保持最小改动原则，只修改测试用例\n- 避免修改核心功能实现\n- 确保所有测试都能独立通过\n\n## 可选步骤\n- 添加调试输出验证状态重置\n- 使用`cargo test -- --nocapture test_name`调试特定测试\n- 考虑使用`once_cell`或`lazy_static`管理复杂全局状态"
+}

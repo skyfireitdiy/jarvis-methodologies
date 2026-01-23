@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust动态库声明-实现分离配置",
+  "content": "问题重述：需要在Rust动态库中通过cc crate嵌入C代码实现函数，同时保持C库只包含函数声明不包含实现，实现声明与实现的真正分离。\n\n可复用解决流程：\n1. 准备C声明头文件：在C库中只声明函数原型（如int add(int a,...)）\n2. 创建C实现文件：在Rust库的src目录创建add_implementation.c包含完整实现\n3. 配置build.rs：\n   - 使用cc::Build::new()创建构建器\n   - .file()指定C实现文件路径（使用PathBuf构建确保可移植）\n   - .include()设置头文件搜索路径\n   - .compile()指定编译输出名称\n4. 设置Cargo依赖：确保Cargo.toml包含cc = \"1.0\"依赖\n5. 验证构建：运行cargo clippy确保无静态分析错误\n6. 验证分离：使用nm/objdump检查C库符号表确认无函数实现\n\n注意事项：\n- 路径必须使用PathBuf和env::var(\"CARGO_MANIFEST_DIR\")确保可移植性\n- cc crate自动处理平台相关的编译器调用\n- 确保C实现文件在src目录下，符合Rust项目结构惯例\n\n可选步骤：\n- 添加编译标志：通过.flag()方法添加特定编译选项\n- 多平台测试：在Linux/macOS/Windows上验证构建一致性"
+}

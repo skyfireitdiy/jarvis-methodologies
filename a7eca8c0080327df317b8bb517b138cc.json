@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust测试失败修复-应触发panic",
+  "content": "# Rust测试失败修复方法论：#[should_panic]测试用例失败\n\n## 问题重述\n测试用例使用`#[should_panic(expected = \"message\")]`但测试失败，通常是因为：\n1. panic消息格式不匹配\n2. panic根本没有触发\n3. 触发的是不同类型的错误\n\n## 可复用解决流程\n\n### 步骤1：确认失败类型\n- 执行`cargo test -- --nocapture`获取完整错误信息\n- 确认是\"expected panic but did not panic\"还是消息不匹配\n\n### 步骤2：定位问题代码\n- 使用`read_code`查看失败测试用例的精确内容\n- 使用`lsp_client`搜索相关函数实现\n- 对比测试期望的panic消息与实际实现\n\n### 步骤3：修复错误处理\n- 如果是消息不匹配：将`error_tok(tok, msg)`改为`panic!(\"准确消息\")`\n- 如果是未触发panic：添加缺失的panic触发逻辑\n- 确保消息格式与测试期望完全一致（包括标点符号）\n\n### 步骤4：验证修复\n- 运行`cargo test -- --nocapture`确认测试通过\n- 运行`cargo test`确认所有测试整体通过\n- 检查是否引入新的回归问题\n\n## 注意事项\n1. 保持最小改动，只修改必要的错误处理逻辑\n2. 如果涉及共享状态（如Mutex），注意清理测试状态\n3. 验证Box指针的克隆和返回值处理是否正确\n4. 使用`#[cfg(test)]`隔离测试代码，避免影响主逻辑\n\n## 可选步骤\n- 添加临时调试信息：`println!`或`dbg!`辅助定位\n- 使用`cargo test <test_name>`单独运行特定测试\n- 检查CI/CD是否有额外测试失败"
+}

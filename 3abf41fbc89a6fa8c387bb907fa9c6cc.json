@@ -1,0 +1,4 @@
+{
+  "problem_type": "C到Rust移植中stub函数验证方法",
+  "content": "## 问题重述\n验证C到Rust移植过程中stub函数是否已正确实现，确保与C实现行为一致。\n\n## 可复用解决流程\n1. **定位stub函数**：使用rg/todo!()/unimplemented!()搜索所有占位函数\n2. **获取C实现**：查找原始C源码中的对应函数签名和实现\n3. **逐条验证预期**：\n   - 检查函数是否为完整实现而非占位\n   - 验证移除所有stub特征（空函数体、todo宏等）\n   - 确认函数行为匹配C实现\n4. **测试验证**：运行相关测试确保无回归\n\n## 工具使用\n- `read_code`：查看函数实现\n- `execute_script`：搜索stub关键字、运行测试\n- `rg \\\"TODO|unimplemented|stub\\\" src/`\n\n## 注意事项\n- 注意Rust特有的stub标记：todo!()、unimplemented!()、空match分支\n- 验证函数被调用时的实际效果，而不仅是函数定义\n- 检查类型推导逻辑的完整性，特别是NodeKind的各种变体\n\n## 可选步骤\n- 比较C和Rust函数签名的差异\n- 验证内存安全模型的转换是否正确\n- 检查边界条件和错误处理"
+}

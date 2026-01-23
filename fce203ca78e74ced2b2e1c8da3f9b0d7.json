@@ -1,0 +1,4 @@
+{
+  "problem_type": "TDD实现eval2函数",
+  "content": "## 任务1：设计AST结构\n- 在expr.rs中定义NodeKind枚举和Node结构体\n- 在type.rs中扩展TypeKind和Type以支持C类型系统\n\n## 任务2：创建测试框架\n- 在check.rs中添加#[cfg(test)] mod tests\n- 设计覆盖所有分支的测试用例\n\n## 任务3：实现依赖函数\n- add_type: 为节点添加类型信息（stub实现）\n- is_flonum: 判断浮点类型\n- eval_double: 浮点评估（stub实现）\n- eval: 简单表达式评估\n- is_integer: 判断整数类型\n- eval_rval: 右值评估\n- error_tok: 错误处理\n\n## 任务4：实现eval2函数\n- 匹配所有NodeKind分支\n- 处理label参数传递\n- 实现类型转换和边界检查\n\n## 任务5：验证测试\n- 运行cargo test确保所有测试通过\n- 验证与C实现行为一致性"
+}

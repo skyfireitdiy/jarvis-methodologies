@@ -1,0 +1,4 @@
+{
+  "problem_type": "C函数到Rust的TDD移植",
+  "content": "|||## C函数到Rust的TDD移植方法论\n\n### 问题重述\n将C函数移植到Rust，使用TDD方法确保行为一致性，保持常量值不变。\n\n### 可复用解决流程\n\n#### Phase 1: 分析阶段\n1. 使用 `read_code` 获取C源码和目标Rust文件现状\n2. 识别关键常量、路径模式、错误处理行为\n3. 检查依赖：`glob`, `std::path`, `std::process` 等\n\n#### Phase 2: 测试设计 (Red)\n1. 在 `#[cfg(test)]` 模块中添加测试函数\n2. 设计测试用例：\n   - 正常路径测试\n   - 边界情况测试\n   - 错误处理测试\n3. 测试命名规范：`test_<函数名>_<场景描述>`\n\n#### Phase 3: 实现功能 (Green)\n1. 添加必要依赖到 `Cargo.toml`\n2. 实现函数，保持以下原则：\n   - 常量值与C实现完全一致\n   - 使用Rust原生类型和错误处理\n   - 路径处理使用 `std::path` 而非字符串操作\n   - 通配符使用 `glob` crate\n\n#### Phase 4: 验证优化 (Refactor)\n1. 运行 `cargo test` 确保全部通过\n2. 清理未使用导入\n3. 移除旧实现（如存在）\n\n### 注意事项\n- 禁止使用 `todo!()` 或 `unimplemented!()`\n- 必须处理所有错误路径\n- 保持最小变更，避免重构无关代码\n- 测试用例设计要覆盖C实现的所有行为\n\n### 可选步骤\n- 使用 `cargo clippy` 检查代码质量\n- 添加性能测试（如需要）\n- 文档注释使用中文|||"
+}

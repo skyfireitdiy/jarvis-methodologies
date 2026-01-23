@@ -1,0 +1,4 @@
+{
+  "problem_type": "系统提示词结构化转换",
+  "content": "<methodology>\n  <title>系统提示词XML结构化转换</title>\n  <problem_description>\n    将非结构化的系统提示词转换为XML格式，提高可读性和维护性\n  </problem_description>\n  \n  <solution_steps>\n    <step>\n      1. 分析原有提示词的结构和语义\n    </step>\n    <step>\n      2. 设计XML标签体系，保持层次清晰\n    </step>\n    <step>\n      3. 将文本内容转换为XML节点\n    </step>\n    <step>\n      4. 验证转换后的功能一致性\n    </step>\n  </solution_steps>\n  \n  <best_practices>\n    <practice>使用语义明确的标签名称</practice>\n    <practice>保持适当的缩进和格式</practice>\n    <practice>添加必要的注释说明</practice>\n  </best_practices>\n  \n  <applicable_scenarios>\n    <scenario>系统提示词重构</scenario>\n    <scenario>配置信息结构化</scenario>\n  </applicable_scenarios>\n</methodology>"
+}

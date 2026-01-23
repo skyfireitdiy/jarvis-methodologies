@@ -1,0 +1,4 @@
+{
+  "problem_type": "git补丁管理",
+  "content": "# git补丁管理\n## 问题重述\n如何从git仓库生成补丁文件并打包处理\n\n## 最优解决方案\n1. 创建临时目录：`mkdir -p patches` (execute_script)\n2. 生成补丁文件：`git format-patch origin/main -o patches/` (execute_script)\n3. 验证补丁文件数量和内容\n4. 打包补丁文件：`tar -czvf patches.tar.gz patches/` (execute_script)\n5. 验证压缩包内容\n6. 删除临时目录：`rm -rf patches/` (execute_script)\n\n## 注意事项\n- 确保目标目录存在\n- 确认正确的分支名称(origin/main)\n- 打包前验证patch文件数量和内容\n- 删除临时目录前确认打包已完成\n- 新增验证步骤确保数据完整性"
+}

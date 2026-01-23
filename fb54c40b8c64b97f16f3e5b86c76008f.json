@@ -1,0 +1,4 @@
+{
+  "problem_type": "查询Docker容器信息",
+  "content": "### 问题重述\n如何获取系统上Docker容器的相关信息，例如列出正在运行的容器、查看所有容器或检查特定容器的详细状态。\n\n### 可复用解决流程\n1.  **明确需求**: 首先确定需要查询的具体信息类型。例如：\n    - 只看正在运行的容器。\n    - 查看所有容器（包括已停止的）。\n    - 查看容器的资源使用情况。\n    - 查看可用的镜像列表。\n2.  **选择命令**: 根据需求选择合适的`docker`子命令。\n    - `docker ps`: 用于列出当前正在运行的容器。\n    - `docker ps -a`: 用于列出所有容器（包括已停止的）。\n    - `docker stats`: 用于实时查看容器的CPU、内存等资源使用情况。\n    - `docker images`: 用于列出本地存储的所有镜像。\n3.  **执行命令**: 使用 `execute_script` 工具执行选定的Docker命令。\n    ```yaml\n    - tool: execute_script\n      args:\n        interpreter: bash\n        script_content: \"docker ps\"\n    ```\n4.  **解析结果**: 分析命令返回的文本输出，提取所需信息并呈现给用户。\n\n### 注意事项\n- **权限问题**: 执行`docker`命令通常需要特定权限。如果遇到 \"permission denied\" 错误，请尝试在命令前添加 `sudo`，例如 `sudo docker ps`。\n- **环境依赖**: 确保目标系统上已经安装并正在运行Docker服务。\n- **命令可用性**: 确认`docker`命令在系统的`PATH`环境变量中，否则需要使用绝对路径。"
+}

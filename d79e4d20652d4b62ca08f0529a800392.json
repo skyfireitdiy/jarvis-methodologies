@@ -1,0 +1,4 @@
+{
+  "problem_type": "rust_workspace_app_creation",
+  "content": "# 问题重述\n如何在现有的 Rust 工作空间（workspace）中，参考一个已有的应用来创建一个新的二进制（binary）应用，并完成编译。\n\n# 最优解决方案\n1.  **分析参考项目 (`read_code`)**:\n    - 读取参考项目的 `Cargo.toml` 文件，以确定所需的依赖项。\n    - 读取参考项目的 `src/main.rs` (或其他源文件)，以理解其核心实现逻辑和项目结构。\n\n2.  **创建新应用 (`execute_script`)**:\n    - 在工作空间目录下，使用 `cargo new --bin <new_app_name>` 命令创建一个新的二进制应用包。Cargo 通常会自动将其添加到工作空间的 `members` 列表。\n\n3.  **实现核心功能 (`rewrite_file` / `edit_file`)**:\n    - 根据需求，编写或修改新应用的 `src/main.rs` 文件。可以借鉴第一步中分析得到的参考代码。对于全新的实现，使用 `rewrite_file`；对于微调，使用 `edit_file`。\n\n4.  **添加依赖 (`edit_file`)**:\n    - 编辑新应用的 `Cargo.toml` 文件，添加在第一步中确定的必要依赖项。\n\n5.  **编译验证 (`execute_script`)**:\n    - 在工作空间的根目录下，执行 `cargo build -p <new_app_name>` 来编译新的应用。\n\n# 注意事项\n- **依赖项错误**: 编译失败的错误可能源自依赖的 crate，而不仅仅是你新写的代码。需要仔细阅读编译器输出，定位问题源头。\n- **代码规范 (Lint) 错误**: 在一些配置严格的项目中，代码规范警告（Lints）会被视为错误处理（如 `unnecessary_transmute`, `non-snake-case`）。如果错误发生在依赖项中，需要使用 `edit_file` 直接修复依赖项的代码，然后再重新编译。"
+}

@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust测试用例修复-恒真断言",
+  "content": "# Rust测试用例修复方法论 - 恒真断言问题\n\n## 问题重述\n测试用例使用 `assert!(result.is_ok() || result.is_err())` 这类恒真断言，无法有效验证功能正确性。\n\n## 可复用解决流程\n\n### 步骤1：识别问题测试\n- 查找使用恒真断言的测试用例\n- 分析测试意图和验证目标\n\n### 步骤2：提取可测试逻辑\n使用工具：`edit_file` 或 `rewrite_file`\n```\n将副作用操作与纯逻辑分离：\n- 原函数：包含I/O操作 + 参数构建\n- 新函数：build_xxx_args() 纯参数构建\n- 原函数：调用新函数 + 执行I/O\n```\n\n### 步骤3：重构测试用例\n使用工具：`edit_file` 重构测试\n```\n替换恒真断言为具体验证：\nassert!(result.is_ok() || result.is_err()) →\nassert!(args.contains(&expected_value))\nassert_eq!(args[0], expected_first)\nassert!(args.iter().any(|x| x.contains(pattern)))\n```\n\n### 步骤4：验证修复\n使用命令：`cargo test`\n- 确保新测试用例能捕获参数错误\n- 确保原有功能不受影响\n\n## 注意事项\n1. 保持原有接口公开性不变\n2. 提取的函数应放在同一模块便于维护\n3. 新测试用例应覆盖原有用例的所有场景\n4. 避免mock外部依赖，改为验证输入参数\n\n## 可选步骤\n- 为提取的函数添加文档注释\n- 考虑增加边界条件测试\n- 评估是否需要额外的错误处理测试"
+}

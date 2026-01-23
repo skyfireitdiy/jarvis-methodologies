@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust间歇性测试失败诊断",
+  "content": "|||## 问题重述\nRust项目中出现间歇性测试失败：单独运行测试通过，批量运行失败。这类\"Heisenbug\"通常由测试间状态污染引起。\n\n## 可复用解决流程\n\n### 阶段1：问题确认\n1. **单独验证**：运行特定测试验证是否确实间歇性\n   ```bash\n   cargo test <测试路径> -- --nocapture\n   ```\n2. **批量验证**：运行全部测试确认问题重现\n   ```bash\n   cargo test -- --nocapture\n   ```\n\n### 阶段2：根因分析\n1. **并发问题检查**：运行多次观察失败模式\n   ```bash\n   for i in {1..10}; do cargo test; done\n   ```\n2. **状态污染定位**：检查测试是否修改全局状态\n   - 查找静态变量、全局状态的使用\n   - 检查测试setup/teardown是否完整\n3. **执行顺序影响**：使用测试顺序随机化验证\n   ```bash\n   cargo test -- --test-threads=1\n   ```\n\n### 阶段3：修复验证\n1. **隔离测试环境**：确保每个测试独立运行\n2. **清理全局状态**：在测试后重置所有修改的状态\n3. **验证修复**：运行多次确认稳定性\n   ```bash\n   cargo test --release  # 生产环境验证\n   ```\n\n### 注意事项\n- 优先检查使用全局状态（如static变量、文件系统、网络资源）的测试\n- 关注测试间的隐式依赖关系\n- 使用RAII模式确保资源清理\n- 考虑使用测试隔离工具如`serial_test`crate\n\n### 可选工具\n- `cargo-nextest`：更好的测试隔离\n- `proptest`：属性测试验证边界条件\n- `loom`：并发测试验证|||"
+}

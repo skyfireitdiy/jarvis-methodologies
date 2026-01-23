@@ -1,0 +1,4 @@
+{
+  "problem_type": "C到Rust函数TDD转译通用流程",
+  "content": "## C函数转译Rust的通用TDD流程\n\n### 阶段1：RESEARCH - 理解原始代码\n1. 使用read_code读取C源码\n2. 使用read_symbols分析符号依赖\n3. 识别关键数据结构（Token、Macro等）\n4. 映射C概念到Rust对应概念\n\n### 阶段2：INNOVATE - 设计转译方案\n1. 结构体映射：C struct → Rust struct\n2. 枚举映射：C enum → Rust enum\n3. 函数签名映射：C指针 → Rust引用/Option\n4. 全局变量：C全局 → Rust lazy_static\n\n### 阶段3：PLAN - TDD执行计划\n1. Red：编写测试用例\n   - 正常路径测试\n   - 边界情况测试\n   - 错误处理测试\n2. Green：最小实现使测试通过\n3. Refactor：优化代码质量\n\n### 阶段4：EXECUTE - 分步实现\n1. 定义数据结构\n2. 实现全局存储\n3. 实现核心函数\n4. 处理生命周期问题\n\n### 阶段5：REVIEW - 验证等价性\n1. 行为一致性验证\n2. 边界条件验证\n3. 内存安全性验证\n\n### 关键注意事项\n- 常量值必须与C保持一致\n- 生命周期使用'static需特别处理\n- 避免unsafe代码，必要时用静态存储\n- 测试用例要能验证与C行为一致性"
+}

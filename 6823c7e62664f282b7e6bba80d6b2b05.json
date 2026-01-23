@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust FFI unsafe代码安全修复",
+  "content": "问题重述：修复Rust代码中与C库交互的FFI unsafe代码安全问题，主要集中在空指针检查和文档完善方面。\n\n可复用解决流程：\n1. **识别风险点**：定位unsafe块中的FFI调用，特别是可能返回空指针的函数\n2. **分析调用链**：使用工具如rg查找所有调用该FFI函数的位置\n3. **设计安全包装**：\n   - 将返回原始指针的函数改为返回Option<WrapperType>\n   - 使用is_null()检查空指针\n   - 保持FFI接口签名不变\n4. **添加安全文档**：\n   - 为每个unsafe块添加SAFETY注释\n   - 说明前置条件、指针有效性保证、生命周期要求\n5. **更新调用方**：\n   - 修改所有调用点以适配新的Option返回类型\n   - 使用模式匹配处理None情况\n6. **验证编译**：\n   - 运行cargo check确保无编译错误\n   - 如有feature依赖，使用--no-default-features或--package指定包\n\n注意事项：\n- 不要移除必要的unsafe块，FFI调用必须保留\n- 不要改变FFI函数本身的签名，只在Rust包装层处理\n- 考虑向后兼容性，对内部API改变是允许的\n- 对于测试代码中的unwrap()，应改为expect()并添加有意义错误信息\n\n可选步骤：\n- 使用clippy检查额外安全警告\n- 添加集成测试验证FFI行为\n- 为WrapperType实现Drop确保资源正确释放"
+}

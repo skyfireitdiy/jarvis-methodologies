@@ -1,0 +1,4 @@
+{
+  "problem_type": "Rust unsafe代码安全文档修复",
+  "content": "问题重述：\n修复Rust代码中unsafe代码块或unsafe impl/trait实现缺乏安全文档的问题，确保符合Rust安全规范。\n\n可复用解决流程：\n1. 定位问题：使用read_code读取具体文件和行号，确认unsafe代码位置\n2. 分析上下文：扩展读取范围(±10行)，理解unsafe操作的具体用途和安全要求\n3. 文档模板应用：\n   - 对于unsafe impl：使用标准SAFETY注释模板\n   - 对于unsafe fn：添加# Safety段落说明前置条件\n4. 验证内容：确保文档包含：\n   - 为什么此unsafe操作是安全的（不变量说明）\n   - 调用者必须保证的前置条件\n   - 指针有效性、生命周期、内存布局等关键安全约束\n5. 编译验证：执行cargo check确保文档添加不影响代码编译\n6. 保存模式：将成功的文档模式保存为项目记忆供复用\n\n注意事项：\n- 保持向后兼容，不改变API签名\n- 优先使用标准Rust文档格式（/// SAFETY: 和 # Safety）\n- 针对具体时间轮/链表等场景，可以保存专用模板\n\n可选步骤：\n- 对复杂unsafe操作，可以添加示例代码说明正确使用方式\n- 考虑使用static_assertions验证关键不变量"
+}
