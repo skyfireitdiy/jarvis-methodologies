@@ -1,4 +1,4 @@
 {
   "problem_type": "Python包安装",
-  "content": "# Python包安装方法论\n\n## 问题重述\n如何在开发模式下安装Python包\n\n## 最优解决方案\n1. 确保已安装最新版setuptools和wheel（使用pip install工具）\n2. 在项目根目录执行命令：python3 -m pip install -e . --verbose（使用execute_script工具）\n3. 验证安装结果（使用execute_script工具执行pip list检查）\n\n## 注意事项\n1. 注意处理__pycache__目录警告\n2. 确保二进制文件权限设置正确(755)\n3. 可编辑安装模式下会显示项目路径而非site-packages路径\n\n## 可选步骤\n1. 对于生产环境安装，去掉-e参数\n2. 可使用--user参数进行用户级别安装"
+  "content": "# Python包安装优化方法论\n\n## 问题重述\n如何在Python项目中安全、可靠地安装本地开发包\n\n## 最优解决方案\n1. **环境检查** (工具: execute_script)\n   - 检查Python版本: `python3 --version`\n   - 检查pip版本: `pip3 --version`\n\n2. **依赖检查** (工具: execute_script)\n   - 检查依赖冲突: `pip3 check`\n   - 验证虚拟环境状态(如适用)\n\n3. **安装执行** (工具: execute_script)\n   - 使用开发模式安装: `python3 -m pip install -e .`\n   - 指定可信源(可选): `--index-url <源地址>`\n\n4. **安装验证** (工具: execute_script)\n   - 检查安装结果: `pip3 list | grep <包名>`\n   - 验证可导入性: `python3 -c \"import <包名>\"`\n\n## 注意事项\n1. 优先使用pip3而非pip，避免Python2.7兼容性问题\n2. 对于可编辑安装(-e)，确保在项目根目录执行\n3. 检查安装警告信息，特别是版本冲突提示\n4. 企业环境需注意代理和证书配置\n\n## 可选步骤\n1. 对于复杂依赖环境，可先创建干净的虚拟环境\n2. 可添加`--user`参数进行用户级安装(当没有系统权限时)\n3. 可结合`pip3 install -U pip`先升级pip工具"
 }
